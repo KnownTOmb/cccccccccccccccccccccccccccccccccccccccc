@@ -242,6 +242,7 @@ Boolowski typ danych jest reprezentowany przez tinyint(1).
 
 # 5. Diagram ERD 	Zmienic na nowy!!!									ඞ
 
+![]('diagram erd.png')
 
 # 7. Zróznicowane zapytania sql
 Wyświetlanie tablicy głownej
