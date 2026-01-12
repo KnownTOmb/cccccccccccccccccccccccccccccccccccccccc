@@ -58,10 +58,13 @@ Boolowski typ danych jest reprezentowany przez tinyint(1).
 
 * id				 klucz główny, int, autoinkrementacja, unique
 * login			 varchar(128), unique
+
 > blob wykracza poza nasza widze
-* haslo			 varchar(64),  
+
+* haslo			 varchar(64),
+
 > używać inet6_aton(‘ipv4 lub ipv6’)
-> ip wykracza poza nasza wiedze 
+> ip wykracza poza nasza wiedze
 > ip				 varbinary(16), unique
 
 ### dane_uzytkownika
@@ -208,6 +211,9 @@ Wyświetlanie tablicy głownej
 Profil główny użytkownika
 Profil rodzinny użytkowanika
 
+# 8. 
+
+
 # 9.Opracowanie i prezentacja widoków
 
 (Statystyki)
@@ -216,9 +222,10 @@ Najpłodniejsze tablice
 Najpłodniejsze parafie
 Najpłodniejsze modliwy
 Najpłodniejsza rodzina
-Pieluchowcy (najstarsi ludzie)
+Matuzal(najstarsi ludzie)
 Zbanowani użytkownicy
 — koniec statystyk —
+Zmarli urzytkownicy
 Wieki
 Rodzina wrzeniona
 adres_URL(/img/{id}.jpg)
@@ -236,4 +243,59 @@ Archiwizacja
 
 # 13.Prezentacja tworzenia kopii zapasowej, importu i eksportu bazy danych
 
-Kopia zapasowa jest tworzona automatycznie o godzinie
+Kopia zapasowa jest tworzona automatycznie o godzinie 2:30
+
+## Początkowa konfiguracja z poziomu admina serwera
+
+Zawartosc skryptu:
+
+```sh
+#!/bin/bash
+
+# Konfiguracja
+USER="root"
+PASSWORD=""   
+DATABASE="smipegs"   
+BACKUP_PATH="/home/server/backups"
+DATE=$(date +%Y-%m-%d_%H%M%S)
+
+# Wykonanie kopii z kompresją (oszczędność miejsca)
+mysqldump -root -p$PASSWORD $DATABASE > $BACKUP_PATH/$DATABASE-$DATE.sql
+
+# Logi
+echo "$DATE: Wykonanie kopii zapasowej." >> logi.txt
+```
+
+```sh
+sudo chmod +x skrypt_do_automatycznej_kopii.sh
+chrontab -e
+```
+
+wewnątrz dodajemy linie:
+
+```sh
+30 2 * * * skrypt_do_automatycznej_kopii.sh
+```
+
+# Jednorazowy Eksport bazy danych w graficzym panelu xampp
+
+## 1. Na górnym panelu klikamy w zakladke Eksport i wybieramy opcje szybko
+
+![](assets/20260112_211932_zakladka_eksport.png)
+
+## 2.Klikamy Export i wybieramy gdzie chcemy zapisac nasza baze danych
+
+![](assets/20260112_212626_zakladka_eksport_cz2.png)
+
+# Import bazy danych w graficznym panelu xampp
+
+# 1. Wybieramy z listy pusta baze danych do której chcemy zaimportowac dane
+
+# 2. Na górnym panelu klikamy w zakladke import wybieramy plik z którego chcemy importować, reszte opcji pozostawiamy ustawionych domyslnie.
+
+![](assets/20260112_214222_import.png)
+
+# 3. Klikamy Import
+
+![](assets/20260112_214214_import_sukces.png)
+
