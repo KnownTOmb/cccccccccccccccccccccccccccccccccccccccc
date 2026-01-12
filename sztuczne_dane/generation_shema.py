@@ -1,5 +1,5 @@
 import config
-# from faker import Faker
+from faker import Faker
 
 generation_config = config.config()
 def generated_table_data(table_name, generate_table_row_data):
