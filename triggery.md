@@ -4,8 +4,7 @@ AFTER INSERT ON uzytkownik
 FOR EACH ROW
 INSERT INTO tablica_ogloszeniowa_uzytkownik (uzytkownik_id, tablica_ogloszeniowa_id)
 VALUES (NEW.id, 1);
-```
-```sql
+
 CREATE TRIGGER po_wstawieniu_do_tablica_ogloszeniowa_uzytkownik
 AFTER INSERT ON tablica_ogloszeniowa_uzytkownik
 FOR EACH ROW 
