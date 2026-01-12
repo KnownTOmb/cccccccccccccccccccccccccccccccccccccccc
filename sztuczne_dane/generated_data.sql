@@ -1,0 +1,14 @@
+INSERT INTO tablica_ogloszeniowa (nazwa, opis) VALUES (['A', 'B'], ['A', 'B'], ['A', 'B'], ['A', 'B'], ['A', 'B'], ['A', 'B'], ['A', 'B'], ['A', 'B'], ['A', 'B'], ['A', 'B'], ['A', 'B'], ['A', 'B'], ['A', 'B'], ['A', 'B'], ['A', 'B'], ['A', 'B'], ['A', 'B'], ['A', 'B'], ['A', 'B'], ['A', 'B']);
+INSERT INTO uzytkownik (login, haslo) VALUES ();
+INSERT INTO dane_uzytkownika (uzytkownik_id, imie, nazwisko, numer_telefonu, data_urodzenia, data_smierci, adres_id) VALUES ();
+INSERT INTO opis_uzytkownika (uzytkownik_id, plec, pseudonim, opis, parafia_id, rodzina_id, zdjecie_profilowe, ulubiona_modlitwa_id) VALUES ();
+INSERT INTO modlitwa (nazwa, tresc, efekt) VALUES ();
+INSERT INTO adres (rejon, kod_pocztowy, ulica, numer_budynku, numer_mieszkania) VALUES ();
+INSERT INTO rodzina (nazwa, opis) VALUES ();
+INSERT INTO pokrewienstwo (typ_relacji, widzi_dane_osobowe, uzytkownik_id, spokrewiony_uzytkownik_id) VALUES ();
+INSERT INTO proboszcz (imie, nazwisko) VALUES ();
+INSERT INTO parafia (nazwa, id_proboszcz) VALUES ();
+INSERT INTO ogloszenie (tytul, data_wstawienia, tresc, autor_id, tablica_ogloszeniowa_id, obrazek_id, archiwalny) VALUES ();
+INSERT INTO obrazek (tekst_alternatywny) VALUES ();
+INSERT INTO uprawnienie (rola, tablica_ogloszeniowa_id, uzytkownik_id) VALUES ();
+INSERT INTO tablica_ogloszeniowa_uzytkownik (uzytkownik_id, tablica_ogloszeniowa_id) VALUES ();

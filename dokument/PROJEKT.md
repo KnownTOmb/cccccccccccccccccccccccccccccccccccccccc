@@ -211,10 +211,12 @@ Wyświetlanie tablicy głownej
 Profil główny użytkownika
 Profil rodzinny użytkowanika
 
-# 8. 
+# 8. Opracownie i prezentacja zapytan modyfikujacych dane w bazie
+> Nie mozemy edytowac struktury bazy danych
 
 
-# 9.Opracowanie i prezentacja widoków
+
+# 9. Opracowanie i prezentacja widoków
 
 (Statystyki)
 Najpłodniejsi kreatorzy postów
