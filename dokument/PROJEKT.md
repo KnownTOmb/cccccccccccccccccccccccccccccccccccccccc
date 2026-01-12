@@ -58,8 +58,11 @@ Boolowski typ danych jest reprezentowany przez tinyint(1).
 
 * id				 klucz główny, int, autoinkrementacja, unique
 * login			 varchar(128), unique
-* haslo			 binary(50) > używać inet6_aton(‘ipv4 lub ipv6’)
-* ip				 varbinary(16), unique
+> blob wykracza poza nasza widze
+* haslo			 varchar(64),  
+> używać inet6_aton(‘ipv4 lub ipv6’)
+> ip wykracza poza nasza wiedze 
+> ip				 varbinary(16), unique
 
 ### dane_uzytkownika
 
@@ -227,5 +230,10 @@ Dodanie użytkownika do tablicy głównej przy dodaniu użytkownika
 dodanie domyślnego avatara / sprawdzenie czy nie jest pusty
 dodanie do rodziny domyslej wartosci 1 - “rodzina nieznana”
 
-11.Opracowanie i prezentacja procedur składowanych
+# 11.Opracowanie i prezentacja procedur składowanych
+
 Archiwizacja
+
+# 13.Prezentacja tworzenia kopii zapasowej, importu i eksportu bazy danych
+
+Kopia zapasowa jest tworzona automatycznie o godzinie
