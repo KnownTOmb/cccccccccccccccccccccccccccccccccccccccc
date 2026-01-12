@@ -21,8 +21,8 @@ CREATE VIEW rodzina_wzeniona AS
 SELECT o.rodzina_id rodzina_id, u.id uzytkownik_id
 FROM uzytkownik u
 JOIN pokrewienstwo p ON p.uzytkownik_id = u.id
-JOIN uzytkownik wspolmalzonek ON wspolmalzonek.id = p.spokrewiony_uzytkownik_id
-JOIN opis_uzytkownika o ON o.id = wspolmalzonek.opis_uzytkownika_id
+JOIN uzytkownik wspolmalzonek ON wspolmalzonek.id = p.spokrewiniony_uzytkownik_id
+JOIN opis_uzytkownika o ON o.uzytkownik_id = wspolmalzonek.id
 WHERE p.typ_relacji IN ('mąż', 'żona');
 
 CREATE VIEW liczba_uzytkownikow_i_ogloszen_w_tablicy AS
@@ -61,8 +61,8 @@ ORDER BY `rodzina`.`id` ASC
 CREATE VIEW matuzal AS
 SELECT uzytkownik.id, opis_uzytkownika.pseudonim, wiek.wiek
 FROM uzytkownik
-JOIN opis_uzytkownika ON opis_uzytkownika.id = uzytkownik.opis_uzytkownika_id
-JOIN dane_uzytkownika ON dane_uzytkownika.id = uzytkownik.dane_uzytkownika_id
+JOIN opis_uzytkownika ON opis_uzytkownika.id = uzytkownik.id
+JOIN dane_uzytkownika ON dane_uzytkownika.uzytkownik_id = uzytkownik.id
 JOIN wiek ON wiek.dane_uzytkownika_id = dane_uzytkownika.id
 WHERE wiek.wiek >= 90
 ORDER BY wiek.wiek DESC;
@@ -74,14 +74,14 @@ FROM obrazek;
 CREATE VIEW zmora AS
 SELECT uzytkownik.id, opis_uzytkownika.pseudonim
 FROM uzytkownik
-JOIN opis_uzytkownika ON opis_uzytkownika.id = uzytkownik.opis_uzytkownika_id
+JOIN opis_uzytkownika ON opis_uzytkownika.uzytkownik_id = uzytkownik.id
 WHERE NOT EXISTS (SELECT 1 FROM tablica_ogloszeniowa_uzytkownik WHERE tablica_ogloszeniowa_uzytkownik.uzytkownik_id = uzytkownik.id AND tablica_ogloszeniowa_uzytkownik.tablica_ogloszeniowa_id = 1);
 
 CREATE VIEW zmarly_uzytkownik AS
 SELECT uzytkownik.id, opis_uzytkownika.pseudonim, dane_uzytkownika.data_smierci
 FROM uzytkownik
-JOIN opis_uzytkownika ON opis_uzytkownika.id = uzytkownik.opis_uzytkownika_id
-JOIN dane_uzytkownika ON dane_uzytkownika.id = uzytkownik.dane_uzytkownika_id
+JOIN opis_uzytkownika ON opis_uzytkownika.uzytkownik_id = uzytkownik.id
+JOIN dane_uzytkownika ON dane_uzytkownika.id = uzytkownik.id
 WHERE dane_uzytkownika.data_smierci IS NOT NULL
 ORDER BY dane_uzytkownika.data_smierci;
 ```
