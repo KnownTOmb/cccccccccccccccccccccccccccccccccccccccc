@@ -97,6 +97,7 @@ def generated_table_data(table_name, generate_table_row_data, fill_table_row_wit
                 column_to_replace,
                 column_to_replace,
                 column_to_replace,
+                column_to_replace
             )
 
             def generate_imie():
@@ -167,10 +168,16 @@ def generated_table_data(table_name, generate_table_row_data, fill_table_row_wit
                     range(1, generation_config.uzytkownik.number_of_rows+1)
                 )
                      
+            def generate_uzytkownik():
+                update_row_with_column_data(
+                    6,
+                    range(1, generation_config.uzytkownik.number_of_rows+1)
+                )
 
             generate_imie()
             generate_data_urodzenia_and_data_smierci()
             generate_adres_id()
+            generate_uzytkownik()
 
         case "rodzina":
             def nazwa():
@@ -211,7 +218,39 @@ def generated_table_data(table_name, generate_table_row_data, fill_table_row_wit
             
         # case "adres":
         #     def rejon():
-        #         return 
+        #         dzielnice = [
+        #             "Abramowice",
+        #             "Bronowice",
+        #             "Czechów Południowy",
+        #             "Czechów Północny",
+        #             "Czuby Południowe",
+        #             "Czuby Północne",
+        #             "Dziesiąta",
+        #             "Felin",
+        #             "Głusk",
+        #             "Hajdów-Zadębie",
+        #             "Kalinowszczyzna",
+        #             "Konstantynów",
+        #             "Kośminek",
+        #             "Ponikwoda",
+        #             "Rury",
+        #             "Sławin",
+        #             "Sławinek",
+        #             "Stare Miasto",
+        #             "Szerokie",
+        #             "Śródmieście",
+        #             "Tatary",
+        #             "Węglin Południowy",
+        #             "Węglin Północny",
+        #             "Wieniawa",
+        #             "Wrotków",
+        #             "Za Cukrownią",
+        #             "Zemborzyce"
+        #         ]
+
+        #         return random.choice([dzielnice])
+        #     def kod_pocztowy():
+
             
         # case "opis_uzytkownika":
         #     def plec():
