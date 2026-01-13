@@ -5,7 +5,7 @@ import datetime
 import config
 
 generation_config = config.config()
-def generated_table_data(table_name, generate_table_row_data, fill_table_row_with_column_data, column_to_replace, already_generated_column_data):
+def generated_table_data(table_name, tables_filled_data, generate_table_row_data, fill_table_row_with_column_data, column_to_replace, already_generated_column_data):
     row_data_to_return = []
     def update_row_with_column_data(column_index, column_data):
         nonlocal  row_data_to_return
@@ -59,7 +59,11 @@ def generated_table_data(table_name, generate_table_row_data, fill_table_row_wit
             def generate_login():
                 logins = []
                 for i in range(generation_config.uzytkownik.number_of_rows):
-                    current_login = fake.unique.simple_profile()["username"]
+                    current_login = ''
+                    regenerate = True
+                    while regenerate:
+                        current_login = fake.unique.simple_profile()["username"]
+                        regenerate = current_login not in logins
 
                     logins.append(current_login)
 
@@ -384,7 +388,5 @@ def generated_table_data(table_name, generate_table_row_data, fill_table_row_wit
 
             generate_uzytkownik_id()
             generate_plec()
-            
-            
     
     return row_data_to_return

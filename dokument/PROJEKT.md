@@ -85,7 +85,7 @@ Boolowski typ danych jest reprezentowany przez tinyint(1).
 * opis			 varchar(1024), możliwy NULL
 * parafia\_id -         klucz obcy, możliwy NULL
 * rodzina\_id -         klucz obcy, DEFAULT '1'
-* zdjecie\_profilowe	 klucz obcy, DEFAULT '1'
+* zdjecie\_profilowe\_id	 klucz obcy, DEFAULT '1'
 * ulubiona\modlitwa\_id -   klucz obcy, możliwy NULL
 
 ### modlitwa

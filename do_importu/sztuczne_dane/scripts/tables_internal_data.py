@@ -77,7 +77,7 @@ tables = {
             "opis",
             "parafia_id",
             "rodzina_id",
-            "zdjecie_profilowe",
+            "zdjecie_profilowe_id",
             "ulubiona_modlitwa_id"
         ],
         "data": []
