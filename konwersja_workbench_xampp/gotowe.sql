@@ -1,6 +1,6 @@
 SET FOREIGN_KEY_CHECKS = 0;
 
--- Tue Jan 13 01:51:46 2026
+-- Tue Jan 13 01:54:36 2026
 
 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0;
 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0;
@@ -296,6 +296,18 @@ END wiek
 FROM dane_uzytkownika;
 
 -- -----------------------------------------------------
+-- View `smipegs_lublin`.`najplodniejsze_parafie`
+-- -----------------------------------------------------
+USE `smipegs_lublin`;
+CREATE  OR REPLACE VIEW najplodniejsze_parafie AS
+SELECT parafia.id, parafia.nazwa, 
+COUNT(opis_uzytkownika.id) AS liczba_wiernych
+FROM parafia
+JOIN opis_uzytkownika ON opis_uzytkownika.parafia_id = parafia.id
+GROUP BY parafia.id  
+ORDER BY `parafia`.`id`;
+
+-- -----------------------------------------------------
 -- View `smipegs_lublin`.`rodzina_wzeniona`
 -- -----------------------------------------------------
 USE `smipegs_lublin`;
@@ -398,6 +410,10 @@ JOIN opis_uzytkownika ON opis_uzytkownika.uzytkownik_id = uzytkownik.id
 JOIN dane_uzytkownika ON dane_uzytkownika.uzytkownik_id = uzytkownik.id
 WHERE dane_uzytkownika.data_smierci IS NOT NULL
 ORDER BY dane_uzytkownika.data_smierci;
+
+SET SQL_MODE=@OLD_SQL_MODE;
+SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
+SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
 USE `smipegs_lublin`;
 
 DELIMITER $$
@@ -416,9 +432,5 @@ INSERT INTO uprawnienia (rola,tablica_ogloszeniowa_id,uzytkownik_id)
 VALUES ('obserwator postow',NEW.tablica_ogloszeniowa_id,NEW.uzytkownik_id)$$
 
 DELIMITER ;
-
-SET SQL_MODE=@OLD_SQL_MODE;
-SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
-SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
 
 SET FOREIGN_KEY_CHECKS = 1;
