@@ -15,7 +15,8 @@ SELECT ou.pseudonim,
 COUNT(o.id) AS liczba_postow 
 FROM uzytkownik u 
 JOIN opis_uzytkownika ou ON ou.uzytkownik_id = u.id 
-JOIN ogloszenie o ON o.autor_id = u.id GROUP BY u.id 
+JOIN ogloszenie o ON o.autor_id = u.id
+GROUP BY ou.pseudonim 
 ORDER BY liczba_postow DESC;
 
 CREATE VIEW rodzina_wzeniona AS 
@@ -40,24 +41,24 @@ SELECT parafia.id, parafia.nazwa,
 COUNT(opis_uzytkownika.id) AS liczba_wiernych
 FROM parafia
 JOIN opis_uzytkownika ON opis_uzytkownika.parafia_id = parafia.id
-GROUP BY parafia.id  
-ORDER BY `parafia`.`id` ASC
+GROUP BY parafia.id, parafia.nazwa
+ORDER BY `parafia`.`id` ASC;
 
 CREATE VIEW najplodniejsze_modlitwy AS 
 SELECT modlitwa.id, modlitwa.nazwa, 
 COUNT(opis_uzytkownika.id) AS liczba_polubien
 FROM modlitwa
 JOIN opis_uzytkownika ON opis_uzytkownika.ulubiona_modlitwa_id = modlitwa.id
-GROUP BY modlitwa.id  
-ORDER BY `modlitwa`.`id` ASC
+GROUP BY modlitwa.id, modlitwa.nazwa 
+ORDER BY `modlitwa`.`id` ASC;
 
 CREATE VIEW najplodniejsze_rodziny AS
 SELECT rodzina.id, rodzina.nazwa, 
 COUNT(opis_uzytkownika.id) AS liczba_czlonkow
 FROM rodzina
 JOIN opis_uzytkownika ON opis_uzytkownika.rodzina_id = rodzina.id
-GROUP BY rodzina.id  
-ORDER BY `rodzina`.`id` ASC
+GROUP BY rodzina.id, rodzina.nazwa 
+ORDER BY `rodzina`.`id` ASC;
 
 CREATE VIEW matuzal AS
 SELECT uzytkownik.id, opis_uzytkownika.pseudonim, wiek.wiek
