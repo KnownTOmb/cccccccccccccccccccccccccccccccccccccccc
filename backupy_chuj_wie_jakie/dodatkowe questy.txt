@@ -1,0 +1,4 @@
+* trigger usuwania uprawnień po usunięciu z tablicy
+* trigger po usunięciu użytkownika usuwa:
+	* wszystkie uprawnienia
+* wypełnianie nieużywanych id przy dodawaniu ogłoszenia

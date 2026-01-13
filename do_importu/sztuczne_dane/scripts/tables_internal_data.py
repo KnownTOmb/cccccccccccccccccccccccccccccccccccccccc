@@ -25,13 +25,29 @@ tables = {
 
     "dane_uzytkownika": {
         "column": [
-            "uzytkownik_id",
             "imie",
             "nazwisko",
             "numer_telefonu",
             "data_urodzenia",
             "data_smierci",
             "adres_id"
+        ],
+        "data": []
+    },
+
+    "rodzina": {
+        "column": [
+            "nazwa",
+            "opis"
+        ],
+        "data": []
+    },
+
+    "modlitwa": {
+        "column": [
+            "nazwa",
+            "tresc",
+            "efekt"
         ],
         "data": []
     },
@@ -50,15 +66,6 @@ tables = {
         "data": []
     },
 
-    "modlitwa": {
-        "column": [
-            "nazwa",
-            "tresc",
-            "efekt"
-        ],
-        "data": []
-    },
-
     "adres": {
         "column": [
             "rejon",
@@ -66,14 +73,6 @@ tables = {
             "ulica",
             "numer_budynku",
             "numer_mieszkania"
-        ],
-        "data": []
-    },
-
-    "rodzina": {
-        "column": [
-            "nazwa",
-            "opis"
         ],
         "data": []
     },
