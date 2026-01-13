@@ -168,7 +168,7 @@ def generated_table_data(table_name, generate_table_row_data, fill_table_row_wit
                     range(1, generation_config.uzytkownik.number_of_rows+1)
                 )
                      
-            def generate_uzytkownik():
+            def generate_uzytkownik_id():
                 update_row_with_column_data(
                     6,
                     range(1, generation_config.uzytkownik.number_of_rows+1)
@@ -177,7 +177,7 @@ def generated_table_data(table_name, generate_table_row_data, fill_table_row_wit
             generate_imie()
             generate_data_urodzenia_and_data_smierci()
             generate_adres_id()
-            generate_uzytkownik()
+            generate_uzytkownik_id()
 
         case "rodzina":
             def nazwa():
@@ -195,15 +195,15 @@ def generated_table_data(table_name, generate_table_row_data, fill_table_row_wit
             def nazwa():
                 name_to_return = ''
                 if random.randint(0, 1):
-                    name_to_return = fake_pl.last_name_female()[:-1:]
-                    if name_to_return[-1::] in "td":
-                        name_to_return += "a"
+                    name_to_return = fake_pl.first_name_female()[:-1:]
+                    if name_to_return[-1::] in "tdżn":
+                        name_to_return += "y"
                     else:
                         name_to_return += "i"
                 else:
-                     name_to_return = fake_pl.last_name_male()[:-1:]+"a"
+                     name_to_return = fake_pl.first_name_male()+"a"
 
-                name_to_return = "Św. "+name_to_return
+                name_to_return = "Do św. "+name_to_return
                 return name_to_return
             def tresc():
                 return  fake_pl.text(max_nb_chars=random.randint(5, 2048+1)).replace('. ', '.\\n')
@@ -211,7 +211,7 @@ def generated_table_data(table_name, generate_table_row_data, fill_table_row_wit
                 return fake_pl.text(max_nb_chars=random.randint(5, 128+1))
             
             row_data_to_return = generate_table_row_data(
-                generation_config.uzytkownik.number_of_rows,
+                generation_config.modlitwa.number_of_rows,
                 nazwa,
                 tresc,
                 efekt,
@@ -277,95 +277,80 @@ def generated_table_data(table_name, generate_table_row_data, fill_table_row_wit
                 numer_mieszkania,
             )
 
-
+        case "proboszcz":
+            def imie():
+                return fake_pl.first_name_male()
+            def nazwisko():
+                return fake_pl.last_name_male()
             
+            row_data_to_return = generate_table_row_data(
+                generation_config.proboszcz.number_of_rows,
+                imie,
+                nazwisko,
+            )
+            
+        case "parafia":
+            row_data_to_return = generate_table_row_data(
+                generation_config.proboszcz.number_of_rows,
+                column_to_replace,
+                column_to_replace,
+            )
+
+            def generate_nazwa():
+                names = []
+                for i in range(generation_config.proboszcz.number_of_rows):
+                    name_prefix = [
+                        "Parafia",
+                        "Parafia Rzymskokatolicka",
+                        "Kościół",
+                        "Kościół Rzymskokatolicki",
+                        "Sanktuarium",
+                        "Bazylika",
+                        "Archikatedra",
+                        "Katedra",
+                        "Kolegiata",
+                        "Kaplica",
+                        "Klasztor",
+                        "Opactwo",
+                        "Dom Zakonny",
+                        "Zgromadzenie",
+                        "Misja",
+                        "Rektorat"
+                    ]
+
+                    name = ''
+                    if random.randint(0, 1):
+                        name = fake_pl.first_name_female()[:-1:]
+                        if name[-1::] in "tdżn":
+                            name += "y"
+                        else:
+                            name += "i"
+                    else:
+                        name = fake_pl.first_name_male()+"a"
+
+                    name = "św. "+name
+                    name = random.choice(name_prefix)+" "+name
+
+                    names.append(name)
+                
+                update_row_with_column_data(
+                    0,
+                    names
+                )
+            def generate_proboszcz_id():
+                update_row_with_column_data(
+                    1,
+                    range(1, generation_config.proboszcz.number_of_rows+1)
+                )
+
+            generate_nazwa()
+            generate_proboszcz_id()
+
         # case "opis_uzytkownika":
         #     def plec():
         #         return get_already_generated_column_data(table_name, 0,)
         #     def pseudonim():
         #         return
             
-        #     row_data_to_return = generate_table_row_data(
-        #         generation_config.uzytkownik.number_of_rows,
-        #         plec,
-        #         nazwisko,
-        #         numer_telefonu,
-        #         column_to_replace,
-        #         column_to_replace,
-        #         column_to_replace,
-        #     )
-
-        #     def generate_imie():
-        #         names = []
-        #         genders = []
-        #         for i in range(generation_config.uzytkownik.number_of_rows):
-        #             current_name = ''
-        #             current_gender = fake.passport_gender()
-        #             match current_gender:
-        #                 case 'K':
-        #                     current_name = fake_pl.first_name_female()
-                        
-        #                 case 'M':
-        #                     current_name = fake_pl.first_name_male()
-
-        #                 case _:
-        #                     current_name = fake_pl.first_name()
-
-        #             genders.append(current_gender)
-        #             names.append(current_name)
-
-        #         generate_data_for_later_table(
-        #             "opis_uzytkownika",
-        #             1,
-        #             genders
-        #         )
-        #         update_row_with_column_data(
-        #             0,
-        #             names
-        #         )
-
-        #     def generate_data_urodzenia_and_data_smierci():
-        #         def string_to_daytime(string_date):
-        #             return datetime.datetime.strptime(string_date, '%Y-%m-%d')
-        #         def daytime_to_string(daytime):
-        #             return daytime.strftime('%Y-%m-%d')
-                
-        #         dates_of_birth = []
-        #         dates_of_death = []
-        #         for i in range(generation_config.uzytkownik.number_of_rows):
-        #             current_date_of_birth = fake_pl.date_of_birth(
-        #                 minimum_age = 40,
-        #                 maximum_age = 120
-        #             )
-
-        #             if random.randint(0, 1):
-        #                 current_date_of_death = daytime_to_string(fake_pl.date_between_dates(
-        #                     current_date_of_birth
-        #                 ))
-        #             else:
-        #                 current_date_of_death = None
-
-        #             dates_of_birth.append(daytime_to_string(current_date_of_birth))
-        #             dates_of_death.append(current_date_of_death)
-
-        #         update_row_with_column_data(
-        #             3,
-        #             dates_of_birth
-        #         )
-        #         update_row_with_column_data(
-        #             4,
-        #             dates_of_death
-        #         )
-
-        #     def generate_adres_id():
-        #         update_row_with_column_data(
-        #             5,
-        #             range(1, generation_config.uzytkownik.number_of_rows+1)
-        #         )
-                    
-
-        #     generate_imie()
-        #     generate_data_urodzenia_and_data_smierci()
-        #     generate_adres_id()
     
     return row_data_to_return
