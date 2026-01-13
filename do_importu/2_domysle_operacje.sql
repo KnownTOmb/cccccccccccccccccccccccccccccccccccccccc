@@ -2,91 +2,114 @@
 -- Widoki
 -- -----------------------------------------------------
 
+DROP VIEW IF EXISTS wiek;
 CREATE VIEW wiek AS
-SELECT dane_uzytkownika.id dane_uzytkownika_id, 
-CASE
-    WHEN data_smierci IS NULL THEN TIMESTAMPDIFF(YEAR, dane_uzytkownika.data_urodzenia, CURDATE())
-    ELSE TIMESTAMPDIFF(YEAR, dane_uzytkownika.data_urodzenia, dane_uzytkownika.data_smierci)
-END wiek
+SELECT 
+    dane_uzytkownika.id AS dane_uzytkownika_id, 
+    CASE
+        WHEN data_smierci IS NULL THEN TIMESTAMPDIFF(YEAR, dane_uzytkownika.data_urodzenia, CURDATE())
+        ELSE TIMESTAMPDIFF(YEAR, dane_uzytkownika.data_urodzenia, dane_uzytkownika.data_smierci)
+    END AS wiek
 FROM dane_uzytkownika;
 
 
-CREATE VIEW najplodniejsi_kreatorzy_postow AS 
-SELECT ou.pseudonim, 
-COUNT(o.id) AS liczba_postow 
+DROP VIEW IF EXISTS plodnosc_kreatorow_postow;
+CREATE VIEW plodnosc_kreatorow_postow AS 
+SELECT ou.pseudonim, COUNT(o.id) AS liczba_postow 
 FROM uzytkownik u 
-JOIN opis_uzytkownika ou ON ou.uzytkownik_id = u.id 
-JOIN ogloszenie o ON o.autor_id = u.id
+LEFT JOIN opis_uzytkownika ou ON ou.uzytkownik_id = u.id 
+LEFT JOIN ogloszenie o ON o.autor_id = u.id
 GROUP BY ou.pseudonim 
 ORDER BY liczba_postow DESC;
 
+
+DROP VIEW IF EXISTS rodzina_wzeniona;
 CREATE VIEW rodzina_wzeniona AS 
-SELECT o.rodzina_id rodzina_id, u.id uzytkownik_id
+SELECT o.rodzina_id AS rodzina_id, u.id AS uzytkownik_id
 FROM uzytkownik u
 JOIN pokrewienstwo p ON p.uzytkownik_id = u.id
 JOIN uzytkownik wspolmalzonek ON wspolmalzonek.id = p.spokrewiniony_uzytkownik_id
 JOIN opis_uzytkownika o ON o.uzytkownik_id = wspolmalzonek.id
 WHERE p.typ_relacji IN ('mąż', 'żona');
 
-CREATE VIEW liczba_uzytkownikow_i_ogloszen_w_tablicy AS
-SELECT t.id, t.nazwa, 
-COUNT(DISTINCT(tou.uzytkownik_id)) AS liczba_uzytkownikow, 
-COUNT(DISTINCT(o.id)) AS liczba_postow FROM tablica_ogloszeniowa t 
-LEFT JOIN tablica_ogloszeniowa_uzytkownik tou ON t.id = tou.tablica_ogloszeniowa_id 
-LEFT JOIN ogloszenie o ON o.tablica_ogloszeniowa_id = t.id 
-GROUP BY t.id, t.nazwa 
+
+DROP VIEW IF EXISTS plodnosc_tablicy;
+CREATE VIEW plodnosc_tablicy AS
+SELECT 
+    t.id, 
+    t.nazwa, 
+    COUNT(DISTINCT tou.uzytkownik_id) AS liczba_uzytkownikow, 
+    COUNT(DISTINCT o.id) AS liczba_postow
+FROM tablica_ogloszeniowa t 
+LEFT JOIN tablica_ogloszeniowa_uzytkownik tou 
+    ON t.id = tou.tablica_ogloszeniowa_id 
+LEFT JOIN ogloszenie o 
+    ON o.tablica_ogloszeniowa_id = t.id 
+GROUP BY t.id, t.nazwa
 ORDER BY liczba_uzytkownikow DESC;
 
-CREATE VIEW najplodniejsze_parafie AS
-SELECT parafia.id, parafia.nazwa, 
-COUNT(opis_uzytkownika.id) AS liczba_wiernych
-FROM parafia
-JOIN opis_uzytkownika ON opis_uzytkownika.parafia_id = parafia.id
-GROUP BY parafia.id, parafia.nazwa
-ORDER BY `parafia`.`id` ASC;
 
-CREATE VIEW najplodniejsze_modlitwy AS 
-SELECT modlitwa.id, modlitwa.nazwa, 
-COUNT(opis_uzytkownika.id) AS liczba_polubien
-FROM modlitwa
-JOIN opis_uzytkownika ON opis_uzytkownika.ulubiona_modlitwa_id = modlitwa.id
-GROUP BY modlitwa.id, modlitwa.nazwa 
-ORDER BY `modlitwa`.`id` ASC;
+DROP VIEW IF EXISTS plodnosc_parafii;
+CREATE VIEW plodnosc_parafii AS
+SELECT p.id, p.nazwa, COUNT(ou.id) AS liczba_wiernych
+FROM parafia p
+JOIN opis_uzytkownika ou ON ou.parafia_id = p.id
+GROUP BY p.id, p.nazwa;
 
-CREATE VIEW najplodniejsze_rodziny AS
-SELECT rodzina.id, rodzina.nazwa, 
-COUNT(opis_uzytkownika.id) AS liczba_czlonkow
-FROM rodzina
-JOIN opis_uzytkownika ON opis_uzytkownika.rodzina_id = rodzina.id
-GROUP BY rodzina.id, rodzina.nazwa 
-ORDER BY `rodzina`.`id` ASC;
 
+DROP VIEW IF EXISTS pozycja_modlitwy;
+CREATE VIEW pozycja_modlitwy AS 
+SELECT m.id, m.nazwa, COUNT(ou.id) AS liczba_polubien
+FROM modlitwa m
+JOIN opis_uzytkownika ou ON ou.ulubiona_modlitwa_id = m.id
+GROUP BY m.id, m.nazwa;
+
+
+DROP VIEW IF EXISTS pozycja_rodziny;
+CREATE VIEW pozycja_rodziny AS
+SELECT r.id, r.nazwa, COUNT(ou.id) AS liczba_czlonkow
+FROM rodzina r
+JOIN opis_uzytkownika ou ON ou.rodzina_id = r.id
+GROUP BY r.id, r.nazwa;
+
+
+DROP VIEW IF EXISTS matuzal;
 CREATE VIEW matuzal AS
-SELECT uzytkownik.id, opis_uzytkownika.pseudonim, wiek.wiek
-FROM uzytkownik
-JOIN opis_uzytkownika ON opis_uzytkownika.uzytkownik_id = uzytkownik.id
-JOIN dane_uzytkownika ON dane_uzytkownika.uzytkownik_id = uzytkownik.id
-JOIN wiek ON wiek.dane_uzytkownika_id = dane_uzytkownika.id
-WHERE wiek.wiek >= 90
-ORDER BY wiek.wiek DESC;
+SELECT u.id, ou.pseudonim, w.wiek
+FROM uzytkownik u
+JOIN opis_uzytkownika ou ON ou.uzytkownik_id = u.id
+JOIN dane_uzytkownika du ON du.uzytkownik_id = u.id
+JOIN wiek w ON w.dane_uzytkownika_id = du.id
+WHERE w.wiek >= 90
+ORDER BY w.wiek DESC;
 
+
+DROP VIEW IF EXISTS url_obrazka;
 CREATE VIEW url_obrazka AS
-SELECT obrazek.id obrazek_id, CONCAT(CONCAT('/img/', obrazek.id), '.jpg') url
-FROM obrazek;
+SELECT o.id AS obrazek_id, CONCAT('/img/', o.id, '.jpg') AS url
+FROM obrazek o;
 
+
+DROP VIEW IF EXISTS zmora;
 CREATE VIEW zmora AS
-SELECT uzytkownik.id, opis_uzytkownika.pseudonim
-FROM uzytkownik
-JOIN opis_uzytkownika ON opis_uzytkownika.uzytkownik_id = uzytkownik.id
-WHERE NOT EXISTS (SELECT 1 FROM tablica_ogloszeniowa_uzytkownik WHERE tablica_ogloszeniowa_uzytkownik.uzytkownik_id = uzytkownik.id AND tablica_ogloszeniowa_uzytkownik.tablica_ogloszeniowa_id = 1);
+SELECT u.id, ou.pseudonim
+FROM uzytkownik u
+JOIN opis_uzytkownika ou ON ou.uzytkownik_id = u.id
+WHERE NOT EXISTS (
+    SELECT 1 
+    FROM tablica_ogloszeniowa_uzytkownik tou
+    WHERE tou.uzytkownik_id = u.id
+      AND tou.tablica_ogloszeniowa_id = 1
+);
 
+
+DROP VIEW IF EXISTS zmarly_uzytkownik;
 CREATE VIEW zmarly_uzytkownik AS
-SELECT uzytkownik.id, opis_uzytkownika.pseudonim, dane_uzytkownika.data_smierci
-FROM uzytkownik
-JOIN opis_uzytkownika ON opis_uzytkownika.uzytkownik_id = uzytkownik.id
-JOIN dane_uzytkownika ON dane_uzytkownika.uzytkownik_id = uzytkownik.id
-WHERE dane_uzytkownika.data_smierci IS NOT NULL
-ORDER BY dane_uzytkownika.data_smierci;
+SELECT u.id, ou.pseudonim, du.data_smierci
+FROM uzytkownik u
+JOIN opis_uzytkownika ou ON ou.uzytkownik_id = u.id
+JOIN dane_uzytkownika du ON du.uzytkownik_id = u.id
+WHERE du.data_smierci IS NOT NULL;
 
 -- -----------------------------------------------------
 -- Domysle dane
@@ -108,53 +131,55 @@ TRUNCATE TABLE parafia;
 TRUNCATE TABLE proboszcz;
 
 
-INSERT INTO tablica_ogloszeniowa (nazwa, opis) VALUES
-('Tablica glówna','Witaj na naszym portalu!');
+INSERT IGNORE INTO tablica_ogloszeniowa (id, nazwa, opis)
+VALUES (1, 'Tablica główna', 'Witaj na naszym portalu!');
 
-INSERT INTO rodzina (id,nazwa) VALUES ('1','Nieznana');
+INSERT IGNORE INTO rodzina (id, nazwa)
+VALUES (1, 'Nieznana');
 
-INSERT INTO obrazek (id,tekst_alternatywny) VALUES ('1','Default')
+INSERT IGNORE INTO obrazek (id, tekst_alternatywny)
+VALUES (1, 'Default');
 
 -- -----------------------------------------------------
 -- Procedura
 -- -----------------------------------------------------
 
+DROP PROCEDURE IF EXISTS usun_stare_ogloszenia;
+
 DELIMITER $$
 
 CREATE PROCEDURE usun_stare_ogloszenia(
-IN ile_lat INT,
-IN do_kiedy DATE
+    IN ile_lat INT,
+    IN do_kiedy DATE
 )
 BEGIN
-DECLARE data_graniczna DATE;
+    DECLARE data_graniczna DATE;
 
-IF (ile_lat IS NOT NULL AND ile_lat > 0)
-AND (do_kiedy IS NOT NULL AND do_kiedy <> '0000-00-00') THEN
+    IF (ile_lat IS NOT NULL AND ile_lat > 0)
+       AND (do_kiedy IS NOT NULL AND do_kiedy <> '0000-00-00') THEN
+        SIGNAL SQLSTATE '45000'
+            SET MESSAGE_TEXT = 'Nie można podać obu parametrów jednocześnie';
 
--- przerywanie dzialania procedury
-SIGNAL SQLSTATE '45000'
-SET MESSAGE_TEXT = 'Nie można podać obu parametrów jednocześnie';
+    ELSEIF ile_lat IS NOT NULL AND ile_lat > 0 THEN
+        SET data_graniczna = DATE_SUB(CURDATE(), INTERVAL ile_lat YEAR);
 
-ELSEIF ile_lat IS NOT NULL AND ile_lat > 0 THEN
-SET data_graniczna = DATE_SUB(CURDATE(), INTERVAL ile_lat YEAR);
+    ELSEIF do_kiedy IS NOT NULL AND do_kiedy <> '0000-00-00' THEN
+        SET data_graniczna = do_kiedy;
 
-ELSEIF do_kiedy IS NOT NULL AND do_kiedy <> '0000-00-00' THEN
-SET data_graniczna = do_kiedy;
+    ELSE
+        SIGNAL SQLSTATE '45000'
+            SET MESSAGE_TEXT = 'Nie podano poprawnego parametru';
+    END IF;
 
-ELSE
-SIGNAL SQLSTATE '45000'
-SET MESSAGE_TEXT = 'Nie podano poprawnego parametru';
-END IF;
+    SELECT *
+    FROM ogloszenie
+    WHERE data_wstawienia < data_graniczna
+      AND (archiwalny IS NULL OR archiwalny = 0);
 
-SELECT *
-FROM ogloszenie
-WHERE data_wstawienia < data_graniczna
-AND (archiwalny IS NULL OR archiwalny = 0);
-
-DELETE FROM ogloszenie
-WHERE data_wstawienia < data_graniczna
-AND (archiwalny IS NULL OR archiwalny = 0);
-
+    DELETE
+    FROM ogloszenie
+    WHERE data_wstawienia < data_graniczna
+      AND (archiwalny IS NULL OR archiwalny = 0);
 END$$
 
 DELIMITER ;

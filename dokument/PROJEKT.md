@@ -208,29 +208,170 @@ Profil rodzinny użytkowanika
 # 8. Opracownie i prezentacja zapytan modyfikujacych dane w bazie
 
 > Nie mozemy edytowac struktury bazy danych
+> reczne stworzenie zmory
+
+
+> degradacja nieaktywnych kreatorów postów
+```sql
+SELECT u.uzytkownik_id
+FROM uprawnienie u
+WHERE u.rola = 'kreator postów'
+AND NOT EXISTS (
+    SELECT 1
+    FROM ogloszenie o
+    WHERE o.autor_id = u.uzytkownik_id
+      AND o.data_wstawienia >= DATE_SUB(CURDATE(), INTERVAL 2 YEAR)
+);
+
+```
+
+# 
 
 # 9. Opracowanie i prezentacja widoków
 
-(Statystyki)
-Najpłodniejsi kreatorzy postów
-Najpłodniejsze tablice
-Najpłodniejsze parafie
-Najpłodniejsze modliwy
-Najpłodniejsza rodzina
-Matuzal(najstarsi ludzie)
-Zbanowani użytkownicy
-— koniec statystyk —
-Zmarli urzytkownicy
-Wieki
-Rodzina wrzeniona
-adres_URL(/img/{id}.jpg)
+## (Statystyki)
 
-10.Opracowanie i prezentacja wyzwalaczy (triggerów)
+### Plodnosc_kreatorow_postow
+> wyswietla ile postów dodał dany uzytkownik
+```sql
+DROP VIEW IF EXISTS plodnosc_kreatorow_postow;
+CREATE VIEW plodnosc_kreatorow_postow AS 
+SELECT ou.pseudonim, COUNT(o.id) AS liczba_postow 
+FROM uzytkownik u 
+JOIN opis_uzytkownika ou ON ou.uzytkownik_id = u.id 
+JOIN ogloszenie o ON o.autor_id = u.id
+GROUP BY ou.pseudonim 
+ORDER BY liczba_postow DESC;
+```
+### Plodnosc tablicy
+> wyswietla ile postów znajduje sie na danej tablicy
+```sql
+DROP VIEW IF EXISTS plodnosc_tablicy;
+CREATE VIEW plodnosc_tablicy AS
+SELECT 
+    t.id, 
+    t.nazwa, 
+    COUNT(DISTINCT tou.uzytkownik_id) AS liczba_uzytkownikow, 
+    COUNT(DISTINCT o.id) AS liczba_postow
+FROM tablica_ogloszeniowa t 
+LEFT JOIN tablica_ogloszeniowa_uzytkownik tou 
+    ON t.id = tou.tablica_ogloszeniowa_id 
+LEFT JOIN ogloszenie o 
+    ON o.tablica_ogloszeniowa_id = t.id 
+GROUP BY t.id, t.nazwa
+ORDER BY liczba_uzytkownikow DESC;
+```
+### Plodnosc parafii
+> wyswietla ilu uzytkowników jest w danej parafii
+```sql
+DROP VIEW IF EXISTS plodnosc_parafii;
+CREATE VIEW plodnosc_parafii AS
+SELECT p.id, p.nazwa, COUNT(ou.id) AS liczba_wiernych
+FROM parafia p
+JOIN opis_uzytkownika ou ON ou.parafia_id = p.id
+GROUP BY p.id, p.nazwa;
+```
+### Pozycja modlitwy
+> wyswietla które modlitwy najczesciej znajduja sie w opisach uzytkowników
+```sql
+DROP VIEW IF EXISTS pozycja_modlitwy;
+CREATE VIEW pozycja_modlitwy AS 
+SELECT m.id, m.nazwa, COUNT(ou.id) AS liczba_polubien
+FROM modlitwa m
+JOIN opis_uzytkownika ou ON ou.ulubiona_modlitwa_id = m.id
+GROUP BY m.id, m.nazwa;
+```
+### Pozycja rodziny
+> wyswietla które rodziny maja najwiecej członków
+```sql 
+DROP VIEW IF EXISTS pozycja_rodziny;
+CREATE VIEW pozycja_rodziny AS
+SELECT r.id, r.nazwa, COUNT(ou.id) AS liczba_czlonkow
+FROM rodzina r
+JOIN opis_uzytkownika ou ON ou.rodzina_id = r.id
+GROUP BY r.id, r.nazwa;
+```
+### Matuzal
+> wyswietla uzytkownikow majacych co namniej 90 lat 
+```sql
+DROP VIEW IF EXISTS matuzal;
+CREATE VIEW matuzal AS
+SELECT u.id, ou.pseudonim, w.wiek
+FROM uzytkownik u
+JOIN opis_uzytkownika ou ON ou.uzytkownik_id = u.id
+JOIN dane_uzytkownika du ON du.uzytkownik_id = u.id
+JOIN wiek w ON w.dane_uzytkownika_id = du.id
+WHERE w.wiek >= 90
+ORDER BY w.wiek DESC;
+```
+### Zmora
+> uzytkownicy usunieci z tablicy głównej
+```sql
+DROP VIEW IF EXISTS zmora;
+CREATE VIEW zmora AS
+SELECT u.id, ou.pseudonim
+FROM uzytkownik u
+JOIN opis_uzytkownika ou ON ou.uzytkownik_id = u.id
+WHERE NOT EXISTS (
+    SELECT 1 
+    FROM tablica_ogloszeniowa_uzytkownik tou
+    WHERE tou.uzytkownik_id = u.id
+      AND tou.tablica_ogloszeniowa_id = 1
+);
+```
+### Zmarli urzytkownicy
+> uzytkownicy którzy nie żyja
+```sql
+DROP VIEW IF EXISTS zmarly_uzytkownik;
+CREATE VIEW zmarly_uzytkownik AS
+SELECT u.id, ou.pseudonim, du.data_smierci
+FROM uzytkownik u
+JOIN opis_uzytkownika ou ON ou.uzytkownik_id = u.id
+JOIN dane_uzytkownika du ON du.uzytkownik_id = u.id
+WHERE du.data_smierci IS NOT NULL;
+```
+
+## — koniec statystyk —
+
+### Wieki uzytkowników
+> wyswietla ile lat ma kazdy uzytkownik
+```sql
+DROP VIEW IF EXISTS wiek;
+CREATE VIEW wiek AS
+SELECT 
+    dane_uzytkownika.id AS dane_uzytkownika_id, 
+    CASE
+        WHEN data_smierci IS NULL THEN TIMESTAMPDIFF(YEAR, dane_uzytkownika.data_urodzenia, CURDATE())
+        ELSE TIMESTAMPDIFF(YEAR, dane_uzytkownika.data_urodzenia, dane_uzytkownika.data_smierci)
+    END AS wiek
+FROM dane_uzytkownika;
+```
+
+### Rodzina wrzeniona
+> wyswietla rodzina małzonka
+```sql
+DROP VIEW IF EXISTS rodzina_wzeniona;
+CREATE VIEW rodzina_wzeniona AS 
+SELECT o.rodzina_id AS rodzina_id, u.id AS uzytkownik_id
+FROM uzytkownik u
+JOIN pokrewienstwo p ON p.uzytkownik_id = u.id
+JOIN uzytkownik wspolmalzonek ON wspolmalzonek.id = p.spokrewiniony_uzytkownik_id
+JOIN opis_uzytkownika o ON o.uzytkownik_id = wspolmalzonek.id
+WHERE p.typ_relacji IN ('mąż', 'żona');
+```
+### url obrazka
+> wyswietla url obrazka
+```sql
+DROP VIEW IF EXISTS url_obrazka;
+CREATE VIEW url_obrazka AS
+SELECT o.id AS obrazek_id, CONCAT('/img/', o.id, '.jpg') AS url
+FROM obrazek o;
+```
+
+# 10.Opracowanie i prezentacja wyzwalaczy (triggerów)
 
 Nadanie uprawnień obserwatora przy dodaniu do tablicy
 Dodanie użytkownika do tablicy głównej przy dodaniu użytkownika
-dodanie domyślnego avatara / sprawdzenie czy nie jest pusty
-dodanie do rodziny domyslej wartosci 1 - “rodzina nieznana”
 
 # 11.Opracowanie i prezentacja procedur składowanych
 
@@ -282,19 +423,19 @@ wewnątrz dodajemy linie:
 
 ![](assets/20260112_212626_zakladka_eksport_cz2.png)
 
-# Import bazy danych w graficznym panelu xampp
+## Import bazy danych w graficznym panelu xampp
 
 > nie musimy wybierac nowej pustej bazy danych, skrypt sam utworzy baze o nazwie smipegs_lublin
 
-# 1. Na górnym panelu klikamy w zakladke import wybieramy plik do_importu/1_pusta_baza_z_triggerami.sql, odznaczamy foregin key checks a reszte opcji pozostawiamy ustawionych domyslnie.
+## 1. Na górnym panelu klikamy w zakladke import wybieramy plik do_importu/1_pusta_baza_z_triggerami.sql, odznaczamy foregin key checks a reszte opcji pozostawiamy ustawionych domyslnie.
 
 ![](assets/20260113_202828_import1.png)
 
-# 2. Nastepnie klikamy w nowo utworzona baze danych smipegs_lublin, wchodzimy w zakładke import i importujemy plik do_importu/2_widoki.sql wczesniej odznaczajac foregin key checks.
+## 2. Nastepnie klikamy w nowo utworzona baze danych smipegs_lublin, wchodzimy w zakładke import i importujemy plik do_importu/2_widoki.sql wczesniej odznaczajac foregin key checks.
 
 ![](assets/20260113_204408_import2.png)
 
-# 3. Na koniec do bazy smipegs lublin importujemy plik do_importu/3_generated_data.sql odznaczajac foregin key cheks.
+## 3. Na koniec do bazy smipegs lublin importujemy plik do_importu/3_generated_data.sql odznaczajac foregin key cheks.
 
 ![](assets/20260113_204904_import3.png)
 
