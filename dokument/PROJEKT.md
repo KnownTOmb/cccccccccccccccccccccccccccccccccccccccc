@@ -104,9 +104,6 @@ Boolowski typ danych jest reprezentowany przez tinyint(1).
 * rejon -               varchar(64)
 
 > Nie trzymamy 20 z przodu, tylko 3 cyfry
-
-# najwiekszy
-
 * kod\_pocztowy -       smallint(3), zerofill
 * ulica -               varchar(64)
 * numer\_budynku -      small int(255)

@@ -203,9 +203,10 @@ def generated_table_data(table_name, generate_table_row_data, fill_table_row_wit
                 else:
                      name_to_return = fake_pl.last_name_male()[:-1:]+"a"
 
+                name_to_return = "Św. "+name_to_return
                 return name_to_return
             def tresc():
-                return  fake_pl.text(max_nb_chars=random.randint(5, 2048+1))
+                return  fake_pl.text(max_nb_chars=random.randint(5, 2048+1)).replace('. ', '.\\n')
             def efekt():
                 return fake_pl.text(max_nb_chars=random.randint(5, 128+1))
             
@@ -216,40 +217,66 @@ def generated_table_data(table_name, generate_table_row_data, fill_table_row_wit
                 efekt,
             )
             
-        # case "adres":
-        #     def rejon():
-        #         dzielnice = [
-        #             "Abramowice",
-        #             "Bronowice",
-        #             "Czechów Południowy",
-        #             "Czechów Północny",
-        #             "Czuby Południowe",
-        #             "Czuby Północne",
-        #             "Dziesiąta",
-        #             "Felin",
-        #             "Głusk",
-        #             "Hajdów-Zadębie",
-        #             "Kalinowszczyzna",
-        #             "Konstantynów",
-        #             "Kośminek",
-        #             "Ponikwoda",
-        #             "Rury",
-        #             "Sławin",
-        #             "Sławinek",
-        #             "Stare Miasto",
-        #             "Szerokie",
-        #             "Śródmieście",
-        #             "Tatary",
-        #             "Węglin Południowy",
-        #             "Węglin Północny",
-        #             "Wieniawa",
-        #             "Wrotków",
-        #             "Za Cukrownią",
-        #             "Zemborzyce"
-        #         ]
+        case "adres":
+            def rejon():
+                dzielnice = [
+                    "Abramowice",
+                    "Bronowice",
+                    "Czechów Południowy",
+                    "Czechów Północny",
+                    "Czuby Południowe",
+                    "Czuby Północne",
+                    "Dziesiąta",
+                    "Felin",
+                    "Głusk",
+                    "Hajdów-Zadębie",
+                    "Kalinowszczyzna",
+                    "Konstantynów",
+                    "Kośminek",
+                    "Ponikwoda",
+                    "Rury",
+                    "Sławin",
+                    "Sławinek",
+                    "Stare Miasto",
+                    "Szerokie",
+                    "Śródmieście",
+                    "Tatary",
+                    "Węglin Południowy",
+                    "Węglin Północny",
+                    "Wieniawa",
+                    "Wrotków",
+                    "Za Cukrownią",
+                    "Zemborzyce"
+                ]
 
-        #         return random.choice([dzielnice])
-        #     def kod_pocztowy():
+                return random.choice(dzielnice)
+            def kod_pocztowy():
+                return random.randint(0, 999)
+            def ulica():
+                street_name = fake_pl.street_prefix_short()
+                street_name += ' '+fake_pl.street_name()
+
+                return street_name
+            def numer_budynku():
+                return random.randint(0, 999)
+            def numer_mieszkania():
+                apartment_number = 0
+                if random.randint(0, 1):
+                    apartment_number = None
+                else:
+                    apartment_number = random.randint(0, 100)
+                
+                return apartment_number
+
+            row_data_to_return = generate_table_row_data(
+                generation_config.uzytkownik.number_of_rows,
+                rejon,
+                kod_pocztowy,
+                ulica,
+                numer_budynku,
+                numer_mieszkania,
+            )
+
 
             
         # case "opis_uzytkownika":
