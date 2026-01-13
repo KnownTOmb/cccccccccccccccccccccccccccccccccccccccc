@@ -15,6 +15,14 @@ tables = {
         "data": []
     },
 
+    "tablica_ogloszeniowa_uzytkownik": {
+        "column": [
+            "uzytkownik_id",
+            "tablica_ogloszeniowa_id"
+        ],
+        "data": []
+    },
+
     "dane_uzytkownika": {
         "column": [
             "uzytkownik_id",
@@ -121,14 +129,6 @@ tables = {
             "rola",
             "tablica_ogloszeniowa_id",
             "uzytkownik_id"
-        ],
-        "data": []
-    },
-
-    "tablica_ogloszeniowa_uzytkownik": {
-        "column": [
-            "uzytkownik_id",
-            "tablica_ogloszeniowa_id"
         ],
         "data": []
     }
