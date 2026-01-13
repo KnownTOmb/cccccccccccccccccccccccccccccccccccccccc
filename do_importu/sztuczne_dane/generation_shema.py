@@ -67,7 +67,9 @@ def generated_table_data(table_name, generate_table_row_data, fill_table_row_wit
                 update_row_with_column_data(
                     0,
                     logins
-                    )
+                )
+            
+            generate_login()
 
         case "tablica_ogloszeniowa_uzytkownik":
             def uzytkownik_id():
@@ -207,7 +209,9 @@ def generated_table_data(table_name, generate_table_row_data, fill_table_row_wit
                 efekt,
             )
             
-
+        # case "adres":
+        #     def rejon():
+        #         return 
             
         # case "opis_uzytkownika":
         #     def plec():

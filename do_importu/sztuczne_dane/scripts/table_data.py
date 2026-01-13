@@ -44,7 +44,7 @@ class methods:
 
             
             if all_values:  # tylko jeśli są jakieś wiersze
-                sql_lines.append(f"ALTER TABLE {table_name} AUTO_INCREMENT = 1;\nDELETE FROM {table_name};\nINSERT INTO {table_name} ({columns_str}) VALUES\n" + ",\n".join(all_values) + ";")
+                sql_lines.append(f"INSERT INTO {table_name} ({columns_str}) VALUES\n" + ",\n".join(all_values) + ";")
             
         with open("../3_generated_data.sql", "w", encoding="utf-8") as f:
             f.write("\n\n".join(sql_lines))
