@@ -1,6 +1,4 @@
-SET FOREIGN_KEY_CHECKS = 0;
-
--- Tue Jan 13 02:25:54 2026
+-- Tue Jan 13 19:58:54 2026
 
 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0;
 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0;
@@ -237,23 +235,23 @@ CREATE TABLE IF NOT EXISTS `smipegs_lublin`.`ogloszenie` (
     ON UPDATE NO ACTION);
 
 -- -----------------------------------------------------
--- Table `smipegs_lublin`.`uprawnienia`
+-- Table `smipegs_lublin`.`uprawnienie`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `smipegs_lublin`.`uprawnienia` (
+CREATE TABLE IF NOT EXISTS `smipegs_lublin`.`uprawnienie` (
   `id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
   `rola` ENUM('zarządzanie użytkownikami', 'kreator postów', 'moderator postów', 'obserwator postów') NOT NULL,
   `tablica_ogloszeniowa_id` SMALLINT UNSIGNED NOT NULL,
   `uzytkownik_id` INT UNSIGNED NOT NULL,
   PRIMARY KEY (`id`, `tablica_ogloszeniowa_id`, `uzytkownik_id`),
   UNIQUE INDEX `id_UNIQUE` (`id`),
-  INDEX `fk_uprawnienia_tablica_ogloszeniowa1_idx` (`tablica_ogloszeniowa_id`),
-  INDEX `fk_uprawnienia_uzytkownik1_idx` (`uzytkownik_id`),
-  CONSTRAINT `fk_uprawnienia_tablica_ogloszeniowa1`
+  INDEX `fk_uprawnienie_tablica_ogloszeniowa1_idx` (`tablica_ogloszeniowa_id`),
+  INDEX `fk_uprawnienie_uzytkownik1_idx` (`uzytkownik_id`),
+  CONSTRAINT `fk_uprawnienie_tablica_ogloszeniowa1`
     FOREIGN KEY (`tablica_ogloszeniowa_id`)
     REFERENCES `smipegs_lublin`.`tablica_ogloszeniowa` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
-  CONSTRAINT `fk_uprawnienia_uzytkownik1`
+  CONSTRAINT `fk_uprawnienie_uzytkownik1`
     FOREIGN KEY (`uzytkownik_id`)
     REFERENCES `smipegs_lublin`.`uzytkownik` (`id`)
     ON DELETE NO ACTION
@@ -281,9 +279,6 @@ CREATE TABLE IF NOT EXISTS `smipegs_lublin`.`tablica_ogloszeniowa_uzytkownik` (
     ON DELETE NO ACTION
     ON UPDATE NO ACTION);
 
-SET SQL_MODE=@OLD_SQL_MODE;
-SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
-SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
 USE `smipegs_lublin`;
 
 DELIMITER $$
@@ -298,9 +293,11 @@ USE `smipegs_lublin`$$
 CREATE TRIGGER po_wstawieniu_do_tablica_ogloszeniowa_uzytkownik
 AFTER INSERT ON tablica_ogloszeniowa_uzytkownik
 FOR EACH ROW 
-INSERT INTO uprawnienia (rola,tablica_ogloszeniowa_id,uzytkownik_id)
+INSERT INTO uprawnienie (rola,tablica_ogloszeniowa_id,uzytkownik_id)
 VALUES ('obserwator postow',NEW.tablica_ogloszeniowa_id,NEW.uzytkownik_id)$$
 
 DELIMITER ;
 
-SET FOREIGN_KEY_CHECKS = 1;
+SET SQL_MODE=@OLD_SQL_MODE;
+SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
+SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
