@@ -213,9 +213,8 @@ Profil główny użytkownika
 Profil rodzinny użytkowanika
 
 # 8. Opracownie i prezentacja zapytan modyfikujacych dane w bazie
+
 > Nie mozemy edytowac struktury bazy danych
-
-
 
 # 9. Opracowanie i prezentacja widoków
 
@@ -292,13 +291,20 @@ wewnątrz dodajemy linie:
 
 # Import bazy danych w graficznym panelu xampp
 
-# 1. Wybieramy z listy pusta baze danych do której chcemy zaimportowac dane
+> nie musimy wybierac nowej pustej bazy danych, skrypt sam utworzy baze o nazwie smipegs_lublin
 
-# 2. Na górnym panelu klikamy w zakladke import wybieramy plik z którego chcemy importować, reszte opcji pozostawiamy ustawionych domyslnie.
+# 1. Na górnym panelu klikamy w zakladke import wybieramy plik do_importu/1_pusta_baza_z_triggerami.sql, odznaczamy foregin key checks a reszte opcji pozostawiamy ustawionych domyslnie.
 
-![](assets/20260112_214222_import.png)
+![](assets/20260113_202828_import1.png)
 
-# 3. Klikamy Import
+# 2. Nastepnie klikamy w nowo utworzona baze danych smipegs_lublin, wchodzimy w zakładke import i importujemy plik do_importu/2_widoki.sql wczesniej odznaczajac foregin key checks.
 
-![](assets/20260112_214214_import_sukces.png)
+![](assets/20260113_204408_import2.png)
 
+# 3. Na koniec do bazy smipegs lublin importujemy plik do_importu/3_generated_data.sql odznaczajac foregin key cheks.
+
+![](assets/20260113_204904_import3.png)
+
+> poprawna struktura danych po imporcie
+
+![](assets/20260113_212348_gotowy_import.png)
