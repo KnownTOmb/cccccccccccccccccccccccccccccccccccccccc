@@ -19,7 +19,7 @@ SELECT ou.pseudonim, COUNT(o.id) AS liczba_postow
 FROM uzytkownik u 
 LEFT JOIN opis_uzytkownika ou ON ou.uzytkownik_id = u.id 
 LEFT JOIN ogloszenie o ON o.autor_id = u.id
-GROUP BY ou.pseudonim 
+GROUP BY ou.pseudonim
 ORDER BY liczba_postow DESC;
 
 
@@ -54,7 +54,7 @@ CREATE VIEW plodnosc_parafii AS
 SELECT p.id, p.nazwa, COUNT(ou.id) AS liczba_wiernych
 FROM parafia p
 JOIN opis_uzytkownika ou ON ou.parafia_id = p.id
-GROUP BY p.id, p.nazwa;
+GROUP BY p.id, p.nazwa
 ORDER BY liczba_wiernych DESC;
 
 
@@ -63,7 +63,7 @@ CREATE VIEW pozycja_modlitwy AS
 SELECT m.id, m.nazwa, COUNT(ou.id) AS liczba_polubien
 FROM modlitwa m
 JOIN opis_uzytkownika ou ON ou.ulubiona_modlitwa_id = m.id
-GROUP BY m.id, m.nazwa;
+GROUP BY m.id, m.nazwa
 ORDER BY liczba_polubien DESC;
 
 
@@ -72,7 +72,7 @@ CREATE VIEW pozycja_rodziny AS
 SELECT r.id, r.nazwa, COUNT(ou.id) AS liczba_czlonkow
 FROM rodzina r
 JOIN opis_uzytkownika ou ON ou.rodzina_id = r.id
-GROUP BY r.id, r.nazwa;
+GROUP BY r.id, r.nazwa
 ORDER BY liczba_czlonkow DESC;
 
 
