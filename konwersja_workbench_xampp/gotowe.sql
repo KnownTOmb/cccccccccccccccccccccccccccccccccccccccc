@@ -1,6 +1,6 @@
 SET FOREIGN_KEY_CHECKS = 0;
 
--- Tue Jan 13 01:28:32 2026
+-- Tue Jan 13 01:51:46 2026
 
 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0;
 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0;
@@ -284,64 +284,8 @@ CREATE TABLE IF NOT EXISTS `smipegs_lublin`.`tablica_ogloszeniowa_uzytkownik` (
 USE `smipegs_lublin` ;
 
 -- -----------------------------------------------------
--- Placeholder table for view `smipegs_lublin`.`wiek`
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `smipegs_lublin`.`wiek` (`dane_uzytkownika_id` INT, `wiek` INT);
-
--- -----------------------------------------------------
--- Placeholder table for view `smipegs_lublin`.`najplodniejsi_kreatorzy_postow`
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `smipegs_lublin`.`najplodniejsi_kreatorzy_postow` (`pseudonim` INT, `liczba_postow` INT);
-
--- -----------------------------------------------------
--- Placeholder table for view `smipegs_lublin`.`rodzina_wzeniona`
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `smipegs_lublin`.`rodzina_wzeniona` (`rodzina_id` INT, `uzytkownik_id` INT);
-
--- -----------------------------------------------------
--- Placeholder table for view `smipegs_lublin`.`liczba_uzytkownikow_i_ogloszen_w_tablicy`
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `smipegs_lublin`.`liczba_uzytkownikow_i_ogloszen_w_tablicy` (`id` INT, `nazwa` INT, `liczba_uzytkownikow` INT, `liczba_postow` INT);
-
--- -----------------------------------------------------
--- Placeholder table for view `smipegs_lublin`.`najplodniejsze_parafie`
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `smipegs_lublin`.`najplodniejsze_parafie` (`id` INT, `nazwa` INT, `liczba_wiernych` INT);
-
--- -----------------------------------------------------
--- Placeholder table for view `smipegs_lublin`.`najplodniejsze_modlitwy`
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `smipegs_lublin`.`najplodniejsze_modlitwy` (`id` INT, `nazwa` INT, `liczba_polubien` INT);
-
--- -----------------------------------------------------
--- Placeholder table for view `smipegs_lublin`.`najplodniejsze_rodziny`
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `smipegs_lublin`.`najplodniejsze_rodziny` (`id` INT, `nazwa` INT, `liczba_czlonkow` INT);
-
--- -----------------------------------------------------
--- Placeholder table for view `smipegs_lublin`.`matuzal`
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `smipegs_lublin`.`matuzal` (`id` INT, `pseudonim` INT, `wiek` INT);
-
--- -----------------------------------------------------
--- Placeholder table for view `smipegs_lublin`.`zmora`
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `smipegs_lublin`.`zmora` (`id` INT, `pseudonim` INT);
-
--- -----------------------------------------------------
--- Placeholder table for view `smipegs_lublin`.`url_obrazka`
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `smipegs_lublin`.`url_obrazka` (`obrazek_id` INT, `url` INT);
-
--- -----------------------------------------------------
--- Placeholder table for view `smipegs_lublin`.`zmarly_uzytkownik`
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `smipegs_lublin`.`zmarly_uzytkownik` (`id` INT, `pseudonim` INT, `data_smierci` INT);
-
--- -----------------------------------------------------
 -- View `smipegs_lublin`.`wiek`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `smipegs_lublin`.`wiek`;
 USE `smipegs_lublin`;
 CREATE  OR REPLACE VIEW wiek AS
 SELECT dane_uzytkownika.id dane_uzytkownika_id, 
@@ -352,22 +296,8 @@ END wiek
 FROM dane_uzytkownika;
 
 -- -----------------------------------------------------
--- View `smipegs_lublin`.`najplodniejsi_kreatorzy_postow`
--- -----------------------------------------------------
-DROP TABLE IF EXISTS `smipegs_lublin`.`najplodniejsi_kreatorzy_postow`;
-USE `smipegs_lublin`;
-CREATE  OR REPLACE VIEW najplodniejsi_kreatorzy_postow AS 
-SELECT ou.pseudonim, 
-COUNT(o.id) AS liczba_postow 
-FROM uzytkownik u 
-JOIN opis_uzytkownika ou ON ou.uzytkownik_id = u.id 
-JOIN ogloszenie o ON o.autor_id = u.id GROUP BY u.id 
-ORDER BY liczba_postow DESC;
-
--- -----------------------------------------------------
 -- View `smipegs_lublin`.`rodzina_wzeniona`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `smipegs_lublin`.`rodzina_wzeniona`;
 USE `smipegs_lublin`;
 CREATE  OR REPLACE VIEW rodzina_wzeniona AS 
 SELECT o.rodzina_id rodzina_id, u.id uzytkownik_id
@@ -380,7 +310,6 @@ WHERE p.typ_relacji IN ('mąż', 'żona');
 -- -----------------------------------------------------
 -- View `smipegs_lublin`.`liczba_uzytkownikow_i_ogloszen_w_tablicy`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `smipegs_lublin`.`liczba_uzytkownikow_i_ogloszen_w_tablicy`;
 USE `smipegs_lublin`;
 CREATE  OR REPLACE VIEW liczba_uzytkownikow_i_ogloszen_w_tablicy AS
 SELECT t.id, t.nazwa, 
@@ -394,7 +323,6 @@ ORDER BY liczba_uzytkownikow DESC;
 -- -----------------------------------------------------
 -- View `smipegs_lublin`.`najplodniejsze_parafie`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `smipegs_lublin`.`najplodniejsze_parafie`;
 USE `smipegs_lublin`;
 CREATE  OR REPLACE VIEW najplodniejsze_parafie AS
 SELECT parafia.id, parafia.nazwa, 
@@ -407,33 +335,30 @@ ORDER BY `parafia`.`id`;
 -- -----------------------------------------------------
 -- View `smipegs_lublin`.`najplodniejsze_modlitwy`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `smipegs_lublin`.`najplodniejsze_modlitwy`;
 USE `smipegs_lublin`;
 CREATE  OR REPLACE VIEW najplodniejsze_modlitwy AS 
 SELECT modlitwa.id, modlitwa.nazwa, 
 COUNT(opis_uzytkownika.id) AS liczba_polubien
 FROM modlitwa
 JOIN opis_uzytkownika ON opis_uzytkownika.ulubiona_modlitwa_id = modlitwa.id
-GROUP BY modlitwa.id  
+GROUP BY modlitwa.id, modlitwa.nazwa 
 ORDER BY `modlitwa`.`id`;
 
 -- -----------------------------------------------------
 -- View `smipegs_lublin`.`najplodniejsze_rodziny`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `smipegs_lublin`.`najplodniejsze_rodziny`;
 USE `smipegs_lublin`;
 CREATE  OR REPLACE VIEW najplodniejsze_rodziny AS
 SELECT rodzina.id, rodzina.nazwa, 
 COUNT(opis_uzytkownika.id) AS liczba_czlonkow
 FROM rodzina
 JOIN opis_uzytkownika ON opis_uzytkownika.rodzina_id = rodzina.id
-GROUP BY rodzina.id  
+GROUP BY rodzina.id, rodzina.nazwa 
 ORDER BY `rodzina`.`id`;
 
 -- -----------------------------------------------------
 -- View `smipegs_lublin`.`matuzal`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `smipegs_lublin`.`matuzal`;
 USE `smipegs_lublin`;
 CREATE  OR REPLACE VIEW matuzal AS
 SELECT uzytkownik.id, opis_uzytkownika.pseudonim, wiek.wiek
@@ -447,7 +372,6 @@ ORDER BY wiek.wiek DESC;
 -- -----------------------------------------------------
 -- View `smipegs_lublin`.`zmora`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `smipegs_lublin`.`zmora`;
 USE `smipegs_lublin`;
 CREATE  OR REPLACE VIEW zmora AS
 SELECT uzytkownik.id, opis_uzytkownika.pseudonim
@@ -458,7 +382,6 @@ WHERE NOT EXISTS (SELECT 1 FROM tablica_ogloszeniowa_uzytkownik WHERE tablica_og
 -- -----------------------------------------------------
 -- View `smipegs_lublin`.`url_obrazka`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `smipegs_lublin`.`url_obrazka`;
 USE `smipegs_lublin`;
 CREATE  OR REPLACE VIEW url_obrazka AS
 SELECT obrazek.id obrazek_id, CONCAT(CONCAT('/img/', obrazek.id), '.jpg') url
@@ -467,7 +390,6 @@ FROM obrazek;
 -- -----------------------------------------------------
 -- View `smipegs_lublin`.`zmarly_uzytkownik`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `smipegs_lublin`.`zmarly_uzytkownik`;
 USE `smipegs_lublin`;
 CREATE  OR REPLACE VIEW zmarly_uzytkownik AS
 SELECT uzytkownik.id, opis_uzytkownika.pseudonim, dane_uzytkownika.data_smierci
