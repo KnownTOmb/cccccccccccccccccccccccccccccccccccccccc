@@ -63,7 +63,7 @@ def generated_table_data(table_name, tables_filled_data, generate_table_row_data
                     regenerate = True
                     while regenerate:
                         current_login = fake.unique.simple_profile()["username"]
-                        regenerate = current_login not in logins
+                        regenerate = current_login in logins
 
                     logins.append(current_login)
 
