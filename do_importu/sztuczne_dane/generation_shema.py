@@ -48,18 +48,26 @@ def generated_table_data(table_name, generate_table_row_data, fill_table_row_wit
             )
         
         case "uzytkownik":
-            def login():
-                return fake.unique.simple_profile()["username"]
             def haslo():
-                fake = Faker()
-                Faker.seed()
                 return fake.password()
 
             row_data_to_return = generate_table_row_data(
                 generation_config.uzytkownik.number_of_rows,
-                login,
+                column_to_replace,
                 haslo
             )
+
+            def generate_login():
+                logins = []
+                for i in range(generation_config.uzytkownik.number_of_rows):
+                    current_login = fake.unique.simple_profile()["username"]
+
+                    logins.append(current_login)
+
+                update_row_with_column_data(
+                    0,
+                    logins
+                    )
 
         case "tablica_ogloszeniowa_uzytkownik":
             def uzytkownik_id():
@@ -187,7 +195,19 @@ def generated_table_data(table_name, generate_table_row_data, fill_table_row_wit
                      name_to_return = fake_pl.last_name_male()[:-1:]+"a"
 
                 return name_to_return
-            "tresc",
+            def tresc():
+                return  fake_pl.text(max_nb_chars=random.randint(5, 2048+1))
+            def efekt():
+                return fake_pl.text(max_nb_chars=random.randint(5, 128+1))
+            
+            row_data_to_return = generate_table_row_data(
+                generation_config.uzytkownik.number_of_rows,
+                nazwa,
+                tresc,
+                efekt,
+            )
+            
+
             
         # case "opis_uzytkownika":
         #     def plec():

@@ -30,7 +30,8 @@ tables = {
             "numer_telefonu",
             "data_urodzenia",
             "data_smierci",
-            "adres_id"
+            "adres_id",
+            "uzytkownik_id"
         ],
         "data": []
     },
