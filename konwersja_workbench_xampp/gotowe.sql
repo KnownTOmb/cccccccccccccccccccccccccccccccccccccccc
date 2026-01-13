@@ -1,6 +1,6 @@
 SET FOREIGN_KEY_CHECKS = 0;
 
--- Tue Jan 13 01:07:45 2026
+-- Tue Jan 13 01:28:32 2026
 
 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0;
 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0;
@@ -360,7 +360,7 @@ CREATE  OR REPLACE VIEW najplodniejsi_kreatorzy_postow AS
 SELECT ou.pseudonim, 
 COUNT(o.id) AS liczba_postow 
 FROM uzytkownik u 
-JOIN opis_uzytkownika ou ON ou.id = u.id 
+JOIN opis_uzytkownika ou ON ou.uzytkownik_id = u.id 
 JOIN ogloszenie o ON o.autor_id = u.id GROUP BY u.id 
 ORDER BY liczba_postow DESC;
 
@@ -438,7 +438,7 @@ USE `smipegs_lublin`;
 CREATE  OR REPLACE VIEW matuzal AS
 SELECT uzytkownik.id, opis_uzytkownika.pseudonim, wiek.wiek
 FROM uzytkownik
-JOIN opis_uzytkownika ON opis_uzytkownika.id = uzytkownik.id
+JOIN opis_uzytkownika ON opis_uzytkownika.uzytkownik_id = uzytkownik.id
 JOIN dane_uzytkownika ON dane_uzytkownika.uzytkownik_id = uzytkownik.id
 JOIN wiek ON wiek.dane_uzytkownika_id = dane_uzytkownika.id
 WHERE wiek.wiek >= 90
@@ -473,7 +473,7 @@ CREATE  OR REPLACE VIEW zmarly_uzytkownik AS
 SELECT uzytkownik.id, opis_uzytkownika.pseudonim, dane_uzytkownika.data_smierci
 FROM uzytkownik
 JOIN opis_uzytkownika ON opis_uzytkownika.uzytkownik_id = uzytkownik.id
-JOIN dane_uzytkownika ON dane_uzytkownika.id = uzytkownik.id
+JOIN dane_uzytkownika ON dane_uzytkownika.uzytkownik_id = uzytkownik.id
 WHERE dane_uzytkownika.data_smierci IS NOT NULL
 ORDER BY dane_uzytkownika.data_smierci;
 USE `smipegs_lublin`;
