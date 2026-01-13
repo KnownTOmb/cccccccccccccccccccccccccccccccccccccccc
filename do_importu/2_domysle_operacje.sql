@@ -55,6 +55,7 @@ SELECT p.id, p.nazwa, COUNT(ou.id) AS liczba_wiernych
 FROM parafia p
 JOIN opis_uzytkownika ou ON ou.parafia_id = p.id
 GROUP BY p.id, p.nazwa;
+ORDER BY liczba_wiernych DESC;
 
 
 DROP VIEW IF EXISTS pozycja_modlitwy;
@@ -63,6 +64,7 @@ SELECT m.id, m.nazwa, COUNT(ou.id) AS liczba_polubien
 FROM modlitwa m
 JOIN opis_uzytkownika ou ON ou.ulubiona_modlitwa_id = m.id
 GROUP BY m.id, m.nazwa;
+ORDER BY liczba_polubien DESC;
 
 
 DROP VIEW IF EXISTS pozycja_rodziny;
@@ -71,6 +73,7 @@ SELECT r.id, r.nazwa, COUNT(ou.id) AS liczba_czlonkow
 FROM rodzina r
 JOIN opis_uzytkownika ou ON ou.rodzina_id = r.id
 GROUP BY r.id, r.nazwa;
+ORDER BY liczba_czlonkow DESC;
 
 
 DROP VIEW IF EXISTS matuzal;
