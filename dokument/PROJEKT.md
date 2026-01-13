@@ -77,6 +77,7 @@ Boolowski typ danych jest reprezentowany przez tinyint(1).
 * data\_urodzenia -     date
 * data\_smierci         date, możliwy NULL
 * adres\_id -           klucz obcy, możliwy NULL
+* użytkownik\_id -      klucz obcy
 
 ### opis_użytkownika
 
