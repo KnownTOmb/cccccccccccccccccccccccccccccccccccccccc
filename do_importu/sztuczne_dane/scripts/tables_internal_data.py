@@ -53,6 +53,17 @@ tables = {
         "data": []
     },
 
+    "adres": {
+        "column": [
+            "rejon",
+            "kod_pocztowy",
+            "ulica",
+            "numer_budynku",
+            "numer_mieszkania"
+        ],
+        "data": []
+    },
+
     "proboszcz": {
         "column": [
             "imie",
