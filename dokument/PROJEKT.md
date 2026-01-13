@@ -56,13 +56,10 @@ Boolowski typ danych jest reprezentowany przez tinyint(1).
 
 ### uzytkownik
 
-* id				 klucz główny, int, autoinkrementacja, unique
+* id				 klucz główny, int
 * login			 varchar(128), unique
-
 > blob wykracza poza nasza widze
-
 * haslo			 varchar(64),
-
 > używać inet6_aton(‘ipv4 lub ipv6’)
 > ip wykracza poza nasza wiedze
 > ip				 varbinary(16), unique
@@ -102,7 +99,6 @@ Boolowski typ danych jest reprezentowany przez tinyint(1).
 
 * id -                  klucz główny, int
 * rejon -               varchar(64)
-
 > Nie trzymamy 20 z przodu, tylko 3 cyfry
 * kod\_pocztowy -       smallint(3), zerofill
 * ulica -               varchar(64)
@@ -137,7 +133,7 @@ Boolowski typ danych jest reprezentowany przez tinyint(1).
 
 * id 			  	klucz główny, smallint(255)
 * nazwa 		  	varchar(256), unique
-* id_proboszcz 	  	klucz obcy
+* proboszcz_id 	  	klucz obcy
 
 ### tablica_ogloszeniowa (board)
 

@@ -53,6 +53,22 @@ tables = {
         "data": []
     },
 
+    "proboszcz": {
+        "column": [
+            "imie",
+            "nazwisko"
+        ],
+        "data": []
+    },
+
+    "parafia": {
+        "column": [
+            "nazwa",
+            "proboszcz_id"
+        ],
+        "data": []
+    },
+
     "opis_uzytkownika": {
         "column": [
             "uzytkownik_id",
@@ -67,39 +83,12 @@ tables = {
         "data": []
     },
 
-    "adres": {
-        "column": [
-            "rejon",
-            "kod_pocztowy",
-            "ulica",
-            "numer_budynku",
-            "numer_mieszkania"
-        ],
-        "data": []
-    },
-
     "pokrewienstwo": {
         "column": [
             "typ_relacji",
             "widzi_dane_osobowe",
             "uzytkownik_id",
             "spokrewiony_uzytkownik_id"
-        ],
-        "data": []
-    },
-
-    "proboszcz": {
-        "column": [
-            "imie",
-            "nazwisko"
-        ],
-        "data": []
-    },
-
-    "parafia": {
-        "column": [
-            "nazwa",
-            "id_proboszcz"
         ],
         "data": []
     },

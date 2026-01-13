@@ -1,6 +1,11 @@
 import generation_shema
 
-def fill_table_with_data(table_name):
+class data_filler_context:
+    def __init__(self):
+        self.already_generated_column_data = {}
+
+default_context = data_filler_context()
+def fill_table_with_data(table_name, context: data_filler_context = default_context):
     def generate_table_row_data(number_of_rows, *current_column_data_generation_methods):
         table_rows_to_return = []
         for i in range(1, number_of_rows+1):
@@ -29,7 +34,13 @@ def fill_table_with_data(table_name):
             )
         return table_rows_to_return
 
-    return generation_shema.generated_table_data(table_name, generate_table_row_data, fill_table_row_with_column_data, lambda: None)
+    return generation_shema.generated_table_data(
+        table_name,
+        generate_table_row_data,
+        fill_table_row_with_column_data,
+        lambda: None,
+        context.already_generated_column_data
+    )
             
 
 
