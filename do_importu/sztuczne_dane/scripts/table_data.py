@@ -35,15 +35,16 @@ class methods:
                         if val is None:
                             values.append("NULL")
                         elif isinstance(val, str):
-                            escaped = val.replace("'", "''")
+                            escaped = val.replace("'", "''").replace('\n', " ")
                             values.append(f"'{escaped}'")
                         else:
                             values.append(str(val))
                     values_str = ", ".join(values)
                     all_values.append(f"({values_str})")
 
+            
             if all_values:  # tylko jeśli są jakieś wiersze
-                sql_lines.append(f"INSERT INTO {table_name} ({columns_str}) VALUES\n" + ",\n".join(all_values) + ";")
-
-        with open("generated_data.sql", "w", encoding="utf-8") as f:
+                sql_lines.append(f"ALTER TABLE {table_name} AUTO_INCREMENT = 1;\nDELETE FROM {table_name};\nINSERT INTO {table_name} ({columns_str}) VALUES\n" + ",\n".join(all_values) + ";")
+            
+        with open("../3_generated_data.sql", "w", encoding="utf-8") as f:
             f.write("\n\n".join(sql_lines))

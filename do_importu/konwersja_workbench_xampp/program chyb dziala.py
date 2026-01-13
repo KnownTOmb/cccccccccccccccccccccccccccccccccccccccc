@@ -43,23 +43,23 @@ def fix_auto_increment_primary_keys(sql: str) -> str:
     return pattern.sub(repl, sql)
 
 
-def ensure_foreign_key_checks(sql: str) -> str:
-    sql = sql.strip()
+# def ensure_foreign_key_checks(sql: str) -> str:
+#     sql = sql.strip()
 
-    if not re.search(r"SET\s+FOREIGN_KEY_CHECKS\s*=\s*0", sql, re.I):
-        sql = "SET FOREIGN_KEY_CHECKS = 0;\n\n" + sql
+#     if not re.search(r"SET\s+FOREIGN_KEY_CHECKS\s*=\s*0", sql, re.I):
+#         sql = "SET FOREIGN_KEY_CHECKS = 0;\n\n" + sql
 
-    if not re.search(r"SET\s+FOREIGN_KEY_CHECKS\s*=\s*1", sql, re.I):
-        sql = sql + "\n\nSET FOREIGN_KEY_CHECKS = 1;"
+#     if not re.search(r"SET\s+FOREIGN_KEY_CHECKS\s*=\s*1", sql, re.I):
+#         sql = sql + "\n\nSET FOREIGN_KEY_CHECKS = 1;"
 
-    return sql
+#     return sql
 
 
 def convert_mysql_to_mariadb(sql: str) -> str:
     sql = remove_mysql_specific_syntax(sql)
     sql = normalize_numeric_types(sql)
     sql = fix_auto_increment_primary_keys(sql)
-    sql = ensure_foreign_key_checks(sql)
+    # sql = ensure_foreign_key_checks(sql)
 
     sql = re.sub(r"\n{3,}", "\n\n", sql)
     return sql.strip() + "\n"
@@ -67,13 +67,13 @@ def convert_mysql_to_mariadb(sql: str) -> str:
 
 def main():
     input_file = Path("test.sql")
-    output_file = Path("gotowe.sql")
+    output_file = Path("../1_pusta_baza_z_triggerami.sql")
 
     sql = input_file.read_text(encoding="utf-8")
     converted = convert_mysql_to_mariadb(sql)
     output_file.write_text(converted, encoding="utf-8")
 
-    print("Konwersja zakonczona: gotowe.sql")
+    print("Konwersja zakończona.")
 
 
 if __name__ == "__main__":

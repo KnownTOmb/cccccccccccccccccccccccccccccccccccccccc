@@ -1,6 +1,4 @@
-## Widoki
 
-```sql
 CREATE VIEW wiek AS
 SELECT dane_uzytkownika.id dane_uzytkownika_id, 
 CASE
@@ -86,4 +84,3 @@ JOIN opis_uzytkownika ON opis_uzytkownika.uzytkownik_id = uzytkownik.id
 JOIN dane_uzytkownika ON dane_uzytkownika.uzytkownik_id = uzytkownik.id
 WHERE dane_uzytkownika.data_smierci IS NOT NULL
 ORDER BY dane_uzytkownika.data_smierci;
-```
