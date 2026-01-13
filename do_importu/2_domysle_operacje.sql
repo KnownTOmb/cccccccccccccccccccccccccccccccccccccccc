@@ -1,3 +1,6 @@
+-- -----------------------------------------------------
+-- Widoki
+-- -----------------------------------------------------
 
 CREATE VIEW wiek AS
 SELECT dane_uzytkownika.id dane_uzytkownika_id, 
@@ -84,3 +87,74 @@ JOIN opis_uzytkownika ON opis_uzytkownika.uzytkownik_id = uzytkownik.id
 JOIN dane_uzytkownika ON dane_uzytkownika.uzytkownik_id = uzytkownik.id
 WHERE dane_uzytkownika.data_smierci IS NOT NULL
 ORDER BY dane_uzytkownika.data_smierci;
+
+-- -----------------------------------------------------
+-- Domysle dane
+-- -----------------------------------------------------
+
+TRUNCATE TABLE tablica_ogloszeniowa_uzytkownik;
+TRUNCATE TABLE uprawnienie;
+TRUNCATE TABLE ogloszenie;
+TRUNCATE TABLE tablica_ogloszeniowa;
+TRUNCATE TABLE obrazek;
+TRUNCATE TABLE pokrewienstwo;
+TRUNCATE TABLE opis_uzytkownika;
+TRUNCATE TABLE dane_uzytkownika;
+TRUNCATE TABLE uzytkownik;
+TRUNCATE TABLE rodzina;
+TRUNCATE TABLE adres;
+TRUNCATE TABLE modlitwa;
+TRUNCATE TABLE parafia;
+TRUNCATE TABLE proboszcz;
+
+
+INSERT INTO tablica_ogloszeniowa (nazwa, opis) VALUES
+('Tablica glówna','Witaj na naszym portalu!');
+
+INSERT INTO rodzina (id,nazwa) VALUES ('1','Nieznana');
+
+INSERT INTO obrazek (id,tekst_alternatywny) VALUES ('1','Default')
+
+-- -----------------------------------------------------
+-- Procedura
+-- -----------------------------------------------------
+
+DELIMITER $$
+
+CREATE PROCEDURE usun_stare_ogloszenia(
+IN ile_lat INT,
+IN do_kiedy DATE
+)
+BEGIN
+DECLARE data_graniczna DATE;
+
+IF (ile_lat IS NOT NULL AND ile_lat > 0)
+AND (do_kiedy IS NOT NULL AND do_kiedy <> '0000-00-00') THEN
+
+-- przerywanie dzialania procedury
+SIGNAL SQLSTATE '45000'
+SET MESSAGE_TEXT = 'Nie można podać obu parametrów jednocześnie';
+
+ELSEIF ile_lat IS NOT NULL AND ile_lat > 0 THEN
+SET data_graniczna = DATE_SUB(CURDATE(), INTERVAL ile_lat YEAR);
+
+ELSEIF do_kiedy IS NOT NULL AND do_kiedy <> '0000-00-00' THEN
+SET data_graniczna = do_kiedy;
+
+ELSE
+SIGNAL SQLSTATE '45000'
+SET MESSAGE_TEXT = 'Nie podano poprawnego parametru';
+END IF;
+
+SELECT *
+FROM ogloszenie
+WHERE data_wstawienia < data_graniczna
+AND (archiwalny IS NULL OR archiwalny = 0);
+
+DELETE FROM ogloszenie
+WHERE data_wstawienia < data_graniczna
+AND (archiwalny IS NULL OR archiwalny = 0);
+
+END$$
+
+DELIMITER ;
