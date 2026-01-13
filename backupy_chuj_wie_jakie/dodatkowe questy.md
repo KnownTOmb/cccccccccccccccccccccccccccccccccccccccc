@@ -5,3 +5,5 @@
 * trigger po usunięciu użytkownika usuwa:
 	* wszystkie uprawnienia
 * wypełnianie nieużywanych id przy dodawaniu ogłoszenia
+
+* problem 3 zdjęć

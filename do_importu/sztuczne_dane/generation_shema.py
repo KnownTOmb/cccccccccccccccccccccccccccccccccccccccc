@@ -5,7 +5,7 @@ import datetime
 import config
 
 generation_config = config.config()
-def generated_table_data(table_name, generate_table_row_data, fill_table_row_with_column_data, column_to_replace):
+def generated_table_data(table_name, generate_table_row_data, fill_table_row_with_column_data, column_to_replace, already_generated_column_data):
     row_data_to_return = []
     def update_row_with_column_data(column_index, column_data):
         nonlocal  row_data_to_return
@@ -15,9 +15,8 @@ def generated_table_data(table_name, generate_table_row_data, fill_table_row_wit
             row_data_to_return
         )
 
-    already_generated_column_data = {}
     def generate_data_for_later_table(later_table_name, later_table_column_index, later_table_column_data):
-        already_generated_column_data[later_table_name] = {}
+        already_generated_column_data.setdefault(later_table_name, {})
         already_generated_column_data[later_table_name][later_table_column_index] = later_table_column_data
         
     def get_already_generated_column_data(later_table_name, later_table_column_index):
@@ -346,11 +345,46 @@ def generated_table_data(table_name, generate_table_row_data, fill_table_row_wit
             generate_nazwa()
             generate_proboszcz_id()
 
-        # case "opis_uzytkownika":
-        #     def plec():
-        #         return get_already_generated_column_data(table_name, 0,)
-        #     def pseudonim():
-        #         return
+        case "opis_uzytkownika":
+            def pseudonim():
+                return fake.simple_profile()["username"]
+            def opis():
+                return fake_pl.text(max_nb_chars=random.randint(5, 1024+1))
+            def parafia_id():
+                return random.randint(1, generation_config.proboszcz.number_of_rows+1)
+            def rodzina_id():
+                return random.randint(1, generation_config.rodzina.number_of_rows+1)
+            def zdjecie_profilowe():
+                return 1
+            def ulubiona_modlitwa_id():
+                return random.randint(1, generation_config.modlitwa.number_of_rows+1)
+            
+            row_data_to_return = generate_table_row_data(
+                generation_config.uzytkownik.number_of_rows,
+                column_to_replace,
+                column_to_replace,
+                pseudonim,
+                opis,
+                parafia_id,
+                rodzina_id,
+                zdjecie_profilowe,
+                ulubiona_modlitwa_id
+            )
+
+            def generate_uzytkownik_id():
+                update_row_with_column_data(
+                    0,
+                    range(0, generation_config.uzytkownik.number_of_rows+1)
+                )
+            def generate_plec():
+                update_row_with_column_data(
+                    1,
+                    get_already_generated_column_data(table_name, 1,)
+                )
+
+            generate_uzytkownik_id()
+            generate_plec()
+            
             
     
     return row_data_to_return
