@@ -261,7 +261,7 @@ def generated_table_data(table_name, generate_table_row_data, fill_table_row_wit
                 relation_types.append(current_relation_type)
                 related_users_id.append(current_related_user_id)
                 
-                relation_types(next_relation_type)
+                relation_types.append(next_relation_type)
                 related_users_id.append(next_related_user_id)
 
             row_data_to_return = generate_table_row_data(
