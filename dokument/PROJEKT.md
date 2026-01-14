@@ -204,6 +204,7 @@ Boolowski typ danych jest reprezentowany przez tinyint(1).
 Wyświetlanie tablicy głownej
 Profil główny użytkownika
 Profil rodzinny użytkowanika
+lidzie z twojej okolicy
 
 # 8. Opracownie i prezentacja zapytan modyfikujacych dane w bazie
 
@@ -213,16 +214,21 @@ Profil rodzinny użytkowanika
 
 > degradacja nieaktywnych kreatorów postów
 ```sql
-SELECT u.uzytkownik_id
-FROM uprawnienie u
-WHERE u.rola = 'kreator postów'
+SELECT 
+u.id AS uzytkownik_id,
+ou.pseudonim,
+pk.liczba_postow AS liczba_postow
+FROM uprawnienie up
+JOIN uzytkownik u ON u.id = up.uzytkownik_id
+JOIN opis_uzytkownika ou ON ou.uzytkownik_id = u.id
+JOIN plodnosc_kreatorow_postow pk ON pk.pseudonim = ou.pseudonim
+WHERE up.rola = 'kreator postów'
 AND NOT EXISTS (
-    SELECT 1
-    FROM ogloszenie o
-    WHERE o.autor_id = u.uzytkownik_id
-      AND o.data_wstawienia >= DATE_SUB(CURDATE(), INTERVAL 2 YEAR)
+SELECT 1
+FROM ogloszenie o
+WHERE o.autor_id = u.id
+AND o.data_wstawienia >= DATE_SUB(CURDATE(), INTERVAL 2 YEAR)
 );
-
 ```
 
 # 
