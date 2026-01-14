@@ -118,21 +118,24 @@ def generated_table_data(table_name, generate_table_row_data, fill_table_row_wit
                 )
             
             def generate_zdjecie_profilowe():
-                profile_pictures = []
+                profile_pictures_id = []
 
                 for row_index in range(0, generation_config.uzytkownik.number_of_rows):
-                    current_profile_picture = None
+                    current_profile_picture_id = None
                     if random.random() <= 0.25:
-                        current_profile_picture = 1
+                        current_profile_picture_id = 1
                     else:
-                        image_alt_texts.append(fake_pl.text(max_nb_chars=random.randint(5, 128+1)))
-                        current_profile_picture = len(image_alt_texts) + 1
+                        if random.random() <= 0.25:
+                            image_alt_texts.append(None)
+                        else:
+                            image_alt_texts.append(fake_pl.text(max_nb_chars=random.randint(5, 128+1)))
+                        current_profile_picture_id = len(image_alt_texts) + 1
                     
-                    profile_pictures.append(current_profile_picture)
+                    profile_pictures_id.append(current_profile_picture_id)
 
                 update_row_with_column_data(
                     0,
-                    profile_pictures
+                    profile_pictures_id
                 )
 
             
@@ -149,34 +152,28 @@ def generated_table_data(table_name, generate_table_row_data, fill_table_row_wit
             generate_obrazek()
 
         case "tablica_ogloszeniowa_uzytkownik":
-            def check_if_user_already_is_in_the_board(user_id, board_id):
-                tablica_ogloszeniowa_uzytkownik_number_of_rows = 0
-                if check_if_already_filled_table_data_exists(table_name):
-                    tablica_ogloszeniowa_uzytkownik_number_of_rows = len(get_already_generated_table(table_name)[0])
-
+            def check_if_user_already_is_in_the_board(user_id, board_id, users_id, boards_id):
                 user_exists_in_board = False
-                for row_index in range(tablica_ogloszeniowa_uzytkownik_number_of_rows):
-                    current_user_id = get_already_generated_table(table_name)[0][row_index]
-                    current_board_id = get_already_generated_table(table_name)[1][row_index]
+                for row_index in range(len(users_id)):
+                    current_user_id = users_id[row_index]
+                    current_board_id = boards_id[row_index]
 
                     user_exists_in_board = user_id == current_user_id and board_id == current_board_id
                     if user_exists_in_board:
-                        break
-                return user_exists_in_board         
-            def check_if_user_is_first_user_in_the_board(user_id, board_id):
-                tablica_ogloszeniowa_uzytkownik_number_of_rows = 0
-                if check_if_already_filled_table_data_exists(table_name):
-                    tablica_ogloszeniowa_uzytkownik_number_of_rows = len(get_already_generated_table(table_name)[0])
-
+                        return True       
+            def check_if_user_is_first_user_in_the_board(user_id, board_id, users_id, boards_id):
                 user_is_first_user_in_the_board = False
-                for row_index in range(tablica_ogloszeniowa_uzytkownik_number_of_rows):
-                    current_user_id = get_already_generated_table(table_name)[0][row_index]
-                    current_board_id = get_already_generated_table(table_name)[1][row_index]
+                for row_index in range(len(users_id)):
+                    current_user_id = users_id[row_index]
+                    current_board_id = boards_id[row_index]
 
+                    another_user_is_first_user_in_the_board = user_id != current_user_id and board_id == current_board_id
+                    if another_user_is_first_user_in_the_board:
+                        return False
+                    
                     user_is_first_user_in_the_board = user_id == current_user_id and board_id == current_board_id
                     if user_is_first_user_in_the_board:
-                        break
-                return user_is_first_user_in_the_board
+                        return True
             
             def uzytkownik_id():
                 return random.randint(1, generation_config.uzytkownik.number_of_rows)
@@ -199,7 +196,6 @@ def generated_table_data(table_name, generate_table_row_data, fill_table_row_wit
             posts = {
                 "autor_id": [],
                 "tablica_ogloszeniowa_id": [],
-                "obrazek_id": []
             }
             for row_index in range(generation_config.tablica_ogloszeniowa_uzytkownik.number_of_rows):
                 current_user_id = None
@@ -208,25 +204,24 @@ def generated_table_data(table_name, generate_table_row_data, fill_table_row_wit
                 while user_exists_in_table:                  
                     current_user_id = uzytkownik_id()
                     current_board_id = tablica_ogloszeniowa_id()
-                    user_exists_in_table = check_if_user_already_is_in_the_board(current_user_id, current_board_id)
+                    user_exists_in_table = check_if_user_already_is_in_the_board(current_user_id, current_board_id, users_id, boards_id)
+
+                users_id.append(current_user_id)
+                boards_id.append(current_board_id)
 
                 current_permission_role = None
-                if check_if_user_is_first_user_in_the_board(current_user_id, current_board_id):
-                    current_permission_role = 'zarządzanie użytkownikam'
+                if check_if_user_is_first_user_in_the_board(current_user_id, current_board_id, users_id, boards_id):
+                    current_permission_role = 'zarządzanie użytkownikami'
                 elif random.random() <= 0.05:
                     current_permission_role = 'moderator postów'
                 elif random.random() <= 0.25:
                     current_permission_role ='kreator postów'
-                    for row_index in range(random.randint(0, 6)):
+                    for posts_row_index in range(random.randint(1, 6)):
                         posts["autor_id"].append(current_user_id)
                         posts["tablica_ogloszeniowa_id"].append(current_board_id)
-                        posts["tablica_ogloszeniowa_id"].append(None)
 
                 else:
                     current_permission_role = 'obserwator postów'
-
-                users_id.append(current_user_id)
-                boards_id.append(current_board_id)
             
                 permissions["rola"].append(current_permission_role)
                 permissions["tablica_ogloszeniowa_id"].append(current_board_id)
@@ -242,6 +237,7 @@ def generated_table_data(table_name, generate_table_row_data, fill_table_row_wit
                     1,
                     boards_id
                 )
+            
             def generate_uprawnienie(permissions):
                 generate_data_for_later_table(
                     'uprawnienie',
@@ -258,11 +254,23 @@ def generated_table_data(table_name, generate_table_row_data, fill_table_row_wit
                     2,
                     permissions['uzytkownik_id']
                 )
+            def generate_ogloszenie(posts):
+                generate_data_for_later_table(
+                    'ogloszenie',
+                    0,
+                    posts['autor_id']
+                )
+                generate_data_for_later_table(
+                    'ogloszenie',
+                    1,
+                    posts['tablica_ogloszeniowa_id']
+                )
 
             generate_uzytkownik_id(users_id)
             generate_tablica_ogloszeniowa_id(boards_id)
 
             generate_uprawnienie(permissions)
+            generate_ogloszenie(posts)
                 
         case "dane_uzytkownika":
             def nazwisko():
@@ -561,7 +569,7 @@ def generated_table_data(table_name, generate_table_row_data, fill_table_row_wit
             def data_wstawienia():
                 return fake_pl.date_between(
                     start_date='-10y',
-                    end_date='today'
+
                 ).strftime('%Y-%m-%d')
             def tresc():
                 return fake_pl.text(
@@ -571,7 +579,7 @@ def generated_table_data(table_name, generate_table_row_data, fill_table_row_wit
                 return 1 if random.random() <= 0.1 else 0
 
             row_data_to_return = generate_table_row_data(
-                len(get_already_generated_table(table_name)[3]),
+                len(get_already_generated_table(table_name)[0]),
                 tytul,
                 data_wstawienia,
                 tresc,
@@ -581,31 +589,50 @@ def generated_table_data(table_name, generate_table_row_data, fill_table_row_wit
                 archiwalny
             )
 
+            image_alt_texts = get_already_generated_column_data('obrazek', 0)
+
             def generate_autor_id():
                 update_row_with_column_data(
                     3,
                     get_already_generated_column_data(
-                        "uzytkownik",
+                        table_name,
                         0
                     )
                 )
-
             def generate_tablica_ogloszeniowa_id():
                 update_row_with_column_data(
                     4,
                     get_already_generated_column_data(
-                        "tablica_ogloszeniowa",
-                        0
+                        table_name,
+                        1
                     )
                 )
-
             def generate_obrazek_id():
+                images_id = []
+
+                for row_index in range(0, generation_config.uzytkownik.number_of_rows):
+                    current_image_id = None
+                    if random.random() <= 0.25:
+                        current_profile_picture_id = 1
+                    else:
+                        if random.random() <= 0.25:
+                            image_alt_texts.append(None)
+                        else:
+                            image_alt_texts.append(fake_pl.text(max_nb_chars=random.randint(5, 128+1)))
+                        current_image_id = len(image_alt_texts) + 1
+                    
+                    images_id.append(current_image_id)
+
                 update_row_with_column_data(
                     5,
-                    get_already_generated_column_data(
-                        "obrazek",
-                        0
-                    )
+                    images_id
+                )
+
+            def generate_obrazek():
+                generate_data_for_later_table(
+                    'obrazek',
+                    0,
+                    image_alt_texts
                 )
 
             generate_autor_id()
