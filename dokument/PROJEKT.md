@@ -56,77 +56,92 @@ Boolowski typ danych jest reprezentowany przez tinyint(1).
 
 ### uzytkownik
 
-* id				 klucz główny, int
-* login			         varchar(128), unique
+
+| Atrybut | Typ          | Ograniczenia / opis |
+| --------- | -------------- | --------------------- |
+| id      | int          | klucz główny      |
+| login   | varchar(128) | unique              |
+| haslo   | varchar(64)  |                     |
 
 > blob wykracza poza nasza widze
-
-* haslo			         varchar(64),
-
 > używać inet6_aton(‘ipv4 lub ipv6’)
 > ip wykracza poza nasza wiedze
-> ip				  varbinary(16), unique
+> ip varbinary(16), unique
 
 ![](assets/20260114_094047_uzytkowik.png)
 
 ### dane_uzytkownika
 
-* id -                             klucz główny, int
-* uzytkownik id -                  klucz obcy
-* imie -                           varchar(64)
-* nazwisko -                       varchar(64)
-* numer_telefonu                   varchar(16), możliwy NULL
-* data\_urodzenia -                 date
-* data\_smierci                     date, możliwy NULL
-* adres\_id -                       klucz obcy, możliwy NULL
-* użytkownik\_id -                  klucz obcy
+
+| Atrybut        | Typ         | Ograniczenia / opis       |
+| ---------------- | ------------- | --------------------------- |
+| id             | int         | klucz główny            |
+| uzytkownik id  |             | klucz obcy                |
+| imie           | varchar(64) |                           |
+| nazwisko       | varchar(64) |                           |
+| numer_telefonu | varchar(16) | możliwy NULL             |
+| data_urodzenia | date        |                           |
+| data_smierci   | date        | możliwy NULL             |
+| adres_id       |             | klucz obcy, możliwy NULL |
+| użytkownik_id |             | klucz obcy                |
 
 ![](assets/20260114_094101_dane_uzytkownika.png)
 
 ### opis_użytkownika
 
-* id				 klucz główny, int
-* uzytkownik id -       klucz obcy
-* plec -                char(1), możliwy NULL
-* pseudonim -           varchar(64), możliwy NULL
-* opis			 varchar(1024), możliwy NULL
-* parafia\_id -         klucz obcy, możliwy NULL
-* rodzina\_id -         klucz obcy, DEFAULT '1'
-* zdjecie\_profilowe\_id	 klucz obcy, DEFAULT '1'
-* ulubiona\modlitwa\_id -   klucz obcy, możliwy NULL
+
+| Atrybut              | Typ           | Ograniczenia / opis       |
+| ---------------------- | --------------- | --------------------------- |
+| id                   | int           | klucz główny            |
+| uzytkownik id        |               | klucz obcy                |
+| plec                 | char(1)       | możliwy NULL             |
+| pseudonim            | varchar(64)   | możliwy NULL             |
+| opis                 | varchar(1024) | możliwy NULL             |
+| parafia_id           |               | klucz obcy, możliwy NULL |
+| rodzina_id           |               | klucz obcy, DEFAULT '1'   |
+| zdjecie_profilowe_id |               | klucz obcy, DEFAULT '1'   |
+| ulubiona\modlitwa_id |               | klucz obcy, możliwy NULL |
 
 ![](assets/20260114_094113_opis_uzytkownika.png)
 
 ### modlitwa
 
-* id -                  klucz główny, smallint(255)
-* nazwa -               varchar(128), możliwy NULL
-* tresc -               varchar(2048)
-* efekt -               varchar(128), możliwy NULL
+
+| Atrybut | Typ           | Ograniczenia / opis |
+| --------- | --------------- | --------------------- |
+| id      | smallint(255) | klucz główny      |
+| nazwa   | varchar(128)  | możliwy NULL       |
+| tresc   | varchar(2048) |                     |
+| efekt   | varchar(128)  | możliwy NULL       |
 
 ![](assets/20260114_094125_modlitwa.png)
 
 ### adres
 
-* id -                  klucz główny, int
-* rejon -               varchar(64)
 
-> Nie trzymamy 20 z przodu, tylko 3 cyfry
+| Atrybut          | Typ            | Ograniczenia / opis |
+| ------------------ | ---------------- | --------------------- |
+| id               | int            | klucz główny      |
+| rejon            | varchar(64)    |                     |
+| kod_pocztowy     | smallint(3)    | zerofill            |
+| ulica            | varchar(64)    |                     |
+| numer_budynku    | small int(255) |                     |
+| numer_mieszkania | small int(255) | możliwy NULL       |
 
-* kod\_pocztowy -       smallint(3), zerofill
-* ulica -               varchar(64)
-* numer\_budynku -      small int(255)
-* numer\_mieszkania -   small int(255), możliwy NULL
+> nie rzymamy 20 z przodu tylko same liczby
 
 ![](assets/20260114_094136_adres.png)
 
 ### rodzina
 
-> id == 0 to rodzina “Nieznana”
 
-* id 				 klucz główny, int
-* nazwa			 varchar(128)
-* opis			 varchar(1024), możliwy NULL
+| Atrybut | Typ           | Ograniczenia / opis |
+| --------- | --------------- | --------------------- |
+| id      | int           | klucz główny      |
+| nazwa   | varchar(128)  |                     |
+| opis    | varchar(1024) | możliwy NULL       |
+
+> id == 0 to rodzina "Nieznana"
 
 ![](assets/20260114_094149_rodzina.png)
 
@@ -134,27 +149,36 @@ Boolowski typ danych jest reprezentowany przez tinyint(1).
 
 > Użytkownik zgłasza swoją relacje z innym użytkownikiem, relacje nie są symetryczne ponieważ drugi użytkownik nie musi ją uznawać, co nie jest problemem gdyż są one czysto informacyjne.
 
-* id -                  klucz główny, int
-* typ\_relacji -         enum('mama', 'ojciec', 'córka', 'syn', 'siostra', 'brat', 'ciotka', 'wujek', 'siostrzenica', 'bratanica', 'siostrzeniec', 'bratanek', 'kuzyn', 'kuzynka', 'babcia', 'dziadek', 'wnuczka', 'wnuk', 'ojczym', 'macocha', 'pasierb', 'pasierbica', 'szwagier', 'szwagierka', 'teść', 'teściowa', 'zięć', 'synowa', 'mąż', 'żona'),
-* widzi_dane_osobowe -	 bool
-* uzytkownik\_id -           klucz obcy
-* spokrewiony\_uzytkownik\_id klucz obcy
+
+| Atrybut                   | Typ                                                                                                                                                                                                                                                                                                                                     | Ograniczenia / opis |
+| --------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------- |
+| id                        | int                                                                                                                                                                                                                                                                                                                                     | klucz główny      |
+| typ_relacji               | enum('mama', 'ojciec', 'córka', 'syn', 'siostra', 'brat', 'ciotka', 'wujek', 'siostrzenica', 'bratanica', 'siostrzeniec', 'bratanek', 'kuzyn', 'kuzynka', 'babcia', 'dziadek', 'wnuczka', 'wnuk', 'ojczym', 'macocha', 'pasierb', 'pasierbica', 'szwagier', 'szwagierka', 'teść', 'teściowa', 'zięć', 'synowa', 'mąż', 'żona') |                     |
+| widzi_dane_osobowe        | bool                                                                                                                                                                                                                                                                                                                                    |                     |
+| uzytkownik_id             |                                                                                                                                                                                                                                                                                                                                         | klucz obcy          |
+| spokrewiony_uzytkownik_id |                                                                                                                                                                                                                                                                                                                                         | klucz obcy          |
 
 ![](assets/20260114_094159_pokrewienstwo.png)
 
 ### proboszcz
 
-* id		klucz główny, tinyint(255)
-* imie			varchar(64)
-* nazwisko			varchar(64)
+
+| Atrybut  | Typ          | Ograniczenia / opis |
+| ---------- | -------------- | --------------------- |
+| id       | tinyint(255) | klucz główny      |
+| imie     | varchar(64)  |                     |
+| nazwisko | varchar(64)  |                     |
 
 ![](assets/20260114_094218_proboszcz.png)
 
 ### parafia
 
-* id 			klucz główny, smallint(255)
-* nazwa 		  	varchar(256), unique
-* proboszcz_id 	  	klucz obcy
+
+| Atrybut      | Typ           | Ograniczenia / opis |
+| -------------- | --------------- | --------------------- |
+| id           | smallint(255) | klucz główny      |
+| nazwa        | varchar(256)  | unique              |
+| proboszcz_id |               | klucz obcy          |
 
 ![](assets/20260114_094230_parafia.png)
 
@@ -163,22 +187,28 @@ Boolowski typ danych jest reprezentowany przez tinyint(1).
 > id == 1 to tablica glowna, kazdy uzytkownik jest tam automatycznie dodawany(trigger)
 > jeżeli istnieje użytkownik o tym samym adresie ip co nowy użytkownik i ten stary użytkownik nie jest w tablicy głównej (został z niej zbanowany), to nowy użytkownik nie jest przypsiwy
 
-* id 			klucz główny, smallint(255),
-* nazwa			varchar(256)
-* opis			varchar(2048), możliwy NULL
+
+| Atrybut | Typ           | Ograniczenia / opis |
+| --------- | --------------- | --------------------- |
+| id      | smallint(255) | klucz główny      |
+| nazwa   | varchar(256)  |                     |
+| opis    | varchar(2048) | możliwy NULL       |
 
 ![](assets/20260114_094243_tablica_ogloszeniowa.png)
 
 ### ogloszenie
 
-* id     			klucz główny, int
-* tytul 			varchar(128)
-* data_wstawienia		date
-* tresc			varchar(512)
-* autor_id (emeryt_id)	klucz obcy
-* tablica_ogloszeniowa_id klucz obcy
-* obrazek_id 		klucz obcy, możliwy NULL
-* archiwalny 		bool
+
+| Atrybut                 | Typ          | Ograniczenia / opis       |
+| ------------------------- | -------------- | --------------------------- |
+| id                      | int          | klucz główny            |
+| tytul                   | varchar(128) |                           |
+| data_wstawienia         | date         |                           |
+| tresc                   | varchar(512) |                           |
+| autor_id (emeryt_id)    |              | klucz obcy                |
+| tablica_ogloszeniowa_id |              | klucz obcy                |
+| obrazek_id              |              | klucz obcy, możliwy NULL |
+| archiwalny              | bool         |                           |
 
 ![](assets/20260114_094259_ogloszenie.png)
 
@@ -186,48 +216,62 @@ Boolowski typ danych jest reprezentowany przez tinyint(1).
 
 > obrazek o id 1 to domyślne zdjęcie profilowe użytkownika
 
-* id 				klucz glówny, int
-* tekst_alternatywny	varchar(128), możliwy NULL
+
+| Atrybut            | Typ          | Ograniczenia / opis |
+| -------------------- | -------------- | --------------------- |
+| id                 | int          | klucz glówny       |
+| tekst_alternatywny | varchar(128) | możliwy NULL       |
 
 ![](assets/20260114_094310_obrazek.png)
 
 ### uprawnienie
 
-* id				klucz glówny, int
-* rola 			    enum('zarządzanie użytkownikami', 'kreator postów', 'moderator postów', 'obserwator postów')
-* tablica_ogloszeniowa_id klucz obcy
-* uzytkownik_id		klucz obcy
+
+| Atrybut                 | Typ       | Ograniczenia / opis |
+| ------------------------- | ----------- | --------------------- |
+| id                      | int       | klucz glówny       |
+| rola                    | enum(...) |                     |
+| tablica_ogloszeniowa_id |           | klucz obcy          |
+| uzytkownik_id           |           | klucz obcy          |
 
 ![](assets/20260114_094326_uprawnienie.png)
 
 ### tablica_ogloszeniowa_uzytkownik
 
-* id				klucz glówny, int
-* uzytkownik_id		klucz obcy
-* tablica_ogloszeniowa_id klucz obcy
 
+| Atrybut                 | Typ | Ograniczenia / opis |
+| ------------------------- | ----- | --------------------- |
+| id                      | int | klucz glówny       |
+| uzytkownik_id           |     | klucz obcy          |
+| tablica_ogloszeniowa_id |     | klucz obcy          |
 
 ![](assets/20260114_094341_tablica_ogloszeniowa_uzytkownik.png)
 
 ## Relacje
 
-(I) - relacja identyfikująca.
-(NI) - relacja nie-identyfikująca.
+**(I)** – relacja identyfikująca
+**(NI)** – relacja nie-identyfikująca
 
-* uzytkownik	   -[1:1](NI)-	dane_uzytkownika
-* opis uzytkownika  -[1:1](NI)-   uzytkownik
-* modlitwa 		   -[1:N](NI)-  (ulubiona_modlitwa_id)opis użytkownika
-* parafia 		   -[1:N](NI)-	opis_uzytkownika
-* parafia 		   -[1:1](I)-	proboszcz
-* adres 		   -[1:1](NI)-	dane_uzytkownika
-* rodzina		   -[1:N](I)- opis_uztkownika
-* uzytkownik 	-[1:N](I)- pokrewienstwo(tabela pośrednia) 	-[N:1](I)- spokrewiony\_uzytkownik\_id - uzytkownik
-* tablica_ogloszeniowa	-[1:N](I) - tablica_ogloszeniowa_uzytkownik -[N:1](I) -	uzytkownik
-* ogłoszenie		-[N:1](I)-	tablica
-* ogłoszenie		-[N:1](I)-autor_id- uzytkownik
-* tablica_ogloszeniowa	-[1:N](I)- uprawnienie(tabela pośrednia)	-[N:1](I)- uzytkownik
-* obrazek		-zdjecie\_profilowe\_id-[1:1](NI)-	opis uzytkownika
-* obrazek			-[1:1](NI)-	ogloszenie
+
+| Encja A                         | Relacja  | Encja B                         | Opis                      |
+| --------------------------------- | :--------: | --------------------------------- | --------------------------- |
+| uzytkownik                      | 1:1 (NI) | dane_uzytkownika                |                           |
+| opis_uzytkownika                | 1:1 (NI) | uzytkownik                      |                           |
+| modlitwa                        | 1:N (NI) | opis_uzytkownika                | ulubiona_modlitwa_id      |
+| parafia                         | 1:N (NI) | opis_uzytkownika                |                           |
+| parafia                         | 1:1 (I)  | proboszcz                       |                           |
+| adres                           | 1:1 (NI) | dane_uzytkownika                |                           |
+| rodzina                         | 1:N (I)  | opis_uzytkownika                |                           |
+| uzytkownik                      | 1:N (I)  | pokrewienstwo                   | tabela pośrednia         |
+| pokrewienstwo                   | N:1 (I)  | uzytkownik                      | spokrewiony_uzytkownik_id |
+| tablica_ogloszeniowa            | 1:N (I)  | tablica_ogloszeniowa_uzytkownik |                           |
+| tablica_ogloszeniowa_uzytkownik | N:1 (I)  | uzytkownik                      |                           |
+| ogloszenie                      | N:1 (I)  | tablica                         |                           |
+| ogloszenie                      | N:1 (I)  | uzytkownik                      | autor_id                  |
+| tablica_ogloszeniowa            | 1:N (I)  | uprawnienie                     | tabela pośrednia         |
+| uprawnienie                     | N:1 (I)  | uzytkownik                      |                           |
+| obrazek                         | 1:1 (NI) | opis_uzytkownika                | zdjecie_profilowe_id      |
+| obrazek                         | 1:1 (NI) | ogloszenie                      |                           |
 
 # 5. Diagram ERD 					    ඞ
 
@@ -244,7 +288,9 @@ SELECT * FROM `ogloszenie` WHERE tablica_ogloszeniowa_id = 1;
 Profil główny użytkownika
 
 Profil rodzinny użytkowanika
+
 > Procentowy podzial na płci
+
 ```sql
 SELECT ou.plec, ROUND(COUNT(*) * 100.0 / SUM(COUNT(*)) OVER (), 0) AS procent
 FROM opis_uzytkownika ou
@@ -252,6 +298,7 @@ GROUP BY ou.plec;
 ```
 
 > Ludzie z twojej okolicy
+
 ```sql
 SELECT u.id AS uzytkownik_id,ou.pseudonim,a.rejon
 FROM uzytkownik u
