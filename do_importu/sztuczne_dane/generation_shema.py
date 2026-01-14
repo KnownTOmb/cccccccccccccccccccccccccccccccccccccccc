@@ -243,8 +243,7 @@ def generated_table_data(table_name, generate_table_row_data, fill_table_row_wit
             relation_types = []
             related_users_id = []
 
-            users_id = range(1, generation_config.uzytkownik.number_of_rows)
-            print("cos", users_id)
+            users_id = list(range(1, generation_config.uzytkownik.number_of_rows))
             random.shuffle(users_id)
 
             for current_every_other_user_id_row_index in range(0, generation_config.uzytkownik.number_of_rows-1, 2):
