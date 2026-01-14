@@ -254,8 +254,8 @@ def generated_table_data(table_name, generate_table_row_data, fill_table_row_wit
                 next_user_id = current_related_user_id
                 next_related_user_id = current_every_other_user_id_row_index
                 next_relation_type = get_reflection_of_relation_type(
-                    current_relation_type,
-                    get_user_gender(next_user_id)
+                    get_user_gender(next_user_id),
+                    current_relation_type
                 )
 
                 relation_types.append(current_relation_type)
