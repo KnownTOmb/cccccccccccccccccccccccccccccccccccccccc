@@ -165,7 +165,7 @@ Boolowski typ danych jest reprezentowany przez tinyint(1).
 ### uprawnienie
 
 * id				klucz glówny, int
-* rola 			enum('zarządzanie postami i użytkownikami', 'kreator postów', 'moderator postów', 'obserwator postów')
+* rola 			    enum('zarządzanie użytkownikami', 'kreator postów', 'moderator postów', 'obserwator postów')
 * tablica_ogloszeniowa_id klucz obcy
 * uzytkownik_id		klucz obcy
 
