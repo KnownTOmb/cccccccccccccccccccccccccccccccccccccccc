@@ -7,3 +7,4 @@
 * [ ] problem 3 zdjęć
 * [ ] porawic widoki w diagram erd
 * [ ] dodać do widzi dane w pokrewienstwo default na 0
+* [ ] uga buga diagram zdj spokre
