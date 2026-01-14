@@ -151,6 +151,147 @@ def generated_table_data(table_name, generate_table_row_data, fill_table_row_wit
             generate_zdjecie_profilowe()
             generate_obrazek()
 
+        case "pokrewienstwo":
+            def get_user_gender(user_id):
+                user_gender = get_already_generated_column_data(
+                    "opis_uzytkownika",
+                    1
+                )[user_id]
+
+                return user_gender
+            def generate_user_relation_type(user_id):
+                possible_relation_types = {
+                    "M": [
+                        "ojciec",
+                        "syn",
+                        "brat",
+                        "wujek",
+                        "siostrzeniec",
+                        "bratanek",
+                        "kuzyn",
+                        "dziadek",
+                        "wnuk",
+                        "ojczym",
+                        "pasierb",
+                        "szwagier",
+                        "teść",
+                        "zięć",
+                        "mąż",
+                    ],
+                    "F": [
+                        "mama",
+                        "córka",
+                        "siostra",
+                        "ciotka",
+                        "siostrzenica",
+                        "bratanica",
+                        "kuzynka",
+                        "babcia",
+                        "wnuczka",
+                        "macocha",
+                        "pasierbica",
+                        "szwagierka",
+                        "teściowa",
+                        "synowa",
+                        "żona"
+                    ]
+                }
+
+                number_of_posible_relation_types = {
+                    "M": len(possible_relation_types["M"]),
+                    "M": len(possible_relation_types["F"])
+                }
+
+                user_gender = get_user_gender(user_id)
+                return possible_relation_types[user_gender][random.randint(0, number_of_posible_relation_types[user_gender])]
+            def get_reflection_of_relation_type(unreflected_relation_type, gender_of_reflected_relation_type):
+                reflection_of_relation_type = {
+                    "mama":        {"M": "syn",         "F": "córka"},
+                    "ojciec":      {"M": "syn",         "F": "córka"},
+                    "córka":       {"M": "ojciec",      "F": "matka"},
+                    "syn":         {"M": "ojciec",      "F": "matka"},
+                    "siostra":     {"M": "brat",        "F": "siostra"},
+                    "brat":        {"M": "brat",        "F": "siostra"},
+                    "ciotka":      {"M": "siostrzeniec","F": "siostrzenica"},
+                    "wujek":       {"M": "bratanek",    "F": "bratanica"},
+                    "siostrzenica":{"M": "wujek",       "F": "ciotka"},
+                    "bratanica":   {"M": "wujek",       "F": "ciotka"},
+                    "siostrzeniec":{"M": "wujek",       "F": "ciotka"},
+                    "bratanek":    {"M": "wujek",       "F": "ciotka"},
+                    "kuzyn":       {"M": "kuzyn",       "F": "kuzynka"},
+                    "kuzynka":     {"M": "kuzyn",       "F": "kuzynka"},
+                    "babcia":      {"M": "wnuk",        "F": "wnuczka"},
+                    "dziadek":     {"M": "wnuk",        "F": "wnuczka"},
+                    "wnuczka":     {"M": "dziadek",     "F": "babcia"},
+                    "wnuk":        {"M": "dziadek",     "F": "babcia"},
+                    "ojczym":      {"M": "pasierb",     "F": "pasierbica"},
+                    "macocha":     {"M": "pasierb",     "F": "pasierbica"},
+                    "pasierb":     {"M": "ojczym",      "F": "macocha"},
+                    "pasierbica":  {"M": "ojczym",      "F": "macocha"},
+                    "szwagier":    {"M": "szwagier",    "F": "szwagierka"},
+                    "szwagierka":  {"M": "szwagier",    "F": "szwagierka"},
+                    "teść":        {"M": "zięć",        "F": "synowa"},
+                    "teściowa":    {"M": "zięć",        "F": "synowa"},
+                    "zięć":        {"M": "teść",        "F": "teściowa"},
+                    "synowa":      {"M": "teść",        "F": "teściowa"},
+                    "mąż":         {"M": "mąż",         "F": "żona"},
+                    "żona":        {"M": "mąż",         "F": "żona"}
+                }
+
+                return reflection_of_relation_type[unreflected_relation_type][gender_of_reflected_relation_type]
+
+            relation_types = []
+            related_users_id = []
+
+            users_id = range(1, generation_config.uzytkownik.number_of_rows)
+            random.shuffle(users_id)
+
+            for current_every_other_user_id_row_index in range(0, generation_config.uzytkownik.number_of_rows-1, 2):
+                current_user = current_every_other_user_id_row_index
+                current_relation_type = generate_user_relation_type(current_user)
+                current_related_user_id = users_id[current_every_other_user_id_row_index+1]
+
+                next_user_id = current_related_user_id
+                next_related_user_id = current_every_other_user_id_row_index
+                next_relation_type = get_reflection_of_relation_type(
+                    current_relation_type,
+                    get_user_gender(next_user_id)
+                )
+
+                relation_types(current_relation_type)
+                related_users_id.append(current_related_user_id)
+                
+                relation_types(next_relation_type)
+                related_users_id.append(next_related_user_id)
+
+            row_data_to_return = generate_table_row_data(
+                column_to_replace,
+                column_to_replace,
+                column_to_replace
+            )
+
+            def generate_relation_type():
+                update_row_with_column_data(
+                    0,
+                    relation_types
+                )
+            def generate_user_id():
+                update_row_with_column_data(
+                    0,
+                    users_id
+                )
+            def generate_related_user_id():
+                update_row_with_column_data(
+                    0,
+                    related_users_id
+                )
+
+            generate_related_user_id()
+            generate_user_id()
+            generate_related_user_id()
+
+
+        
         case "tablica_ogloszeniowa_uzytkownik":
             def check_if_user_already_is_in_the_board(user_id, board_id, users_id, boards_id):
                 user_exists_in_board = False
@@ -639,7 +780,6 @@ def generated_table_data(table_name, generate_table_row_data, fill_table_row_wit
             generate_tablica_ogloszeniowa_id()
             generate_obrazek_id()
 
-
         case "obrazek":
             row_data_to_return = generate_table_row_data(
                 len(get_already_generated_table(table_name)[0]),
@@ -653,33 +793,5 @@ def generated_table_data(table_name, generate_table_row_data, fill_table_row_wit
                 )
 
             generate_alt_text()
-
-        case "uprawnienie":
-            row_data_to_return = generate_table_row_data(
-                len(get_already_generated_table(table_name)[0]),
-                column_to_replace,
-                column_to_replace,
-                column_to_replace
-            )
-
-            def generate_rola():
-                update_row_with_column_data(
-                    0,
-                    get_already_generated_column_data(table_name, 0)
-                )
-            def generate_tablica_ogloszeniowa_id():
-                update_row_with_column_data(
-                    1,
-                    get_already_generated_column_data(table_name, 1)
-                )
-            def generate_uzytkownik_id():
-                update_row_with_column_data(
-                    2,
-                    get_already_generated_column_data(table_name, 2)
-                )
-
-            generate_rola()
-            generate_tablica_ogloszeniowa_id()
-            generate_uzytkownik_id()
 
     return row_data_to_return
