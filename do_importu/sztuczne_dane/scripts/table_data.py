@@ -9,7 +9,7 @@ class methods:
     def fill(self):
         for table_name in self.table_names:
             self.tables_filled_data[table_name]["data"].append(
-                data_filler.fill_table_with_data(table_name, self.tables_filled_data)
+                data_filler.fill_table_with_data(table_name)
             )
     
     def generate(self):

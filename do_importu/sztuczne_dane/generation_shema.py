@@ -5,7 +5,7 @@ import datetime
 import config
 
 generation_config = config.config()
-def generated_table_data(table_name, tables_filled_data, generate_table_row_data, fill_table_row_with_column_data, column_to_replace, already_generated_column_data):
+def generated_table_data(table_name, generate_table_row_data, fill_table_row_with_column_data, column_to_replace, already_generated_column_data):
     row_data_to_return = []
     def update_row_with_column_data(column_index, column_data):
         nonlocal  row_data_to_return
@@ -21,6 +21,12 @@ def generated_table_data(table_name, tables_filled_data, generate_table_row_data
         
     def get_already_generated_column_data(later_table_name, later_table_column_index):
         return already_generated_column_data[later_table_name][later_table_column_index]
+    
+    def check_if_already_filled_table_data_exists(table_name):
+        return table_name in already_generated_column_data
+    
+    def get_already_generated_table(table_name):
+        return already_generated_column_data[table_name]
         
 
     fake = Faker()
@@ -74,18 +80,189 @@ def generated_table_data(table_name, tables_filled_data, generate_table_row_data
             
             generate_login()
 
+        case "opis_uzytkownika":
+            def pseudonim():
+                return fake.simple_profile()["username"]
+            def opis():
+                return fake_pl.text(max_nb_chars=random.randint(5, 1024+1))
+            def parafia_id():
+                return random.randint(1, generation_config.proboszcz.number_of_rows+1)
+            def rodzina_id():
+                return random.randint(1, generation_config.rodzina.number_of_rows+1)
+            def ulubiona_modlitwa_id():
+                return random.randint(1, generation_config.modlitwa.number_of_rows+1)
+            
+            row_data_to_return = generate_table_row_data(
+                generation_config.uzytkownik.number_of_rows,
+                column_to_replace,
+                column_to_replace,
+                pseudonim,
+                opis,
+                parafia_id,
+                rodzina_id,
+                column_to_replace,
+                ulubiona_modlitwa_id
+            )
+
+            image_alt_texts = []
+
+            def generate_uzytkownik_id():
+                update_row_with_column_data(
+                    0,
+                    range(0, generation_config.uzytkownik.number_of_rows+1)
+                )
+            def generate_plec():
+                update_row_with_column_data(
+                    1,
+                    get_already_generated_column_data(table_name, 1,)
+                )
+            
+            def generate_zdjecie_profilowe():
+                profile_pictures = []
+
+                for row_index in range(0, generation_config.uzytkownik.number_of_rows):
+                    current_profile_picture = None
+                    if random.random() <= 0.25:
+                        current_profile_picture = 1
+                    else:
+                        image_alt_texts.append(fake_pl.text(max_nb_chars=random.randint(5, 128+1)))
+                        current_profile_picture = len(image_alt_texts) + 1
+                    
+                    profile_pictures.append(current_profile_picture)
+
+                update_row_with_column_data(
+                    0,
+                    profile_pictures
+                )
+
+            
+            def generate_obrazek():
+                generate_data_for_later_table(
+                    'obrazek',
+                    0,
+                    image_alt_texts
+                )
+
+            generate_uzytkownik_id()
+            generate_plec()
+            generate_zdjecie_profilowe()
+            generate_obrazek()
+
         case "tablica_ogloszeniowa_uzytkownik":
+            def check_if_user_already_is_in_the_board(user_id, board_id):
+                tablica_ogloszeniowa_uzytkownik_number_of_rows = 0
+                if check_if_already_filled_table_data_exists(table_name):
+                    tablica_ogloszeniowa_uzytkownik_number_of_rows = len(get_already_generated_table(table_name)[0])
+
+                user_exists_in_board = False
+                for row_index in range(tablica_ogloszeniowa_uzytkownik_number_of_rows):
+                    current_user_id = get_already_generated_table(table_name)[0][row_index]
+                    current_board_id = get_already_generated_table(table_name)[1][row_index]
+
+                    user_exists_in_board = user_id == current_user_id and board_id == current_board_id
+                    if user_exists_in_board:
+                        break
+                return user_exists_in_board         
+            def check_if_user_is_first_user_in_the_board(user_id, board_id):
+                tablica_ogloszeniowa_uzytkownik_number_of_rows = 0
+                if check_if_already_filled_table_data_exists(table_name):
+                    tablica_ogloszeniowa_uzytkownik_number_of_rows = len(get_already_generated_table(table_name)[0])
+
+                user_is_first_user_in_the_board = False
+                for row_index in range(tablica_ogloszeniowa_uzytkownik_number_of_rows):
+                    current_user_id = get_already_generated_table(table_name)[0][row_index]
+                    current_board_id = get_already_generated_table(table_name)[1][row_index]
+
+                    user_is_first_user_in_the_board = user_id == current_user_id and board_id == current_board_id
+                    if user_is_first_user_in_the_board:
+                        break
+                return user_is_first_user_in_the_board
+            
             def uzytkownik_id():
                 return random.randint(1, generation_config.uzytkownik.number_of_rows)
             def tablica_ogloszeniowa_id():
-                return random.randint(1, generation_config.tablica_ogloszeniowa.number_of_rows)
-
+                return random.randint(2, generation_config.tablica_ogloszeniowa.number_of_rows)
+            
             row_data_to_return = generate_table_row_data(
                 generation_config.tablica_ogloszeniowa_uzytkownik.number_of_rows,
-                uzytkownik_id,
-                tablica_ogloszeniowa_id
+                column_to_replace,
+                column_to_replace
             )
-        
+
+            users_id = []
+            boards_id = []
+            permissions = {
+                "rola": [],
+                "tablica_ogloszeniowa_id": [],
+                "uzytkownik_id": []
+            }
+            posts = {
+                "autor_id": [],
+                "tablica_ogloszeniowa_id": [],
+                "obrazek_id": []
+            }
+            for row_index in range(generation_config.tablica_ogloszeniowa_uzytkownik.number_of_rows):
+                current_user_id = None
+                current_board_id = None
+                user_exists_in_table = True
+                while user_exists_in_table:                  
+                    current_user_id = uzytkownik_id()
+                    current_board_id = tablica_ogloszeniowa_id()
+                    user_exists_in_table = check_if_user_already_is_in_the_board(current_user_id, current_board_id)
+
+                current_permission_role = None
+                if check_if_user_is_first_user_in_the_board(current_user_id, current_board_id):
+                    current_permission_role = 'zarządzanie postami i użytkownikami'
+                elif random.random() <= 0.05:
+                    current_permission_role = 'moderator postów'
+                elif random.random() <= 0.25:
+                    current_permission_role ='kreator postów'
+                    for row_index in range(1, random(1, 6)+1):
+                        posts["autor_id"].append(current_user_id)
+                        posts["tablica_ogloszeniowa_id"].append(current_board_id)
+                        
+                else:
+                    current_permission_role = 'obserwator postów'
+
+                users_id.append(current_user_id)
+                boards_id.append(current_board_id)
+            
+                permissions["rola"].append(current_permission_role)
+                permissions["tablica_ogloszeniowa_id"].append(current_board_id)
+                permissions["uzytkownik_id"].append(current_user_id)
+
+            def generate_uzytkownik_id(users_id):
+                update_row_with_column_data(
+                    0,
+                    users_id
+                )
+            def generate_tablica_ogloszeniowa_id(boards_id):
+                update_row_with_column_data(
+                    1,
+                    boards_id
+                )
+            def generate_uprawnienie(permissions):
+                generate_data_for_later_table(
+                    'uprawnienie',
+                    0,
+                    permissions['rola']
+                )
+                generate_data_for_later_table(
+                    'uprawnienie',
+                    1,
+                    permissions['tablica_ogloszeniowa_id']
+                )
+                generate_data_for_later_table(
+                    'uprawnienie',
+                    2,
+                    permissions['uzytkownik_id']
+                )
+
+            generate_uzytkownik_id(users_id)
+            generate_tablica_ogloszeniowa_id(boards_id)
+
+            generate_uprawnienie(permissions)
+                
         case "dane_uzytkownika":
             def nazwisko():
                 return fake_pl.last_name()
@@ -349,44 +526,46 @@ def generated_table_data(table_name, tables_filled_data, generate_table_row_data
             generate_nazwa()
             generate_proboszcz_id()
 
-        case "opis_uzytkownika":
-            def pseudonim():
-                return fake.simple_profile()["username"]
-            def opis():
-                return fake_pl.text(max_nb_chars=random.randint(5, 1024+1))
-            def parafia_id():
-                return random.randint(1, generation_config.proboszcz.number_of_rows+1)
-            def rodzina_id():
-                return random.randint(1, generation_config.rodzina.number_of_rows+1)
-            def zdjecie_profilowe():
-                return 1
-            def ulubiona_modlitwa_id():
-                return random.randint(1, generation_config.modlitwa.number_of_rows+1)
-            
+        case "obrazek":
             row_data_to_return = generate_table_row_data(
-                generation_config.uzytkownik.number_of_rows,
+                len(get_already_generated_table(table_name)[0]),
                 column_to_replace,
-                column_to_replace,
-                pseudonim,
-                opis,
-                parafia_id,
-                rodzina_id,
-                zdjecie_profilowe,
-                ulubiona_modlitwa_id
             )
 
-            def generate_uzytkownik_id():
+            def generate_alt_text():
                 update_row_with_column_data(
                     0,
-                    range(0, generation_config.uzytkownik.number_of_rows+1)
-                )
-            def generate_plec():
-                update_row_with_column_data(
-                    1,
-                    get_already_generated_column_data(table_name, 1,)
+                    get_already_generated_column_data(table_name, 0)
                 )
 
+            generate_alt_text()
+
+        case "uprawnienie":
+            row_data_to_return = generate_table_row_data(
+                len(get_already_generated_table(table_name)[0]),
+                column_to_replace,
+                column_to_replace,
+                column_to_replace
+            )
+
+            def generate_rola():
+                update_row_with_column_data(
+                    0,
+                    get_already_generated_column_data(table_name, 0)
+                )
+            def generate_tablica_ogloszeniowa_id():
+                update_row_with_column_data(
+                    1,
+                    get_already_generated_column_data(table_name, 1)
+                )
+            def generate_uzytkownik_id():
+                update_row_with_column_data(
+                    2,
+                    get_already_generated_column_data(table_name, 2)
+                )
+
+            generate_rola()
+            generate_tablica_ogloszeniowa_id()
             generate_uzytkownik_id()
-            generate_plec()
-    
+
     return row_data_to_return
