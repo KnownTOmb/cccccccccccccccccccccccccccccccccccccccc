@@ -31,10 +31,10 @@ CREATE TABLE IF NOT EXISTS `smipegs_lublin`.`uzytkownik` (
 CREATE TABLE IF NOT EXISTS `smipegs_lublin`.`adres` (
   `id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
   `rejon` VARCHAR(64) NOT NULL,
-  `kod_pocztowy` SMALLINT(3) ZEROFILL UNSIGNED NOT NULL,
+  `kod_pocztowy` SMALLINT ZEROFILL UNSIGNED NOT NULL,
   `ulica` VARCHAR(64) NOT NULL,
-  `numer_budynku` SMALLINT(255) NOT NULL,
-  `numer_mieszkania` SMALLINT(255) NULL,
+  `numer_budynku` SMALLINT NOT NULL,
+  `numer_mieszkania` SMALLINT NULL,
   PRIMARY KEY (`id`),
   UNIQUE INDEX `id_UNIQUE` (`id`));
 
@@ -88,7 +88,7 @@ CREATE TABLE IF NOT EXISTS `smipegs_lublin`.`obrazek` (
 -- Table `smipegs_lublin`.`modlitwa`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `smipegs_lublin`.`modlitwa` (
-  `id` SMALLINT(255) UNSIGNED NOT NULL AUTO_INCREMENT,
+  `id` SMALLINT UNSIGNED NOT NULL AUTO_INCREMENT,
   `nazwa` VARCHAR(128) NULL,
   `tresc` VARCHAR(2048) NOT NULL,
   `efekt` VARCHAR(128) NULL,
@@ -99,7 +99,7 @@ CREATE TABLE IF NOT EXISTS `smipegs_lublin`.`modlitwa` (
 -- Table `smipegs_lublin`.`proboszcz`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `smipegs_lublin`.`proboszcz` (
-  `id` TINYINT(255) UNSIGNED NOT NULL AUTO_INCREMENT,
+  `id` TINYINT UNSIGNED NOT NULL AUTO_INCREMENT,
   `imie` VARCHAR(64) NOT NULL,
   `nazwisko` VARCHAR(64) NOT NULL,
   PRIMARY KEY (`id`),
@@ -109,9 +109,9 @@ CREATE TABLE IF NOT EXISTS `smipegs_lublin`.`proboszcz` (
 -- Table `smipegs_lublin`.`parafia`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `smipegs_lublin`.`parafia` (
-  `id` SMALLINT(255) UNSIGNED NOT NULL AUTO_INCREMENT,
+  `id` SMALLINT UNSIGNED NOT NULL AUTO_INCREMENT,
   `nazwa` VARCHAR(256) NOT NULL,
-  `proboszcz_id` TINYINT(255) UNSIGNED NOT NULL,
+  `proboszcz_id` TINYINT UNSIGNED NOT NULL,
   PRIMARY KEY (`id`, `proboszcz_id`),
   UNIQUE INDEX `id_UNIQUE` (`id`),
   INDEX `fk_parafia_proboszcz1_idx` (`proboszcz_id`),
@@ -132,8 +132,8 @@ CREATE TABLE IF NOT EXISTS `smipegs_lublin`.`opis_uzytkownika` (
   `opis` VARCHAR(1024) NULL,
   `rodzina_id` INT UNSIGNED NOT NULL,
   `zdjecie_profilowe_id` INT UNSIGNED NOT NULL,
-  `ulubiona_modlitwa_id` SMALLINT(255) UNSIGNED NOT NULL,
-  `parafia_id` SMALLINT(255) UNSIGNED NOT NULL,
+  `ulubiona_modlitwa_id` SMALLINT UNSIGNED NOT NULL,
+  `parafia_id` SMALLINT UNSIGNED NOT NULL,
   PRIMARY KEY (`id`, `rodzina_id`),
   UNIQUE INDEX `id_UNIQUE` (`id`),
   INDEX `fk_opis_uzytkownika_rodzina1_idx` (`rodzina_id`),
@@ -195,7 +195,7 @@ CREATE TABLE IF NOT EXISTS `smipegs_lublin`.`pokrewienstwo` (
 -- Table `smipegs_lublin`.`tablica_ogloszeniowa`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `smipegs_lublin`.`tablica_ogloszeniowa` (
-  `id` SMALLINT(255) UNSIGNED NOT NULL AUTO_INCREMENT,
+  `id` SMALLINT UNSIGNED NOT NULL AUTO_INCREMENT,
   `nazwa` VARCHAR(256) NOT NULL,
   `opis` VARCHAR(2048) NULL,
   PRIMARY KEY (`id`),
@@ -209,7 +209,7 @@ CREATE TABLE IF NOT EXISTS `smipegs_lublin`.`ogloszenie` (
   `tytul` VARCHAR(128) NOT NULL,
   `data_wstawienia` DATE NOT NULL,
   `tresc` VARCHAR(512) NOT NULL,
-  `tablica_ogloszeniowa_id` SMALLINT(255) UNSIGNED NOT NULL,
+  `tablica_ogloszeniowa_id` SMALLINT UNSIGNED NOT NULL,
   `obrazek_id` INT UNSIGNED NULL,
   `autor_id` INT UNSIGNED NOT NULL,
   `archiwalny` TINYINT NULL,
@@ -240,7 +240,7 @@ CREATE TABLE IF NOT EXISTS `smipegs_lublin`.`ogloszenie` (
 CREATE TABLE IF NOT EXISTS `smipegs_lublin`.`uprawnienie` (
   `id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
   `rola` ENUM('zarządzanie użytkownikami', 'kreator postów', 'moderator postów', 'obserwator postów') NOT NULL,
-  `tablica_ogloszeniowa_id` SMALLINT(255) UNSIGNED NOT NULL,
+  `tablica_ogloszeniowa_id` SMALLINT UNSIGNED NOT NULL,
   `uzytkownik_id` INT UNSIGNED NOT NULL,
   PRIMARY KEY (`id`, `tablica_ogloszeniowa_id`, `uzytkownik_id`),
   UNIQUE INDEX `id_UNIQUE` (`id`),
@@ -263,7 +263,7 @@ CREATE TABLE IF NOT EXISTS `smipegs_lublin`.`uprawnienie` (
 CREATE TABLE IF NOT EXISTS `smipegs_lublin`.`tablica_ogloszeniowa_uzytkownik` (
   `id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
   `uzytkownik_id` INT UNSIGNED NOT NULL,
-  `tablica_ogloszeniowa_id` SMALLINT(255) UNSIGNED NOT NULL,
+  `tablica_ogloszeniowa_id` SMALLINT UNSIGNED NOT NULL,
   UNIQUE INDEX `id_UNIQUE` (`id`),
   PRIMARY KEY (`id`, `uzytkownik_id`, `tablica_ogloszeniowa_id`),
   INDEX `fk_tablica_ogloszeniowa_uzytkownik_uzytkownik1_idx` (`uzytkownik_id`),

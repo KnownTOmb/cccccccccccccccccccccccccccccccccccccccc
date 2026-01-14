@@ -58,11 +58,17 @@ Boolowski typ danych jest reprezentowany przez tinyint(1).
 
 * id				 klucz główny, int
 * login			 varchar(128), unique
+
 > blob wykracza poza nasza widze
+
 * haslo			 varchar(64),
+
 > używać inet6_aton(‘ipv4 lub ipv6’)
 > ip wykracza poza nasza wiedze
 > ip				 varbinary(16), unique
+
+
+![](assets/20260114_084906_uzytkownik.png)
 
 ### dane_uzytkownika
 
@@ -76,6 +82,8 @@ Boolowski typ danych jest reprezentowany przez tinyint(1).
 * adres\_id -           klucz obcy, możliwy NULL
 * użytkownik\_id -      klucz obcy
 
+![](assets/20260114_084920_dane_urzytkownika.png)
+
 ### opis_użytkownika
 
 * id				 klucz główny, int
@@ -88,6 +96,9 @@ Boolowski typ danych jest reprezentowany przez tinyint(1).
 * zdjecie\_profilowe\_id	 klucz obcy, DEFAULT '1'
 * ulubiona\modlitwa\_id -   klucz obcy, możliwy NULL
 
+
+![](assets/20260114_084946_opis_urzytkownika.png)
+
 ### modlitwa
 
 * id -                  klucz główny, smallint(255)
@@ -95,15 +106,21 @@ Boolowski typ danych jest reprezentowany przez tinyint(1).
 * tresc -               varchar(2048)
 * efekt -               varchar(128), możliwy NULL
 
+![](assets/20260114_085002_modlitwa.png)
+
 ### adres
 
 * id -                  klucz główny, int
 * rejon -               varchar(64)
+
 > Nie trzymamy 20 z przodu, tylko 3 cyfry
+
 * kod\_pocztowy -       smallint(3), zerofill
 * ulica -               varchar(64)
 * numer\_budynku -      small int(255)
 * numer\_mieszkania -   small int(255), możliwy NULL
+
+![](assets/20260114_085035_adres.png)
 
 ### rodzina
 
@@ -112,6 +129,9 @@ Boolowski typ danych jest reprezentowany przez tinyint(1).
 * id 				 klucz główny, int
 * nazwa			 varchar(128)
 * opis			 varchar(1024), możliwy NULL
+
+
+![](assets/20260114_085053_rodzina.png)
 
 ### pokrewienstwo
 
@@ -123,26 +143,34 @@ Boolowski typ danych jest reprezentowany przez tinyint(1).
 * uzytkownik\_id -           klucz obcy
 * spokrewiony\_uzytkownik\_id klucz obcy
 
+![](assets/20260114_085147_pokrewienstwo.png)
+
 ### proboszcz
 
-* id				klucz główny, tinyint(255)
+* id		klucz główny, tinyint(255)
 * imie			varchar(64)
 * nazwisko			varchar(64)
 
+![](assets/20260114_085203_proboszcz.png)
+
 ### parafia
 
-* id 			  	klucz główny, smallint(255)
+* id 			klucz główny, smallint(255)
 * nazwa 		  	varchar(256), unique
 * proboszcz_id 	  	klucz obcy
+
+![](assets/20260114_085229_parafia.png)
 
 ### tablica_ogloszeniowa (board)
 
 > id == 1 to tablica glowna, kazdy uzytkownik jest tam automatycznie dodawany(trigger)
 > jeżeli istnieje użytkownik o tym samym adresie ip co nowy użytkownik i ten stary użytkownik nie jest w tablicy głównej (został z niej zbanowany), to nowy użytkownik nie jest przypsiwy
 
-* id 				klucz główny, smallint(255),
+* id 			klucz główny, smallint(255),
 * nazwa			varchar(256)
 * opis			varchar(2048), możliwy NULL
+
+![](assets/20260114_085250_tablica_ogloszeniowa.png)
 
 ### ogloszenie
 
@@ -202,14 +230,17 @@ Boolowski typ danych jest reprezentowany przez tinyint(1).
 # 7. Zróznicowane zapytania sql
 
 Wyświetlanie tablicy głownej
+
 ```sql
 SELECT * FROM `ogloszenie` WHERE tablica_ogloszeniowa_id = 1;
 ```
+
 Profil główny użytkownika
 
 Profil rodzinny użytkowanika
 
 Ludzie z twojej okolicy
+
 ```sql
 SELECT u.id AS uzytkownik_id,ou.pseudonim,a.rejon
 FROM uzytkownik u
@@ -224,8 +255,8 @@ WHERE a.rejon = 'Rury'
 > Nie mozemy edytowac struktury bazy danych
 > reczne stworzenie zmory
 
-
 > degradacja nieaktywnych kreatorów postów
+
 ```sql
 SELECT 
 u.id AS uzytkownik_id,
@@ -244,14 +275,16 @@ AND o.data_wstawienia >= DATE_SUB(CURDATE(), INTERVAL 2 YEAR)
 );
 ```
 
-# 
+#
 
 # 9. Opracowanie i prezentacja widoków
 
 ## (Statystyki)
 
 ### Plodnosc_kreatorow_postow
+
 > wyswietla ile postów dodał dany uzytkownik
+
 ```sql
 DROP VIEW IF EXISTS plodnosc_kreatorow_postow;
 CREATE VIEW plodnosc_kreatorow_postow AS 
@@ -262,8 +295,11 @@ LEFT JOIN ogloszenie o ON o.autor_id = u.id
 GROUP BY ou.pseudonim
 ORDER BY liczba_postow DESC;
 ```
+
 ### Plodnosc tablicy
+
 > wyswietla ile postów znajduje sie na danej tablicy
+
 ```sql
 DROP VIEW IF EXISTS plodnosc_tablicy;
 CREATE VIEW plodnosc_tablicy AS
@@ -276,8 +312,11 @@ LEFT JOIN ogloszenie o ON o.tablica_ogloszeniowa_id = t.id
 GROUP BY t.id, t.nazwa
 ORDER BY liczba_uzytkownikow DESC;
 ```
+
 ### Plodnosc parafii
+
 > wyswietla ilu uzytkowników jest w danej parafii
+
 ```sql
 DROP VIEW IF EXISTS plodnosc_parafii;
 CREATE VIEW plodnosc_parafii AS
@@ -286,8 +325,11 @@ FROM parafia p
 JOIN opis_uzytkownika ou ON ou.parafia_id = p.id
 GROUP BY p.id, p.nazwa;
 ```
+
 ### Pozycja modlitwy
+
 > wyswietla które modlitwy najczesciej znajduja sie w opisach uzytkowników
+
 ```sql
 DROP VIEW IF EXISTS pozycja_modlitwy;
 CREATE VIEW pozycja_modlitwy AS 
@@ -296,9 +338,12 @@ FROM modlitwa m
 JOIN opis_uzytkownika ou ON ou.ulubiona_modlitwa_id = m.id
 GROUP BY m.id, m.nazwa;
 ```
+
 ### Pozycja rodziny
+
 > wyswietla które rodziny maja najwiecej członków
-```sql 
+
+```sql
 DROP VIEW IF EXISTS pozycja_rodziny;
 CREATE VIEW pozycja_rodziny AS
 SELECT r.id, r.nazwa, COUNT(ou.id) AS liczba_czlonkow
@@ -306,8 +351,11 @@ FROM rodzina r
 JOIN opis_uzytkownika ou ON ou.rodzina_id = r.id
 GROUP BY r.id, r.nazwa;
 ```
+
 ### Matuzal
-> wyswietla uzytkownikow majacych co namniej 90 lat 
+
+> wyswietla uzytkownikow majacych co namniej 90 lat
+
 ```sql
 DROP VIEW IF EXISTS matuzal;
 CREATE VIEW matuzal AS
@@ -319,8 +367,11 @@ JOIN wiek w ON w.dane_uzytkownika_id = du.id
 WHERE w.wiek >= 90
 ORDER BY w.wiek DESC;
 ```
+
 ### Zmora
+
 > uzytkownicy usunieci z tablicy głównej
+
 ```sql
 DROP VIEW IF EXISTS zmora;
 CREATE VIEW zmora AS
@@ -333,8 +384,11 @@ WHERE NOT EXISTS (
     WHERE tou.uzytkownik_id = u.id AND tou.tablica_ogloszeniowa_id = 1
 );
 ```
+
 ### Zmarli urzytkownicy
+
 > uzytkownicy którzy nie żyja
+
 ```sql
 DROP VIEW IF EXISTS zmarly_uzytkownik;
 CREATE VIEW zmarly_uzytkownik AS
@@ -348,7 +402,9 @@ WHERE du.data_smierci IS NOT NULL;
 ## — koniec statystyk —
 
 ### Wieki uzytkowników
+
 > wyswietla ile lat ma kazdy uzytkownik
+
 ```sql
 DROP VIEW IF EXISTS wiek;
 CREATE VIEW wiek AS
@@ -361,7 +417,9 @@ FROM dane_uzytkownika;
 ```
 
 ### Rodzina wrzeniona
+
 > wyswietla rodzina małzonka
+
 ```sql
 DROP VIEW IF EXISTS rodzina_wzeniona;
 CREATE VIEW rodzina_wzeniona AS 
@@ -372,8 +430,11 @@ JOIN uzytkownik wspolmalzonek ON wspolmalzonek.id = p.spokrewiniony_uzytkownik_i
 JOIN opis_uzytkownika o ON o.uzytkownik_id = wspolmalzonek.id
 WHERE p.typ_relacji IN ('mąż', 'żona');
 ```
+
 ### url obrazka
+
 > wyswietla url obrazka
+
 ```sql
 DROP VIEW IF EXISTS url_obrazka;
 CREATE VIEW url_obrazka AS
