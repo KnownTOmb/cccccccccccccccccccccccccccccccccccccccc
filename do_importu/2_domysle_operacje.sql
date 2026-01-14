@@ -4,12 +4,11 @@
 
 DROP VIEW IF EXISTS wiek;
 CREATE VIEW wiek AS
-SELECT 
-    dane_uzytkownika.id AS dane_uzytkownika_id, 
-    CASE
-        WHEN data_smierci IS NULL THEN TIMESTAMPDIFF(YEAR, dane_uzytkownika.data_urodzenia, CURDATE())
-        ELSE TIMESTAMPDIFF(YEAR, dane_uzytkownika.data_urodzenia, dane_uzytkownika.data_smierci)
-    END AS wiek
+SELECT dane_uzytkownika.id AS dane_uzytkownika_id, 
+CASE
+    WHEN data_smierci IS NULL THEN TIMESTAMPDIFF(YEAR, dane_uzytkownika.data_urodzenia, CURDATE())
+    ELSE TIMESTAMPDIFF(YEAR, dane_uzytkownika.data_urodzenia, dane_uzytkownika.data_smierci)
+END AS wiek
 FROM dane_uzytkownika;
 
 
@@ -35,16 +34,12 @@ WHERE p.typ_relacji IN ('mąż', 'żona');
 
 DROP VIEW IF EXISTS plodnosc_tablicy;
 CREATE VIEW plodnosc_tablicy AS
-SELECT 
-    t.id, 
-    t.nazwa, 
-    COUNT(DISTINCT tou.uzytkownik_id) AS liczba_uzytkownikow, 
-    COUNT(DISTINCT o.id) AS liczba_postow
+SELECT t.id, t.nazwa, 
+COUNT(DISTINCT tou.uzytkownik_id) AS liczba_uzytkownikow, 
+COUNT(DISTINCT o.id) AS liczba_postow
 FROM tablica_ogloszeniowa t 
-LEFT JOIN tablica_ogloszeniowa_uzytkownik tou 
-    ON t.id = tou.tablica_ogloszeniowa_id 
-LEFT JOIN ogloszenie o 
-    ON o.tablica_ogloszeniowa_id = t.id 
+LEFT JOIN tablica_ogloszeniowa_uzytkownik tou ON t.id = tou.tablica_ogloszeniowa_id 
+LEFT JOIN ogloszenie o ON o.tablica_ogloszeniowa_id = t.id 
 GROUP BY t.id, t.nazwa
 ORDER BY liczba_uzytkownikow DESC;
 
@@ -101,8 +96,7 @@ JOIN opis_uzytkownika ou ON ou.uzytkownik_id = u.id
 WHERE NOT EXISTS (
     SELECT 1 
     FROM tablica_ogloszeniowa_uzytkownik tou
-    WHERE tou.uzytkownik_id = u.id
-      AND tou.tablica_ogloszeniowa_id = 1
+    WHERE tou.uzytkownik_id = u.id AND tou.tablica_ogloszeniowa_id = 1
 );
 
 
@@ -159,9 +153,9 @@ BEGIN
     DECLARE data_graniczna DATE;
 
     IF (ile_lat IS NOT NULL AND ile_lat > 0)
-       AND (do_kiedy IS NOT NULL AND do_kiedy <> '0000-00-00') THEN
+        AND (do_kiedy IS NOT NULL AND do_kiedy <> '0000-00-00') THEN
         SIGNAL SQLSTATE '45000'
-            SET MESSAGE_TEXT = 'Nie można podać obu parametrów jednocześnie';
+        SET MESSAGE_TEXT = 'Nie można podać obu parametrów jednocześnie';
 
     ELSEIF ile_lat IS NOT NULL AND ile_lat > 0 THEN
         SET data_graniczna = DATE_SUB(CURDATE(), INTERVAL ile_lat YEAR);
@@ -171,18 +165,18 @@ BEGIN
 
     ELSE
         SIGNAL SQLSTATE '45000'
-            SET MESSAGE_TEXT = 'Nie podano poprawnego parametru';
+        SET MESSAGE_TEXT = 'Nie podano poprawnego parametru';
     END IF;
 
     SELECT *
     FROM ogloszenie
     WHERE data_wstawienia < data_graniczna
-      AND (archiwalny IS NULL OR archiwalny = 0);
+        AND (archiwalny IS NULL OR archiwalny = 0);
 
     DELETE
     FROM ogloszenie
     WHERE data_wstawienia < data_graniczna
-      AND (archiwalny IS NULL OR archiwalny = 0);
+        AND (archiwalny IS NULL OR archiwalny = 0);
 END$$
 
 DELIMITER ;
