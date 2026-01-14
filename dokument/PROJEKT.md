@@ -546,13 +546,13 @@ wewnątrz dodajemy linie:
 30 2 * * * skrypt_do_automatycznej_kopii.sh
 ```
 
-# Jednorazowy Eksport bazy danych w graficzym panelu xampp
+## Jednorazowy Eksport bazy danych w graficzym panelu xampp
 
-## 1. Na górnym panelu klikamy w zakladke Eksport i wybieramy opcje szybko
+### 1. Na górnym panelu klikamy w zakladke Eksport i wybieramy opcje szybko
 
 ![](assets/20260112_211932_zakladka_eksport.png)
 
-## 2.Klikamy Export i wybieramy gdzie chcemy zapisac nasza baze danych
+### 2.Klikamy Export i wybieramy gdzie chcemy zapisac nasza baze danych
 
 ![](assets/20260112_212626_zakladka_eksport_cz2.png)
 
@@ -560,15 +560,15 @@ wewnątrz dodajemy linie:
 
 > nie musimy wybierac nowej pustej bazy danych, skrypt sam utworzy baze o nazwie smipegs_lublin
 
-## 1. Na górnym panelu klikamy w zakladke import wybieramy plik do_importu/1_pusta_baza_z_triggerami.sql, odznaczamy foregin key checks a reszte opcji pozostawiamy ustawionych domyslnie.
+### 1. Na górnym panelu klikamy w zakladke import wybieramy plik do_importu/1_pusta_baza_z_triggerami.sql, odznaczamy foregin key checks a reszte opcji pozostawiamy ustawionych domyslnie.
 
 ![](assets/20260113_202828_import1.png)
 
-## 2. Nastepnie klikamy w nowo utworzona baze danych smipegs_lublin, wchodzimy w zakładke import i importujemy plik do_importu/2_widoki.sql wczesniej odznaczajac foregin key checks.
+### 2. Nastepnie klikamy w nowo utworzona baze danych smipegs_lublin, wchodzimy w zakładke import i importujemy plik do_importu/2_widoki.sql wczesniej odznaczajac foregin key checks.
 
 ![](assets/20260113_204408_import2.png)
 
-## 3. Na koniec do bazy smipegs lublin importujemy plik do_importu/3_generated_data.sql odznaczajac foregin key cheks.
+### 3. Na koniec do bazy smipegs lublin importujemy plik do_importu/3_generated_data.sql odznaczajac foregin key cheks.
 
 ![](assets/20260113_204904_import3.png)
 
