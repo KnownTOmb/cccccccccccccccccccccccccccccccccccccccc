@@ -258,7 +258,7 @@ def generated_table_data(table_name, generate_table_row_data, fill_table_row_wit
                     get_user_gender(next_user_id)
                 )
 
-                relation_types(current_relation_type)
+                relation_types.append(current_relation_type)
                 related_users_id.append(current_related_user_id)
                 
                 relation_types(next_relation_type)
