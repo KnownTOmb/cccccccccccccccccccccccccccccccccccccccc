@@ -67,8 +67,7 @@ Boolowski typ danych jest reprezentowany przez tinyint(1).
 > ip wykracza poza nasza wiedze
 > ip				 varbinary(16), unique
 
-
-![](assets/20260114_084906_uzytkownik.png)
+![](assets/20260114_094047_uzytkowik.png)
 
 ### dane_uzytkownika
 
@@ -82,7 +81,7 @@ Boolowski typ danych jest reprezentowany przez tinyint(1).
 * adres\_id -           klucz obcy, możliwy NULL
 * użytkownik\_id -      klucz obcy
 
-![](assets/20260114_084920_dane_urzytkownika.png)
+![](assets/20260114_094101_dane_uzytkownika.png)
 
 ### opis_użytkownika
 
@@ -96,8 +95,7 @@ Boolowski typ danych jest reprezentowany przez tinyint(1).
 * zdjecie\_profilowe\_id	 klucz obcy, DEFAULT '1'
 * ulubiona\modlitwa\_id -   klucz obcy, możliwy NULL
 
-
-![](assets/20260114_084946_opis_urzytkownika.png)
+![](assets/20260114_094113_opis_uzytkownika.png)
 
 ### modlitwa
 
@@ -106,7 +104,7 @@ Boolowski typ danych jest reprezentowany przez tinyint(1).
 * tresc -               varchar(2048)
 * efekt -               varchar(128), możliwy NULL
 
-![](assets/20260114_085002_modlitwa.png)
+![](assets/20260114_094125_modlitwa.png)
 
 ### adres
 
@@ -120,7 +118,7 @@ Boolowski typ danych jest reprezentowany przez tinyint(1).
 * numer\_budynku -      small int(255)
 * numer\_mieszkania -   small int(255), możliwy NULL
 
-![](assets/20260114_085035_adres.png)
+![](assets/20260114_094136_adres.png)
 
 ### rodzina
 
@@ -130,8 +128,7 @@ Boolowski typ danych jest reprezentowany przez tinyint(1).
 * nazwa			 varchar(128)
 * opis			 varchar(1024), możliwy NULL
 
-
-![](assets/20260114_085053_rodzina.png)
+![](assets/20260114_094149_rodzina.png)
 
 ### pokrewienstwo
 
@@ -143,7 +140,7 @@ Boolowski typ danych jest reprezentowany przez tinyint(1).
 * uzytkownik\_id -           klucz obcy
 * spokrewiony\_uzytkownik\_id klucz obcy
 
-![](assets/20260114_085147_pokrewienstwo.png)
+![](assets/20260114_094159_pokrewienstwo.png)
 
 ### proboszcz
 
@@ -151,7 +148,7 @@ Boolowski typ danych jest reprezentowany przez tinyint(1).
 * imie			varchar(64)
 * nazwisko			varchar(64)
 
-![](assets/20260114_085203_proboszcz.png)
+![](assets/20260114_094218_proboszcz.png)
 
 ### parafia
 
@@ -159,7 +156,7 @@ Boolowski typ danych jest reprezentowany przez tinyint(1).
 * nazwa 		  	varchar(256), unique
 * proboszcz_id 	  	klucz obcy
 
-![](assets/20260114_085229_parafia.png)
+![](assets/20260114_094230_parafia.png)
 
 ### tablica_ogloszeniowa (board)
 
@@ -170,7 +167,7 @@ Boolowski typ danych jest reprezentowany przez tinyint(1).
 * nazwa			varchar(256)
 * opis			varchar(2048), możliwy NULL
 
-![](assets/20260114_085250_tablica_ogloszeniowa.png)
+![](assets/20260114_094243_tablica_ogloszeniowa.png)
 
 ### ogloszenie
 
@@ -183,12 +180,16 @@ Boolowski typ danych jest reprezentowany przez tinyint(1).
 * obrazek_id 		klucz obcy, możliwy NULL
 * archiwalny 		bool
 
+![](assets/20260114_094259_ogloszenie.png)
+
 ### obrazek
 
 > obrazek o id 1 to domyślne zdjęcie profilowe użytkownika
 
 * id 				klucz glówny, int
 * tekst_alternatywny	varchar(128), możliwy NULL
+
+![](assets/20260114_094310_obrazek.png)
 
 ### uprawnienie
 
@@ -197,11 +198,16 @@ Boolowski typ danych jest reprezentowany przez tinyint(1).
 * tablica_ogloszeniowa_id klucz obcy
 * uzytkownik_id		klucz obcy
 
+![](assets/20260114_094326_uprawnienie.png)
+
 ### tablica_ogloszeniowa_uzytkownik
 
 * id				klucz glówny, int
 * uzytkownik_id		klucz obcy
 * tablica_ogloszeniowa_id klucz obcy
+
+
+![](assets/20260114_094341_tablica_ogloszeniowa_uzytkownik.png)
 
 ## Relacje
 
@@ -229,7 +235,7 @@ Boolowski typ danych jest reprezentowany przez tinyint(1).
 
 # 7. Zróznicowane zapytania sql
 
-Wyświetlanie tablicy głownej
+> Wyświetlanie tablicy głownej
 
 ```sql
 SELECT * FROM `ogloszenie` WHERE tablica_ogloszeniowa_id = 1;
@@ -238,9 +244,14 @@ SELECT * FROM `ogloszenie` WHERE tablica_ogloszeniowa_id = 1;
 Profil główny użytkownika
 
 Profil rodzinny użytkowanika
+> Procentowy podzial na płci
+```sql
+SELECT ou.plec, ROUND(COUNT(*) * 100.0 / SUM(COUNT(*)) OVER (), 0) AS procent
+FROM opis_uzytkownika ou
+GROUP BY ou.plec;
+```
 
-Ludzie z twojej okolicy
-
+> Ludzie z twojej okolicy
 ```sql
 SELECT u.id AS uzytkownik_id,ou.pseudonim,a.rejon
 FROM uzytkownik u
