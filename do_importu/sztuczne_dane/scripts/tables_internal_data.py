@@ -99,7 +99,7 @@ tables = {
             "typ_relacji",
             "widzi_dane_osobowe",
             "uzytkownik_id",
-            "spokrewiony_uzytkownik_id"
+            "spokrewniony_uzytkownik_id"
         ],
         "data": []
     },

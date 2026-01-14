@@ -27,7 +27,7 @@ CREATE VIEW rodzina_wzeniona AS
 SELECT o.rodzina_id AS rodzina_id, u.id AS uzytkownik_id
 FROM uzytkownik u
 JOIN pokrewienstwo p ON p.uzytkownik_id = u.id
-JOIN uzytkownik wspolmalzonek ON wspolmalzonek.id = p.spokrewiniony_uzytkownik_id
+JOIN uzytkownik wspolmalzonek ON wspolmalzonek.id = p.spokrewniony_uzytkownik_id
 JOIN opis_uzytkownika o ON o.uzytkownik_id = wspolmalzonek.id
 WHERE p.typ_relacji IN ('mąż', 'żona');
 

@@ -1,4 +1,4 @@
--- Wed Jan 14 01:04:13 2026
+-- Wed Jan 14 14:13:24 2026
 
 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0;
 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0;
@@ -174,14 +174,14 @@ CREATE TABLE IF NOT EXISTS `smipegs_lublin`.`pokrewienstwo` (
   `id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
   `typ_relacji` ENUM('mama', 'ojciec', 'córka', 'syn', 'siostra', 'brat', 'ciotka', 'wujek', 'siostrzenica', 'bratanica', 'siostrzeniec', 'bratanek', 'kuzyn', 'kuzynka', 'babcia', 'dziadek', 'wnuczka', 'wnuk', 'ojczym', 'macocha', 'pasierb', 'pasierbica', 'szwagier', 'szwagierka', 'teść', 'teściowa', 'zięć', 'synowa', 'mąż', 'żona') NOT NULL,
   `widzi_dane_osobowe` TINYINT NULL,
-  `spokrewiniony_uzytkownik_id` INT UNSIGNED NOT NULL,
+  `spokrewniony_uzytkownik_id` INT UNSIGNED NOT NULL,
   `uzytkownik_id` INT UNSIGNED NOT NULL,
-  PRIMARY KEY (`id`, `spokrewiniony_uzytkownik_id`, `uzytkownik_id`),
+  PRIMARY KEY (`id`, `spokrewniony_uzytkownik_id`, `uzytkownik_id`),
   UNIQUE INDEX `id_UNIQUE` (`id`),
-  INDEX `fk_pokrewienstwo_uzytkownik2_idx` (`spokrewiniony_uzytkownik_id`),
+  INDEX `fk_pokrewienstwo_uzytkownik2_idx` (`spokrewniony_uzytkownik_id`),
   INDEX `fk_pokrewienstwo_uzytkownik1_idx` (`uzytkownik_id`),
   CONSTRAINT `fk_pokrewienstwo_uzytkownik2`
-    FOREIGN KEY (`spokrewiniony_uzytkownik_id`)
+    FOREIGN KEY (`spokrewniony_uzytkownik_id`)
     REFERENCES `smipegs_lublin`.`uzytkownik` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,

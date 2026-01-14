@@ -240,6 +240,12 @@ def generated_table_data(table_name, generate_table_row_data, fill_table_row_wit
 
                 return reflection_of_relation_type[unreflected_relation_type][gender_of_reflected_relation_type]
 
+            def widzi_dane_osobowe():
+                if random.random() <= 0.25:
+                    return 0
+                else:
+                    return 1
+            
             relation_types = []
             related_users_id = []
 
@@ -267,6 +273,7 @@ def generated_table_data(table_name, generate_table_row_data, fill_table_row_wit
             row_data_to_return = generate_table_row_data(
                 len(users_id),
                 column_to_replace,
+                widzi_dane_osobowe,
                 column_to_replace,
                 column_to_replace
             )
@@ -278,12 +285,12 @@ def generated_table_data(table_name, generate_table_row_data, fill_table_row_wit
                 )
             def generate_user_id():
                 update_row_with_column_data(
-                    1,
+                    2,
                     users_id
                 )
             def generate_related_user_id():
                 update_row_with_column_data(
-                    2,
+                    3,
                     related_users_id
                 )
 
