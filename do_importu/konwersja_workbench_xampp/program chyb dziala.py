@@ -4,7 +4,7 @@ from pathlib import Path
 
 def normalize_numeric_types(sql: str) -> str:
     sql = re.sub(r"TINYINT\s*\(\s*\d+\s*\)", "TINYINT", sql, flags=re.I)
-    sql = re.sub(r"SMALLINT\s*\(\s*\d+\s*\)", "SMALLINT", sql, flags=re.I)
+    #sql = re.sub(r"SMALLINT\s*\(\s*\d+\s*\)", "SMALLINT", sql, flags=re.I)
     sql = re.sub(r"INT\s*\(\s*\d+\s*\)", "INT", sql, flags=re.I)
     return sql
 
@@ -57,7 +57,7 @@ def fix_auto_increment_primary_keys(sql: str) -> str:
 
 def convert_mysql_to_mariadb(sql: str) -> str:
     sql = remove_mysql_specific_syntax(sql)
-    sql = normalize_numeric_types(sql)
+    #sql = normalize_numeric_types(sql)
     sql = fix_auto_increment_primary_keys(sql)
     # sql = ensure_foreign_key_checks(sql)
 
