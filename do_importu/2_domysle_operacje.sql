@@ -108,6 +108,14 @@ JOIN opis_uzytkownika ou ON ou.uzytkownik_id = u.id
 JOIN dane_uzytkownika du ON du.uzytkownik_id = u.id
 WHERE du.data_smierci IS NOT NULL;
 
+DROP VIEW IF EXISTS kod_pocztowy;
+CREATE VIEW kod_pocztowy AS
+SELECT a.id, CONCAT('20-',LEFT(a.kod_pocztowy, 3)) AS kod_pocztowy
+FROM adres a;
+
+
+
+
 -- -----------------------------------------------------
 -- Domysle dane
 -- -----------------------------------------------------

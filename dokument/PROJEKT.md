@@ -235,7 +235,7 @@ Boolowski typ danych jest reprezentowany przez tinyint(1).
 
 # 7. Zróznicowane zapytania sql
 
-Wyświetlanie tablicy głownej
+> Wyświetlanie tablicy głownej
 
 ```sql
 SELECT * FROM `ogloszenie` WHERE tablica_ogloszeniowa_id = 1;
@@ -244,9 +244,14 @@ SELECT * FROM `ogloszenie` WHERE tablica_ogloszeniowa_id = 1;
 Profil główny użytkownika
 
 Profil rodzinny użytkowanika
+> Procentowy podzial na płci
+```sql
+SELECT ou.plec, ROUND(COUNT(*) * 100.0 / SUM(COUNT(*)) OVER (), 0) AS procent
+FROM opis_uzytkownika ou
+GROUP BY ou.plec;
+```
 
-Ludzie z twojej okolicy
-
+> Ludzie z twojej okolicy
 ```sql
 SELECT u.id AS uzytkownik_id,ou.pseudonim,a.rejon
 FROM uzytkownik u
