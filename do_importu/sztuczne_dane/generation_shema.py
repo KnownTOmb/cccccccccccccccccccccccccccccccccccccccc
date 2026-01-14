@@ -204,7 +204,7 @@ def generated_table_data(table_name, generate_table_row_data, fill_table_row_wit
 
                 user_gender = get_user_gender(user_id)
                 return possible_relation_types[user_gender][random.randint(0, number_of_posible_relation_types[user_gender])]
-            def get_reflection_of_relation_type(unreflected_relation_type, gender_of_reflected_relation_type):
+            def get_reflection_of_relation_type(gender_of_reflected_relation_type, unreflected_relation_type):
                 reflection_of_relation_type = {
                     "mama":        {"M": "syn",         "F": "córka"},
                     "ojciec":      {"M": "syn",         "F": "córka"},
