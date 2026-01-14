@@ -202,8 +202,22 @@ Boolowski typ danych jest reprezentowany przez tinyint(1).
 # 7. Zróznicowane zapytania sql
 
 Wyświetlanie tablicy głownej
+```sql
+SELECT * FROM `ogloszenie` WHERE tablica_ogloszeniowa_id = 1;
+```
 Profil główny użytkownika
+
 Profil rodzinny użytkowanika
+
+Ludzie z twojej okolicy
+```sql
+SELECT u.id AS uzytkownik_id,ou.pseudonim,a.rejon
+FROM uzytkownik u
+JOIN opis_uzytkownika ou ON ou.uzytkownik_id = u.id
+JOIN dane_uzytkownika du ON du.uzytkownik_id = u.id
+JOIN adres a ON a.id = du.adres_id
+WHERE a.rejon = 'Rury'
+```
 
 # 8. Opracownie i prezentacja zapytan modyfikujacych dane w bazie
 
@@ -213,16 +227,21 @@ Profil rodzinny użytkowanika
 
 > degradacja nieaktywnych kreatorów postów
 ```sql
-SELECT u.uzytkownik_id
-FROM uprawnienie u
-WHERE u.rola = 'kreator postów'
+SELECT 
+u.id AS uzytkownik_id,
+ou.pseudonim,
+pk.liczba_postow AS liczba_postow
+FROM uprawnienie up
+JOIN uzytkownik u ON u.id = up.uzytkownik_id
+JOIN opis_uzytkownika ou ON ou.uzytkownik_id = u.id
+JOIN plodnosc_kreatorow_postow pk ON pk.pseudonim = ou.pseudonim
+WHERE up.rola = 'kreator postów'
 AND NOT EXISTS (
-    SELECT 1
-    FROM ogloszenie o
-    WHERE o.autor_id = u.uzytkownik_id
-      AND o.data_wstawienia >= DATE_SUB(CURDATE(), INTERVAL 2 YEAR)
+SELECT 1
+FROM ogloszenie o
+WHERE o.autor_id = u.id
+AND o.data_wstawienia >= DATE_SUB(CURDATE(), INTERVAL 2 YEAR)
 );
-
 ```
 
 # 
@@ -238,9 +257,9 @@ DROP VIEW IF EXISTS plodnosc_kreatorow_postow;
 CREATE VIEW plodnosc_kreatorow_postow AS 
 SELECT ou.pseudonim, COUNT(o.id) AS liczba_postow 
 FROM uzytkownik u 
-JOIN opis_uzytkownika ou ON ou.uzytkownik_id = u.id 
-JOIN ogloszenie o ON o.autor_id = u.id
-GROUP BY ou.pseudonim 
+LEFT JOIN opis_uzytkownika ou ON ou.uzytkownik_id = u.id 
+LEFT JOIN ogloszenie o ON o.autor_id = u.id
+GROUP BY ou.pseudonim
 ORDER BY liczba_postow DESC;
 ```
 ### Plodnosc tablicy
@@ -248,16 +267,12 @@ ORDER BY liczba_postow DESC;
 ```sql
 DROP VIEW IF EXISTS plodnosc_tablicy;
 CREATE VIEW plodnosc_tablicy AS
-SELECT 
-    t.id, 
-    t.nazwa, 
-    COUNT(DISTINCT tou.uzytkownik_id) AS liczba_uzytkownikow, 
-    COUNT(DISTINCT o.id) AS liczba_postow
+SELECT t.id, t.nazwa, 
+COUNT(DISTINCT tou.uzytkownik_id) AS liczba_uzytkownikow, 
+COUNT(DISTINCT o.id) AS liczba_postow
 FROM tablica_ogloszeniowa t 
-LEFT JOIN tablica_ogloszeniowa_uzytkownik tou 
-    ON t.id = tou.tablica_ogloszeniowa_id 
-LEFT JOIN ogloszenie o 
-    ON o.tablica_ogloszeniowa_id = t.id 
+LEFT JOIN tablica_ogloszeniowa_uzytkownik tou ON t.id = tou.tablica_ogloszeniowa_id 
+LEFT JOIN ogloszenie o ON o.tablica_ogloszeniowa_id = t.id 
 GROUP BY t.id, t.nazwa
 ORDER BY liczba_uzytkownikow DESC;
 ```
@@ -315,8 +330,7 @@ JOIN opis_uzytkownika ou ON ou.uzytkownik_id = u.id
 WHERE NOT EXISTS (
     SELECT 1 
     FROM tablica_ogloszeniowa_uzytkownik tou
-    WHERE tou.uzytkownik_id = u.id
-      AND tou.tablica_ogloszeniowa_id = 1
+    WHERE tou.uzytkownik_id = u.id AND tou.tablica_ogloszeniowa_id = 1
 );
 ```
 ### Zmarli urzytkownicy
@@ -338,12 +352,11 @@ WHERE du.data_smierci IS NOT NULL;
 ```sql
 DROP VIEW IF EXISTS wiek;
 CREATE VIEW wiek AS
-SELECT 
-    dane_uzytkownika.id AS dane_uzytkownika_id, 
-    CASE
-        WHEN data_smierci IS NULL THEN TIMESTAMPDIFF(YEAR, dane_uzytkownika.data_urodzenia, CURDATE())
-        ELSE TIMESTAMPDIFF(YEAR, dane_uzytkownika.data_urodzenia, dane_uzytkownika.data_smierci)
-    END AS wiek
+SELECT dane_uzytkownika.id AS dane_uzytkownika_id, 
+CASE
+    WHEN data_smierci IS NULL THEN TIMESTAMPDIFF(YEAR, dane_uzytkownika.data_urodzenia, CURDATE())
+    ELSE TIMESTAMPDIFF(YEAR, dane_uzytkownika.data_urodzenia, dane_uzytkownika.data_smierci)
+END AS wiek
 FROM dane_uzytkownika;
 ```
 
