@@ -212,15 +212,16 @@ def generated_table_data(table_name, generate_table_row_data, fill_table_row_wit
 
                 current_permission_role = None
                 if check_if_user_is_first_user_in_the_board(current_user_id, current_board_id):
-                    current_permission_role = 'zarządzanie postami i użytkownikami'
+                    current_permission_role = 'zarządzanie użytkownikam'
                 elif random.random() <= 0.05:
                     current_permission_role = 'moderator postów'
                 elif random.random() <= 0.25:
                     current_permission_role ='kreator postów'
-                    for row_index in range(1, random(1, 6)+1):
+                    for row_index in range(random.randint(0, 6)):
                         posts["autor_id"].append(current_user_id)
                         posts["tablica_ogloszeniowa_id"].append(current_board_id)
-                        
+                        posts["tablica_ogloszeniowa_id"].append(None)
+
                 else:
                     current_permission_role = 'obserwator postów'
 
@@ -525,6 +526,92 @@ def generated_table_data(table_name, generate_table_row_data, fill_table_row_wit
 
             generate_nazwa()
             generate_proboszcz_id()
+
+        case "uprawnienie":
+            row_data_to_return = generate_table_row_data(
+                len(get_already_generated_table(table_name)[0]),
+                column_to_replace,
+                column_to_replace,
+                column_to_replace
+            )
+
+            def generate_rola():
+                update_row_with_column_data(
+                    0,
+                    get_already_generated_column_data(table_name, 0)
+                )
+            def generate_tablica_ogloszeniowa_id():
+                update_row_with_column_data(
+                    1,
+                    get_already_generated_column_data(table_name, 1)
+                )
+            def generate_uzytkownik_id():
+                update_row_with_column_data(
+                    2,
+                    get_already_generated_column_data(table_name, 2)
+                )
+
+            generate_rola()
+            generate_tablica_ogloszeniowa_id()
+            generate_uzytkownik_id()
+
+        case "ogloszenie":
+            def tytul():
+                return fake_pl.sentence(nb_words=random.randint(3, 7))
+            def data_wstawienia():
+                return fake_pl.date_between(
+                    start_date='-10y',
+                    end_date='today'
+                ).strftime('%Y-%m-%d')
+            def tresc():
+                return fake_pl.text(
+                    max_nb_chars=random.randint(20, 1024)
+                )
+            def archiwalny():
+                return 1 if random.random() <= 0.1 else 0
+
+            row_data_to_return = generate_table_row_data(
+                len(get_already_generated_table(table_name)[3]),
+                tytul,
+                data_wstawienia,
+                tresc,
+                column_to_replace,
+                column_to_replace,
+                column_to_replace,
+                archiwalny
+            )
+
+            def generate_autor_id():
+                update_row_with_column_data(
+                    3,
+                    get_already_generated_column_data(
+                        "uzytkownik",
+                        0
+                    )
+                )
+
+            def generate_tablica_ogloszeniowa_id():
+                update_row_with_column_data(
+                    4,
+                    get_already_generated_column_data(
+                        "tablica_ogloszeniowa",
+                        0
+                    )
+                )
+
+            def generate_obrazek_id():
+                update_row_with_column_data(
+                    5,
+                    get_already_generated_column_data(
+                        "obrazek",
+                        0
+                    )
+                )
+
+            generate_autor_id()
+            generate_tablica_ogloszeniowa_id()
+            generate_obrazek_id()
+
 
         case "obrazek":
             row_data_to_return = generate_table_row_data(
