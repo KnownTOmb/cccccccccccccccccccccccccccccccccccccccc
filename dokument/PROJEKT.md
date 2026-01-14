@@ -253,25 +253,28 @@ Boolowski typ danych jest reprezentowany przez tinyint(1).
 **(NI)** – relacja nie-identyfikująca
 
 
-| Encja A                         | Relacja  | Encja B                         | Opis                      |
+| Encja A                         | Relacja | Encja B                         | Opis                      |
 | --------------------------------- | :--------: | --------------------------------- | --------------------------- |
 | uzytkownik                      | 1:1 (NI) | dane_uzytkownika                |                           |
 | opis_uzytkownika                | 1:1 (NI) | uzytkownik                      |                           |
 | modlitwa                        | 1:N (NI) | opis_uzytkownika                | ulubiona_modlitwa_id      |
 | parafia                         | 1:N (NI) | opis_uzytkownika                |                           |
-| parafia                         | 1:1 (I)  | proboszcz                       |                           |
+| parafia                         | 1:1 (I) | proboszcz                       |                           |
 | adres                           | 1:1 (NI) | dane_uzytkownika                |                           |
-| rodzina                         | 1:N (I)  | opis_uzytkownika                |                           |
-| uzytkownik                      | 1:N (I)  | pokrewienstwo                   | tabela pośrednia         |
-| pokrewienstwo                   | N:1 (I)  | uzytkownik                      | spokrewiony_uzytkownik_id |
-| tablica_ogloszeniowa            | 1:N (I)  | tablica_ogloszeniowa_uzytkownik |                           |
-| tablica_ogloszeniowa_uzytkownik | N:1 (I)  | uzytkownik                      |                           |
-| ogloszenie                      | N:1 (I)  | tablica                         |                           |
-| ogloszenie                      | N:1 (I)  | uzytkownik                      | autor_id                  |
-| tablica_ogloszeniowa            | 1:N (I)  | uprawnienie                     | tabela pośrednia         |
-| uprawnienie                     | N:1 (I)  | uzytkownik                      |                           |
+| rodzina                         | 1:N (I) | opis_uzytkownika                |                           |
+| uzytkownik                      | 1:N (I) | pokrewienstwo                   | tabela pośrednia         |
+| pokrewienstwo                   | N:1 (I) | uzytkownik                      | spokrewiony_uzytkownik_id |
+| tablica_ogloszeniowa            | 1:N (I) | tablica_ogloszeniowa_uzytkownik |                           |
+| tablica_ogloszeniowa_uzytkownik | N:1 (I) | uzytkownik                      |                           |
+| ogloszenie                      | N:1 (I) | tablica                         |                           |
+| ogloszenie                      | N:1 (I) | uzytkownik                      | autor_id                  |
+| tablica_ogloszeniowa            | 1:N (I) | uprawnienie                     | tabela pośrednia         |
+| uprawnienie                     | N:1 (I) | uzytkownik                      |                           |
 | obrazek                         | 1:1 (NI) | opis_uzytkownika                | zdjecie_profilowe_id      |
 | obrazek                         | 1:1 (NI) | ogloszenie                      |                           |
+
+
+![](assets/20260114_125414_relacje.png)
 
 # 5. Diagram ERD 					    ඞ
 
