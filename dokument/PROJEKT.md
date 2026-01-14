@@ -57,29 +57,29 @@ Boolowski typ danych jest reprezentowany przez tinyint(1).
 ### uzytkownik
 
 * id				 klucz główny, int
-* login			 varchar(128), unique
+* login			         varchar(128), unique
 
 > blob wykracza poza nasza widze
 
-* haslo			 varchar(64),
+* haslo			         varchar(64),
 
 > używać inet6_aton(‘ipv4 lub ipv6’)
 > ip wykracza poza nasza wiedze
-> ip				 varbinary(16), unique
+> ip				  varbinary(16), unique
 
 ![](assets/20260114_094047_uzytkowik.png)
 
 ### dane_uzytkownika
 
-* id -                  klucz główny, int
-* uzytkownik id -       klucz obcy
-* imie -                varchar(64)
-* nazwisko -            varchar(64)
-* numer_telefonu        varchar(16), możliwy NULL
-* data\_urodzenia -     date
-* data\_smierci         date, możliwy NULL
-* adres\_id -           klucz obcy, możliwy NULL
-* użytkownik\_id -      klucz obcy
+* id -                             klucz główny, int
+* uzytkownik id -                  klucz obcy
+* imie -                           varchar(64)
+* nazwisko -                       varchar(64)
+* numer_telefonu                   varchar(16), możliwy NULL
+* data\_urodzenia -                 date
+* data\_smierci                     date, możliwy NULL
+* adres\_id -                       klucz obcy, możliwy NULL
+* użytkownik\_id -                  klucz obcy
 
 ![](assets/20260114_094101_dane_uzytkownika.png)
 
