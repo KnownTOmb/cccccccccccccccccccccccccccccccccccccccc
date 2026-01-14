@@ -156,7 +156,7 @@ def generated_table_data(table_name, generate_table_row_data, fill_table_row_wit
                 user_gender = get_already_generated_column_data(
                     "opis_uzytkownika",
                     1
-                )[user_id]
+                )[user_id].replace("X", "F")
 
                 return user_gender
             def generate_user_relation_type(user_id):
@@ -199,7 +199,7 @@ def generated_table_data(table_name, generate_table_row_data, fill_table_row_wit
 
                 number_of_posible_relation_types = {
                     "M": len(possible_relation_types["M"]),
-                    "M": len(possible_relation_types["F"])
+                    "F": len(possible_relation_types["F"])
                 }
 
                 user_gender = get_user_gender(user_id)
