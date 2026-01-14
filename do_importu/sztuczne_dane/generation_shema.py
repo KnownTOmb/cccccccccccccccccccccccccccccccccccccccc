@@ -265,6 +265,7 @@ def generated_table_data(table_name, generate_table_row_data, fill_table_row_wit
                 related_users_id.append(next_related_user_id)
 
             row_data_to_return = generate_table_row_data(
+                len(users_id),
                 column_to_replace,
                 column_to_replace,
                 column_to_replace
@@ -286,7 +287,7 @@ def generated_table_data(table_name, generate_table_row_data, fill_table_row_wit
                     related_users_id
                 )
 
-            generate_related_user_id()
+            generate_relation_type()
             generate_user_id()
             generate_related_user_id()
 
