@@ -246,13 +246,13 @@ def generated_table_data(table_name, generate_table_row_data, fill_table_row_wit
             users_id = list(range(1, generation_config.uzytkownik.number_of_rows))
             random.shuffle(users_id)
 
-            for current_every_other_user_id_row_index in range(0, generation_config.uzytkownik.number_of_rows-1, 2):
-                current_user = current_every_other_user_id_row_index
+            for current_row in range(0, generation_config.uzytkownik.number_of_rows-1, 2):
+                current_user = users_id[current_row]
                 current_relation_type = generate_user_relation_type(current_user)
-                current_related_user_id = users_id[current_every_other_user_id_row_index+1]
+                current_related_user_id = users_id[current_row+1]
 
                 next_user_id = current_related_user_id
-                next_related_user_id = current_every_other_user_id_row_index
+                next_related_user_id = current_user
                 next_relation_type = get_reflection_of_relation_type(
                     get_user_gender(next_user_id),
                     current_relation_type
@@ -286,10 +286,9 @@ def generated_table_data(table_name, generate_table_row_data, fill_table_row_wit
                     related_users_id
                 )
 
-            generate_related_user_id()
+            generate_relation_type()
             generate_user_id()
             generate_related_user_id()
-
 
         
         case "tablica_ogloszeniowa_uzytkownik":

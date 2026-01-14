@@ -6,3 +6,4 @@
 * [ ] dodac załozenia projektu (server na linuxie zmora oznacza to, matuzal oznacza tamto)
 * [ ] problem 3 zdjęć
 * [ ] porawic widoki w diagram erd
+* [ ] dodać do widzi dane w pokrewienstwo default na 0

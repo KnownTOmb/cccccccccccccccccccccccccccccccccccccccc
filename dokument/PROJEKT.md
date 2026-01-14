@@ -1,7 +1,3 @@
-# -1. Všechno je to o penisu
-
-Forum dla emerytów gdzie mówią co się dzieje, wydarzenia itp. znajdować się mogą po swoich zainteresowaniach, też inaczej taki słup/tablica na którą się nakleja rzeczy tylko wirtualna.
-
 # 0. Nazwa Projektu
 
 System Monitorowania Interakcji Pośród Emerytalnej Grupy Społecznej (SMIPEGS Lublin).
@@ -158,6 +154,9 @@ Boolowski typ danych jest reprezentowany przez tinyint(1).
 | uzytkownik_id             |                                                                                                                                                                                                                                                                                                                                         | klucz obcy          |
 | spokrewiony_uzytkownik_id |                                                                                                                                                                                                                                                                                                                                         | klucz obcy          |
 
+
+![](assets/20260114_134039_mapa_pokrewienstw.png)
+
 ![](assets/20260114_094159_pokrewienstwo.png)
 
 ### proboszcz
@@ -272,7 +271,6 @@ Boolowski typ danych jest reprezentowany przez tinyint(1).
 | uprawnienie                     | N:1 (I) | uzytkownik                      |                           |
 | obrazek                         | 1:1 (NI) | opis_uzytkownika                | zdjecie_profilowe_id      |
 | obrazek                         | 1:1 (NI) | ogloszenie                      |                           |
-
 
 ![](assets/20260114_125414_relacje.png)
 
