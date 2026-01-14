@@ -156,7 +156,7 @@ def generated_table_data(table_name, generate_table_row_data, fill_table_row_wit
                 user_gender = get_already_generated_column_data(
                     "opis_uzytkownika",
                     1
-                )[user_id].replace("X", "F")
+                )[user_id - 1].replace("X", "F")
 
                 return user_gender
             def generate_user_relation_type(user_id):
@@ -203,7 +203,7 @@ def generated_table_data(table_name, generate_table_row_data, fill_table_row_wit
                 }
 
                 user_gender = get_user_gender(user_id)
-                return possible_relation_types[user_gender][random.randint(0, number_of_posible_relation_types[user_gender])]
+                return possible_relation_types[user_gender][random.randint(0, number_of_posible_relation_types[user_gender])-1]
             def get_reflection_of_relation_type(gender_of_reflected_relation_type, unreflected_relation_type):
                 reflection_of_relation_type = {
                     "mama":        {"M": "syn",         "F": "córka"},
@@ -243,16 +243,16 @@ def generated_table_data(table_name, generate_table_row_data, fill_table_row_wit
             relation_types = []
             related_users_id = []
 
-            users_id = list(range(1, generation_config.uzytkownik.number_of_rows))
+            users_id = list(range(1, generation_config.uzytkownik.number_of_rows+1))
             random.shuffle(users_id)
 
             for current_every_other_user_id_row_index in range(0, generation_config.uzytkownik.number_of_rows-1, 2):
-                current_user = current_every_other_user_id_row_index
-                current_relation_type = generate_user_relation_type(current_user)
+                current_user_id = users_id[current_every_other_user_id_row_index]
+                current_relation_type = generate_user_relation_type(current_user_id)
                 current_related_user_id = users_id[current_every_other_user_id_row_index+1]
 
                 next_user_id = current_related_user_id
-                next_related_user_id = current_every_other_user_id_row_index
+                next_related_user_id = current_user_id
                 next_relation_type = get_reflection_of_relation_type(
                     get_user_gender(next_user_id),
                     current_relation_type
@@ -277,12 +277,12 @@ def generated_table_data(table_name, generate_table_row_data, fill_table_row_wit
                 )
             def generate_user_id():
                 update_row_with_column_data(
-                    0,
+                    1,
                     users_id
                 )
             def generate_related_user_id():
                 update_row_with_column_data(
-                    0,
+                    2,
                     related_users_id
                 )
 
