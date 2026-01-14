@@ -7,3 +7,4 @@
 * wypełnianie nieużywanych id przy dodawaniu ogłoszenia
 * dodanie screenów z dzialania trigerow procedur i widokow 
 * dodac załozenia projektu (server na linuxie zmora oznacza to, matuzal oznacza tamto)
+* problem 3 zdjęć
