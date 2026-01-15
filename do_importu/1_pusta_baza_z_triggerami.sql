@@ -1,4 +1,4 @@
--- Thu Jan 15 11:34:27 2026
+-- Thu Jan 15 23:02:00 2026
 
 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0;
 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0;
@@ -173,7 +173,7 @@ CREATE TABLE IF NOT EXISTS `smipegs_lublin`.`opis_uzytkownika` (
 CREATE TABLE IF NOT EXISTS `smipegs_lublin`.`pokrewienstwo` (
   `id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
   `typ_relacji` ENUM('mama', 'ojciec', 'córka', 'syn', 'siostra', 'brat', 'ciotka', 'wujek', 'siostrzenica', 'bratanica', 'siostrzeniec', 'bratanek', 'kuzyn', 'kuzynka', 'babcia', 'dziadek', 'wnuczka', 'wnuk', 'ojczym', 'macocha', 'pasierb', 'pasierbica', 'szwagier', 'szwagierka', 'teść', 'teściowa', 'zięć', 'synowa', 'mąż', 'żona') NOT NULL,
-  `widzi_dane_osobowe` TINYINT NULL,
+  `widzi_dane_osobowe` TINYINT(1) NULL,
   `spokrewniony_uzytkownik_id` INT UNSIGNED NOT NULL,
   `uzytkownik_id` INT UNSIGNED NOT NULL,
   PRIMARY KEY (`id`, `spokrewniony_uzytkownik_id`, `uzytkownik_id`),
@@ -212,7 +212,8 @@ CREATE TABLE IF NOT EXISTS `smipegs_lublin`.`ogloszenie` (
   `tablica_ogloszeniowa_id` SMALLINT(255) UNSIGNED NOT NULL,
   `obrazek_id` INT UNSIGNED NULL,
   `autor_id` INT UNSIGNED NOT NULL,
-  `archiwalny` TINYINT NULL,
+  `archiwalny` TINYINT(1) NULL,
+  `ogloszeniecol` VARCHAR(45) NULL,
   PRIMARY KEY (`id`, `tablica_ogloszeniowa_id`, `autor_id`),
   UNIQUE INDEX `id_UNIQUE` (`id`),
   INDEX `fk_ogloszenie_tablica_ogloszeniowa1_idx` (`tablica_ogloszeniowa_id`),
@@ -302,6 +303,44 @@ BEFORE DELETE ON uzytkownik
 FOR EACH ROW
 DELETE FROM uprawnienie
 WHERE uzytkownik_id = OLD.id;$$
+
+USE `smipegs_lublin`$$
+CREATE TRIGGER przed_usunieciem_uzytkownik_usun_opis
+BEFORE DELETE ON uzytkownik
+FOR EACH ROW
+DELETE FROM opis_uzytkownika
+WHERE uzytkownik_id = OLD.id;$$
+
+USE `smipegs_lublin`$$
+CREATE TRIGGER przed_usunieciem_uzytkownik_usun_dane
+BEFORE DELETE ON uzytkownik
+FOR EACH ROW
+DELETE FROM dane_uzytkownika
+WHERE uzytkownik_id = OLD.id;$$
+
+USE `smipegs_lublin`$$
+CREATE TRIGGER przed_usunieciem_uzytkownik_usun_pokrewienstwo
+BEFORE DELETE ON uzytkownik
+FOR EACH ROW
+DELETE FROM pokrewienstwo 
+WHERE uzytkownik_id = OLD.id OR spokrewniony_uzytkownik_id = OLD.id$$
+
+USE `smipegs_lublin`$$
+CREATE TRIGGER przed_usunieciem_uzytkownika_usun_posty
+BEFORE DELETE ON uzytkownik
+FOR EACH ROW
+DELETE FROM ogloszenie 
+WHERE autor_id = OLD.id;$$
+
+USE `smipegs_lublin`$$
+CREATE TRIGGER po_usunieciu_danych_usun_adres
+AFTER DELETE ON dane_uzytkownika
+FOR EACH ROW
+    IF OLD.adres_id IS NOT NULL THEN
+        IF NOT EXISTS (SELECT 1 FROM dane_uzytkownika WHERE adres_id = OLD.adres_id) THEN
+            DELETE FROM adres WHERE id = OLD.adres_id;
+        END IF;
+    END IF;$$
 
 USE `smipegs_lublin`$$
 CREATE TRIGGER po_wstawieniu_do_tablica_ogloszeniowa_uzytkownik

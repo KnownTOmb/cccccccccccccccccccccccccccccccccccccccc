@@ -160,7 +160,7 @@ Boolowski typ danych jest reprezentowany przez tinyint(1).
 
 ![](assets/20260114_134039_mapa_pokrewienstw.png)
 
-![](assets/20260114_094159_pokrewienstwo.png)
+![](assets/20260116_000057_relacje_struktura_danych.png)
 
 ### proboszcz
 
@@ -212,7 +212,7 @@ Boolowski typ danych jest reprezentowany przez tinyint(1).
 | obrazek_id              |              | klucz obcy, możliwy NULL |
 | archiwalny              | bool         |                           |
 
-![](assets/20260114_094259_ogloszenie.png)
+![](assets/20260116_000306_ogloszenie_struktura.png)
 
 ### obrazek
 
@@ -569,7 +569,11 @@ VALUES ('obserwator postow',NEW.tablica_ogloszeniowa_id,NEW.uzytkownik_id)$$
 DELIMITER ;
 ```
 
-> Przed usunieciem uzytkownika z bazy danych zabiera mu uprawnienia
+## Sprzatanie kiedy usuwamy uzytkownika
+
+##### Przed usunieciem uzytkownika z bazy danych:
+
+> Zabieramy mu uprawnienia
 
 ```sql
 CREATE TRIGGER przed_usunieciem_uzytkownik_usun_uprwanienie
@@ -579,7 +583,7 @@ DELETE FROM uprawnienie
 WHERE uzytkownik_id = OLD.id;
 ```
 
-> Przed usunieciem uzytkownika z bazy danych usuwa go z tablic
+> Usuwamy go z tablic
 
 ```sql
 CREATE TRIGGER przed_usunieciem_uzytkownik_usun_z_tablice
@@ -589,7 +593,67 @@ DELETE FROM tablica_ogloszeniowa_uzytkownik
 WHERE uzytkownik_id = OLD.id;
 ```
 
-### Przyklad działania
+> Usuwamy ustawiony przez niego opis
+
+```sql
+USE `smipegs_lublin`
+CREATE TRIGGER przed_usunieciem_uzytkownik_usun_opis
+BEFORE DELETE ON uzytkownik
+FOR EACH ROW
+DELETE FROM opis_uzytkownika
+WHERE uzytkownik_id = OLD.id;
+```
+
+> Usuwamy wypełmione przez niego dane osobowe
+
+```sql
+USE `smipegs_lublin`
+CREATE TRIGGER przed_usunieciem_uzytkownik_usun_dane
+BEFORE DELETE ON uzytkownik
+FOR EACH ROW
+DELETE FROM dane_uzytkownika
+WHERE uzytkownik_id = OLD.id;
+```
+
+> Usuwamy mu powiazania z innymi uzytkownikami
+
+```sql
+USE `smipegs_lublin`
+CREATE TRIGGER przed_usunieciem_uzytkownik_usun_pokrewienstwo
+BEFORE DELETE ON uzytkownik
+FOR EACH ROW
+DELETE FROM pokrewienstwo 
+WHERE uzytkownik_id = OLD.id OR spokrewniony_uzytkownik_id = OLD.id
+```
+
+> Usuwamy posty które stworzył
+
+```sql
+USE `smipegs_lublin`
+CREATE TRIGGER przed_usunieciem_uzytkownika_usun_posty
+BEFORE DELETE ON uzytkownik
+FOR EACH ROW
+DELETE FROM ogloszenie 
+WHERE autor_id = OLD.id;
+```
+
+> Usuamy adres zamieszkania z bazy, tylko wtedy jezeli nikt inny pod nim nie mieszka
+
+```sql
+USE `smipegs_lublin`
+CREATE TRIGGER po_usunieciu_danych_usun_adres
+AFTER DELETE ON dane_uzytkownika
+FOR EACH ROW
+    IF OLD.adres_id IS NOT NULL THEN
+        IF NOT EXISTS (SELECT 1 FROM dane_uzytkownika WHERE adres_id = OLD.adres_id) THEN
+            DELETE FROM adres WHERE id = OLD.adres_id;
+        END IF;
+    END IF;
+```
+
+### Przyklady działania:
+
+##### Dodawanie uzytkownika
 
 > Nasze wyzwalacze działaja wspólnie ze soba, gdy dodajemy uzytkownika:
 
@@ -605,18 +669,43 @@ WHERE uzytkownik_id = OLD.id;
 
 ![](assets/20260115_105144_Adam_Uprawniania.png)
 
+##### Usuwanie Uzytkownika
+
+###### Stan przed usunieciem:
+
+![](assets/20260115_234334_Adam_Uprawniania.png)
+
+![](assets/20260115_234444_Adam_Uprawniania.png)
+
+![](assets/20260115_234457_adam_Zyje_opis.png)
+
+![](assets/20260115_234522_adam_Zyje_dane.png)
+
+![](assets/20260115_234530_adam_ma_Rodzine.png)
+
+![](assets/20260115_234538_adam_Kreator.png)
+
 > Gdy postanowimy usunac uzytkownika
 
 ![](assets/20260115_114142_adamGONE.png)
 
-> To najpierw zostaną mu usuniety uprawnienia:
+> To system posprzata i usunie wszystkie dane powiazane z uzytkownikiem
 
 ![](assets/20260115_114347_nieMaAdama.png)
 
-> Oraz zastanie usuniety z tablic na których był:
-
-
 ![](assets/20260115_114705_nieMaGo.png)
+
+![](assets/20260115_235049_adam_smierc_dane.png)
+
+![](assets/20260115_235103_adam_smierc_ogloszenie.png)
+
+![](assets/20260115_235117_adam_smierc_opis.png)
+
+![](assets/20260115_235126_adam_stracil_rodzine.png)
+
+> Pozostał jedynie adres uzytkownika poniewarz w bazie znajdowal sie inny uzytkownik który mieszkal pod tym samym adresem
+
+![](assets/20260115_235624_adam_umar_ale_dom_stoi.png)
 
 # 11.Opracowanie i prezentacja procedur składowanych
 

@@ -135,6 +135,7 @@ TRUNCATE TABLE modlitwa;
 TRUNCATE TABLE parafia;
 TRUNCATE TABLE proboszcz;
 
+ALTER TABLE `pokrewienstwo` CHANGE `widzi_dane_osobowe` `widzi_dane_osobowe` TINYINT(1) NULL DEFAULT '0'; 
 
 INSERT IGNORE INTO tablica_ogloszeniowa (id, nazwa, opis)
 VALUES (1, 'Tablica główna', 'Witaj na naszym portalu!');
