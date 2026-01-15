@@ -1,3 +1,7 @@
+# -1. Załorzenia projektu cos? jesze?
+
+Zakładamy ze nasza baza danych stoi na serwerze dzialajacym na Linuxie, aby nasz skrypt tworzenia kopii zapasowej dzialal.
+
 # 0. Nazwa Projektu
 
 System Monitorowania Interakcji Pośród Emerytalnej Grupy Społecznej (SMIPEGS Lublin).
@@ -146,14 +150,13 @@ Boolowski typ danych jest reprezentowany przez tinyint(1).
 > Użytkownik zgłasza swoją relacje z innym użytkownikiem, relacje nie są symetryczne ponieważ drugi użytkownik nie musi ją uznawać, co nie jest problemem gdyż są one czysto informacyjne.
 
 
-| Atrybut                   | Typ                                                                                                                                                                                                                                                                                                                                     | Ograniczenia / opis |
-| --------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------- |
-| id                        | int                                                                                                                                                                                                                                                                                                                                     | klucz główny      |
-| typ_relacji               | enum('mama', 'ojciec', 'córka', 'syn', 'siostra', 'brat', 'ciotka', 'wujek', 'siostrzenica', 'bratanica', 'siostrzeniec', 'bratanek', 'kuzyn', 'kuzynka', 'babcia', 'dziadek', 'wnuczka', 'wnuk', 'ojczym', 'macocha', 'pasierb', 'pasierbica', 'szwagier', 'szwagierka', 'teść', 'teściowa', 'zięć', 'synowa', 'mąż', 'żona') |                     |
-| widzi_dane_osobowe        | bool                                                                                                                                                                                                                                                                                                                                    |                     |
-| uzytkownik_id             |                                                                                                                                                                                                                                                                                                                                         | klucz obcy          |
+| Atrybut                    | Typ                                                                                                                                                                                                                                                                                                                                     | Ograniczenia / opis |
+| ---------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------- |
+| id                         | int                                                                                                                                                                                                                                                                                                                                     | klucz główny      |
+| typ_relacji                | enum('mama', 'ojciec', 'córka', 'syn', 'siostra', 'brat', 'ciotka', 'wujek', 'siostrzenica', 'bratanica', 'siostrzeniec', 'bratanek', 'kuzyn', 'kuzynka', 'babcia', 'dziadek', 'wnuczka', 'wnuk', 'ojczym', 'macocha', 'pasierb', 'pasierbica', 'szwagier', 'szwagierka', 'teść', 'teściowa', 'zięć', 'synowa', 'mąż', 'żona') |                     |
+| widzi_dane_osobowe         | bool                                                                                                                                                                                                                                                                                                                                    |                     |
+| uzytkownik_id              |                                                                                                                                                                                                                                                                                                                                         | klucz obcy          |
 | spokrewniony_uzytkownik_id |                                                                                                                                                                                                                                                                                                                                         | klucz obcy          |
-
 
 ![](assets/20260114_134039_mapa_pokrewienstw.png)
 
@@ -274,9 +277,9 @@ Boolowski typ danych jest reprezentowany przez tinyint(1).
 
 ![](assets/20260114_125414_relacje.png)
 
-# 5. Diagram ERD 					    ඞ
+# 5. Diagram ERD                             ඞ
 
-![](assets/20260109_133156_diagrem_erd.png)
+![](assets/20260115_090626_diagram_erd.png)
 
 # 7. Zróznicowane zapytania sql
 
@@ -338,7 +341,7 @@ AND o.data_wstawienia >= DATE_SUB(CURDATE(), INTERVAL 2 YEAR)
 
 # 9. Opracowanie i prezentacja widoków
 
-## (Statystyki)
+## ----(Statystyki)----
 
 ### Plodnosc_kreatorow_postow
 
@@ -354,6 +357,8 @@ LEFT JOIN ogloszenie o ON o.autor_id = u.id
 GROUP BY ou.pseudonim
 ORDER BY liczba_postow DESC;
 ```
+
+![](assets/20260115_102430_plodnoscKreatorowPostow.png)
 
 ### Plodnosc tablicy
 
@@ -372,6 +377,8 @@ GROUP BY t.id, t.nazwa
 ORDER BY liczba_uzytkownikow DESC;
 ```
 
+![](assets/20260115_102501_plodnoscTablicy.png)
+
 ### Plodnosc parafii
 
 > wyswietla ilu uzytkowników jest w danej parafii
@@ -384,6 +391,8 @@ FROM parafia p
 JOIN opis_uzytkownika ou ON ou.parafia_id = p.id
 GROUP BY p.id, p.nazwa;
 ```
+
+![](assets/20260115_102513_plodnoscParafii.png)
 
 ### Pozycja modlitwy
 
@@ -398,6 +407,8 @@ JOIN opis_uzytkownika ou ON ou.ulubiona_modlitwa_id = m.id
 GROUP BY m.id, m.nazwa;
 ```
 
+![](assets/20260115_102527_pozycjaModlitwy.png)
+
 ### Pozycja rodziny
 
 > wyswietla które rodziny maja najwiecej członków
@@ -411,9 +422,11 @@ JOIN opis_uzytkownika ou ON ou.rodzina_id = r.id
 GROUP BY r.id, r.nazwa;
 ```
 
+![](assets/20260115_102541_pozycjaRodziny.png)
+
 ### Matuzal
 
-> wyswietla uzytkownikow majacych co namniej 90 lat
+> wyswietla uzytkownikow mających co namniej 90 lat
 
 ```sql
 DROP VIEW IF EXISTS matuzal;
@@ -426,6 +439,8 @@ JOIN wiek w ON w.dane_uzytkownika_id = du.id
 WHERE w.wiek >= 90
 ORDER BY w.wiek DESC;
 ```
+
+![](assets/20260115_102602_matuzal.png)
 
 ### Zmora
 
@@ -444,7 +459,9 @@ WHERE NOT EXISTS (
 );
 ```
 
-### Zmarli urzytkownicy
+![](assets/20260115_102616_zmora.png)
+
+### Zmarły uzytkownik
 
 > uzytkownicy którzy nie żyja
 
@@ -458,9 +475,13 @@ JOIN dane_uzytkownika du ON du.uzytkownik_id = u.id
 WHERE du.data_smierci IS NOT NULL;
 ```
 
-## — koniec statystyk —
+![](assets/20260115_102640_zmarlyUzytkownik.png)
 
-### Wieki uzytkowników
+## ---- Koniec statystyk ----
+
+## ---- Dane zależne ----
+
+### Wiek
 
 > wyswietla ile lat ma kazdy uzytkownik
 
@@ -474,6 +495,8 @@ CASE
 END AS wiek
 FROM dane_uzytkownika;
 ```
+
+![](assets/20260115_102736_wiek.png)
 
 ### Rodzina wrzeniona
 
@@ -490,6 +513,8 @@ JOIN opis_uzytkownika o ON o.uzytkownik_id = wspolmalzonek.id
 WHERE p.typ_relacji IN ('mąż', 'żona');
 ```
 
+![](assets/20260115_102806_rodzinaWzeniona.png)
+
 ### url obrazka
 
 > wyswietla url obrazka
@@ -501,22 +526,166 @@ SELECT o.id AS obrazek_id, CONCAT('/img/', o.id, '.jpg') AS url
 FROM obrazek o;
 ```
 
+![](assets/20260115_102855_urlObrazka.png)
+
+### Kod pocztowy
+
+> wyswietla kod pocztowy uzytkownika
+
+```sql
+DROP VIEW IF EXISTS kod_pocztowy;
+CREATE VIEW kod_pocztowy AS
+SELECT a.id, CONCAT('20-',LEFT(a.kod_pocztowy, 3)) AS kod_pocztowy
+FROM adres a;
+```
+
+![](assets/20260115_103123_adres_pocztowy.png)
+
 # 10.Opracowanie i prezentacja wyzwalaczy (triggerów)
 
-Nadanie uprawnień obserwatora przy dodaniu do tablicy
-Dodanie użytkownika do tablicy głównej przy dodaniu użytkownika
+> Dodaje uzytkownika do tablicy głównej przy dodaniu użytkownika
+
+```sql
+DELIMITER $$
+USE `smipegs_lublin`$$
+CREATE TRIGGER po_wstawieniu_do_uzytkownik
+AFTER INSERT ON uzytkownik
+FOR EACH ROW
+INSERT INTO tablica_ogloszeniowa_uzytkownik (uzytkownik_id, tablica_ogloszeniowa_id)
+VALUES (NEW.id, 1);$$
+DELIMITER ;
+```
+
+> Ustawia uzytkownikowi role obserwatora postów przy dodaniu do nowej tablicy
+
+```sql
+DELIMITER $$
+USE `smipegs_lublin`$$
+CREATE TRIGGER po_wstawieniu_do_tablica_ogloszeniowa_uzytkownik
+AFTER INSERT ON tablica_ogloszeniowa_uzytkownik
+FOR EACH ROW 
+INSERT INTO uprawnienie (rola,tablica_ogloszeniowa_id,uzytkownik_id)
+VALUES ('obserwator postow',NEW.tablica_ogloszeniowa_id,NEW.uzytkownik_id)$$
+DELIMITER ;
+```
+
+> Przed usunieciem uzytkownika z bazy danych zabiera mu uprawnienia
+
+```sql
+CREATE TRIGGER przed_usunieciem_uzytkownik_usun_uprwanienie
+BEFORE DELETE ON uzytkownik
+FOR EACH ROW
+DELETE FROM uprawnienie
+WHERE uzytkownik_id = OLD.id;
+```
+
+> Przed usunieciem uzytkownika z bazy danych usuwa go z tablic
+
+```sql
+CREATE TRIGGER przed_usunieciem_uzytkownik_usun_z_tablice
+BEFORE DELETE ON uzytkownik
+FOR EACH ROW
+DELETE FROM tablica_ogloszeniowa_uzytkownik
+WHERE uzytkownik_id = OLD.id;
+```
+
+### Przyklad działania
+
+> Nasze wyzwalacze działaja wspólnie ze soba, gdy dodajemy uzytkownika:
+
+![](assets/20260115_104543_dodanie_uzytkownika.png)
+
+![](assets/20260115_104820_testerAdam.png)
+
+> To automatycznie zostanie dodany do tablicy głównej:
+
+![](assets/20260115_104950_Adam_w_tablicy.png)
+
+> Oraz zostanie mu przypisana rola 'obserwtor postów'
+
+![](assets/20260115_105144_Adam_Uprawniania.png)
+
+> Gdy postanowimy usunac uzytkownika
+
+![](assets/20260115_114142_adamGONE.png)
+
+> To najpierw zostaną mu usuniety uprawnienia:
+
+![](assets/20260115_114347_nieMaAdama.png)
+
+> Oraz zastanie usuniety z tablic na których był:
+
+
+![](assets/20260115_114705_nieMaGo.png)
 
 # 11.Opracowanie i prezentacja procedur składowanych
 
-Archiwizacja
+> Pozwala admistratorowi podejrzec przedawnione posty na podstawie daty wstawienia z pominieciem postów oznaczonych jako 'do  archiwizacji'. Procedura pozwala na wyszukanie postów starszych niz x lat lub postów stworzonych do konkretnej daty. Mozna tez podejrzec kolumny do usuniecia jesli nie ustawimy parametru usunac na 'true'.
+
+```sql
+DROP PROCEDURE IF EXISTS usun_stare_ogloszenia;
+
+DELIMITER $$
+
+CREATE PROCEDURE usun_stare_ogloszenia(
+    IN starsze_niz INT,
+    IN do_kiedy DATE,
+    IN usunac BOOLEAN
+)
+BEGIN
+    DECLARE data_graniczna DATE;
+    IF usunac IS NULL THEN
+    	SET usunac = 0;
+	END IF;
+
+    IF (starsze_niz IS NOT NULL AND starsze_niz > 0)
+        AND (do_kiedy IS NOT NULL AND do_kiedy <> '0000-00-00') THEN
+        SIGNAL SQLSTATE '45000'
+        SET MESSAGE_TEXT = 'Nie można podać obu parametrów jednocześnie';
+
+    ELSEIF starsze_niz IS NOT NULL AND starsze_niz > 0 THEN
+        SET data_graniczna = DATE_SUB(CURDATE(), INTERVAL starsze_niz YEAR);
+
+    ELSEIF do_kiedy IS NOT NULL AND do_kiedy <> '0000-00-00' THEN
+        SET data_graniczna = do_kiedy;
+
+    ELSE
+        SIGNAL SQLSTATE '45000'
+        SET MESSAGE_TEXT = 'Nie podano poprawnego parametru';
+    END IF;
+
+    SELECT *
+    FROM ogloszenie
+    WHERE data_wstawienia < data_graniczna
+        AND (archiwalny IS NULL OR archiwalny = 0);
+	IF (usunac) THEN
+    DELETE
+    FROM ogloszenie
+    WHERE data_wstawienia < data_graniczna
+        AND (archiwalny IS NULL OR archiwalny = 0);
+	END IF;
+END$$
+
+DELIMITER ;
+```
+
+### Przykladowe uzycie
+
+> Wyszukujemy procedure w pasku bocznym, klikamy przycisk execute, w parametrach podajemy tylko wartosc parametru 'starsze_niz' = 1 nastepnie naciskamy przycisk Go.
+
+![](assets/20260115_103531_execute_routine.png)
+
+> Procedura pokarze ogloszenia starsze niz 1 rok, nie usunie ich poniewarz nie zmieniamy wartosci paramatru 'usunac'.
+
+![](assets/20260115_104018_procedure_wynik.png)
 
 # 13.Prezentacja tworzenia kopii zapasowej, importu i eksportu bazy danych
 
-Kopia zapasowa jest tworzona automatycznie o godzinie 2:30
+> Kopia zapasowa jest tworzona automatycznie o godzinie 2:30
 
 ## Początkowa konfiguracja z poziomu admina serwera
 
-Zawartosc skryptu:
+#### Zawartosc skryptu:
 
 ```sh
 #!/bin/bash
@@ -528,19 +697,21 @@ DATABASE="smipegs"
 BACKUP_PATH="/home/server/backups"
 DATE=$(date +%Y-%m-%d_%H%M%S)
 
-# Wykonanie kopii z kompresją (oszczędność miejsca)
+# Wykonanie kopii
 mysqldump -root -p$PASSWORD $DATABASE > $BACKUP_PATH/$DATABASE-$DATE.sql
 
 # Logi
 echo "$DATE: Wykonanie kopii zapasowej." >> logi.txt
 ```
 
+> nadajemy prawo do wykonywania i dodajemy wpis do chrona aby automatycznie sie wykonywal
+
 ```sh
 sudo chmod +x skrypt_do_automatycznej_kopii.sh
 chrontab -e
 ```
 
-wewnątrz dodajemy linie:
+> wewnątrz dodajemy linie:
 
 ```sh
 30 2 * * * skrypt_do_automatycznej_kopii.sh
@@ -548,11 +719,11 @@ wewnątrz dodajemy linie:
 
 ## Jednorazowy Eksport bazy danych w graficzym panelu xampp
 
-### 1. Na górnym panelu klikamy w zakladke Eksport i wybieramy opcje szybko
+#### 1. Na górnym panelu klikamy w zakladke Eksport i wybieramy opcje szybko
 
 ![](assets/20260112_211932_zakladka_eksport.png)
 
-### 2.Klikamy Export i wybieramy gdzie chcemy zapisac nasza baze danych
+#### 2.Klikamy Export i wybieramy gdzie chcemy zapisac nasza baze danych
 
 ![](assets/20260112_212626_zakladka_eksport_cz2.png)
 
@@ -560,15 +731,15 @@ wewnątrz dodajemy linie:
 
 > nie musimy wybierac nowej pustej bazy danych, skrypt sam utworzy baze o nazwie smipegs_lublin
 
-### 1. Na górnym panelu klikamy w zakladke import wybieramy plik do_importu/1_pusta_baza_z_triggerami.sql, odznaczamy foregin key checks a reszte opcji pozostawiamy ustawionych domyslnie.
+#### 1. Na górnym panelu klikamy w zakladke import wybieramy plik do_importu/1_pusta_baza_z_triggerami.sql, odznaczamy foregin key checks a reszte opcji pozostawiamy ustawionych domyslnie.
 
 ![](assets/20260113_202828_import1.png)
 
-### 2. Nastepnie klikamy w nowo utworzona baze danych smipegs_lublin, wchodzimy w zakładke import i importujemy plik do_importu/2_widoki.sql wczesniej odznaczajac foregin key checks.
+#### 2. Nastepnie klikamy w nowo utworzona baze danych smipegs_lublin, wchodzimy w zakładke import i importujemy plik do_importu/2_widoki.sql wczesniej odznaczajac foregin key checks.
 
 ![](assets/20260113_204408_import2.png)
 
-### 3. Na koniec do bazy smipegs lublin importujemy plik do_importu/3_generated_data.sql odznaczajac foregin key cheks.
+#### 3. Na koniec do bazy smipegs lublin importujemy plik do_importu/3_generated_data.sql odznaczajac foregin key cheks.
 
 ![](assets/20260113_204904_import3.png)
 

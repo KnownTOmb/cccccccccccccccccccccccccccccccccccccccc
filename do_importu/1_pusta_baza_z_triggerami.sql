@@ -1,4 +1,4 @@
--- Wed Jan 14 14:13:24 2026
+-- Thu Jan 15 11:34:27 2026
 
 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0;
 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0;
@@ -288,6 +288,20 @@ AFTER INSERT ON uzytkownik
 FOR EACH ROW
 INSERT INTO tablica_ogloszeniowa_uzytkownik (uzytkownik_id, tablica_ogloszeniowa_id)
 VALUES (NEW.id, 1);$$
+
+USE `smipegs_lublin`$$
+CREATE TRIGGER przed_usunieciem_uzytkownik_usun_z_tablice
+BEFORE DELETE ON uzytkownik
+FOR EACH ROW
+DELETE FROM tablica_ogloszeniowa_uzytkownik
+WHERE uzytkownik_id = OLD.id;$$
+
+USE `smipegs_lublin`$$
+CREATE TRIGGER przed_usunieciem_uzytkownik_usun_uprwanienie
+BEFORE DELETE ON uzytkownik
+FOR EACH ROW
+DELETE FROM uprawnienie
+WHERE uzytkownik_id = OLD.id;$$
 
 USE `smipegs_lublin`$$
 CREATE TRIGGER po_wstawieniu_do_tablica_ogloszeniowa_uzytkownik

@@ -154,19 +154,23 @@ DROP PROCEDURE IF EXISTS usun_stare_ogloszenia;
 DELIMITER $$
 
 CREATE PROCEDURE usun_stare_ogloszenia(
-    IN ile_lat INT,
-    IN do_kiedy DATE
+    IN starsze_niz INT,
+    IN do_kiedy DATE,
+    IN usunac BOOLEAN
 )
 BEGIN
     DECLARE data_graniczna DATE;
+    IF usunac IS NULL THEN
+    	SET usunac = 0;
+	END IF;
 
-    IF (ile_lat IS NOT NULL AND ile_lat > 0)
+    IF (starsze_niz IS NOT NULL AND starsze_niz > 0)
         AND (do_kiedy IS NOT NULL AND do_kiedy <> '0000-00-00') THEN
         SIGNAL SQLSTATE '45000'
         SET MESSAGE_TEXT = 'Nie można podać obu parametrów jednocześnie';
 
-    ELSEIF ile_lat IS NOT NULL AND ile_lat > 0 THEN
-        SET data_graniczna = DATE_SUB(CURDATE(), INTERVAL ile_lat YEAR);
+    ELSEIF starsze_niz IS NOT NULL AND starsze_niz > 0 THEN
+        SET data_graniczna = DATE_SUB(CURDATE(), INTERVAL starsze_niz YEAR);
 
     ELSEIF do_kiedy IS NOT NULL AND do_kiedy <> '0000-00-00' THEN
         SET data_graniczna = do_kiedy;
@@ -180,11 +184,12 @@ BEGIN
     FROM ogloszenie
     WHERE data_wstawienia < data_graniczna
         AND (archiwalny IS NULL OR archiwalny = 0);
-
+	IF (usunac) THEN
     DELETE
     FROM ogloszenie
     WHERE data_wstawienia < data_graniczna
         AND (archiwalny IS NULL OR archiwalny = 0);
+	END IF;
 END$$
 
 DELIMITER ;
