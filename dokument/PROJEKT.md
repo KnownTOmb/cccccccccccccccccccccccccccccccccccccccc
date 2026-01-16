@@ -97,7 +97,7 @@ Boolowski typ danych jest reprezentowany przez tinyint(1).
 | Atrybut              | Typ           | Ograniczenia / opis       |
 | ---------------------- | --------------- | --------------------------- |
 | id                   | int           | klucz główny            |
-| uzytkownik id        |               | klucz obcy                |
+| uzytkownik_id        |               | klucz obcy                |
 | plec                 | char(1)       | możliwy NULL             |
 | pseudonim            | varchar(64)   | możliwy NULL             |
 | opis                 | varchar(1024) | możliwy NULL             |
