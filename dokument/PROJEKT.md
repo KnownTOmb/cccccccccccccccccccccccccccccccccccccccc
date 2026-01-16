@@ -828,13 +828,9 @@ chrontab -e
 
 ![](assets/20260113_202828_import1.png)
 
-#### 2. Nastepnie klikamy w nowo utworzona baze danych smipegs_lublin, wchodzimy w zakładke import i importujemy plik do_importu/2_widoki.sql wczesniej odznaczajac foregin key checks.
+#### 2. Nastepnie klikamy w nowo utworzona baze danych smipegs_lublin, wchodzimy w zakładke import i importujemy plik do_importu/2_initial_data_with_generated_data.sql wczesniej odznaczajac foregin key checks.
 
 ![](assets/20260113_204408_import2.png)
-
-#### 3. Na koniec do bazy smipegs lublin importujemy plik do_importu/3_generated_data.sql odznaczajac foregin key cheks.
-
-![](assets/20260113_204904_import3.png)
 
 > poprawna struktura danych po imporcie
 
