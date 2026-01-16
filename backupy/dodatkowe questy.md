@@ -49,3 +49,13 @@
 > Życie po śmiertne
 * [ ] oddzielna tabela do haseł i loginów 
 
+```
+Adam i Maria siedzą na brzegu małego jeziora, gdzie woda lśni jak rozpuszczone srebro. Zachód słońca barwi niebo w odcieniach moreli i fiołku. Adam wyciąga z kieszeni małe, aksamitne pudełeczko. Maria patrzy na niego zdziwiona, serce bije jej szybciej.
+
+Adam łapie jej dłonie w swoje i mówi:
+„Maria… każdy dzień z Tobą jest jak odkrywanie nowego nieba. Chcę, żeby nasze przygody nigdy się nie kończyły. Czy zostaniesz moją żoną?”
+
+W tym momencie otwierają się pudełeczko, a w nim pierścionek, który odbija ostatnie promienie słońca. Maria, z łzami szczęścia w oczach, odpowiada „Tak!”, a Adam wciąga ją w czuły uścisk.
+
+W tle migoczą ogniki świetlików, a wiatr niesie ich śmiech nad taflą jeziora. Wszystko jest idealnie – jakby świat na chwilę przestał się spieszyć, tylko dla nich dwojga. 💖
+```

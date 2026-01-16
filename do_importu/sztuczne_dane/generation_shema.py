@@ -159,7 +159,7 @@ def generated_table_data(table_name, additional_sqls, generate_table_row_data, f
                 user_gender = get_already_generated_column_data(
                     "opis_uzytkownika",
                     1
-                )[user_id - 1].replace("X", "F")
+                )[user_id - 2].replace("X", "F")
 
                 return user_gender
             def generate_user_relation_type(user_id):
@@ -252,10 +252,10 @@ def generated_table_data(table_name, additional_sqls, generate_table_row_data, f
             relation_types = []
             related_users_id = []
 
-            users_id = list(range(1, generation_config.uzytkownik.number_of_rows+1))
+            users_id = list(range(2, generation_config.uzytkownik.number_of_rows+2))
             random.shuffle(users_id)
 
-            for current_every_other_user_id_row_index in range(0, generation_config.uzytkownik.number_of_rows-1, 2):
+            for current_every_other_user_id_row_index in range(0, len(users_id), 2):
                 current_user_id = users_id[current_every_other_user_id_row_index]
                 current_relation_type = generate_user_relation_type(current_user_id)
                 current_related_user_id = users_id[current_every_other_user_id_row_index+1]
