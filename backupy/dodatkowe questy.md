@@ -33,12 +33,19 @@
 * [ ] dopisać w pdfie i gdzie tam trzeba że kombinacja id tablicy i użytkownika jest unikalna w uprawnieniach ()
 * [X] usunąć kolumnę ogłoszeniecol z ogłoszeń
 * [ ] poprawić kiedyś błędy językowe/niechlujstwa w pdfie
-  od razu im przypisał id_autora = 1
 * [X] login ma być null, dopisać to do pdfa
 * [X] zdjecie profilowe nie może być null, default to 1
 * [X] opis dla usuniętego użytkownika, w opisie ma należeć do nieznanej rodziny też dopisać do pdfa
-* [ ] posortuj po liczbie użytkowników w płodności tablic
+* [X] posortuj po liczbie użytkowników w płodności tablic
 * [ ] na końcu screeny zweryfikować i typy danych
 * [ ] administracje
 * [ ] widok opis imie nazwisko na końcu jak czas
+* [ ] dodac nowe triggery do trigerow
+* [ ] zapytania napisac z 8 podpunktu
 * [ ] zabić projekt
+
+
+
+> Życie po śmiertne
+* [ ] oddzielna tabela do haseł i loginów 
+

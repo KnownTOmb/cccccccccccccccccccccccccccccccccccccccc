@@ -321,6 +321,14 @@ WHERE a.rejon = 'Rury'
 > Nie mozemy edytowac struktury bazy danych
 > reczne stworzenie zmory
 
+> stworzenie zmory
+
+> usuniecie kreatora
+
+> dodanie uzytkownika
+
+> rozwód
+
 > degradacja nieaktywnych kreatorów postów
 
 ```sql
@@ -580,11 +588,11 @@ DELIMITER ;
 > Zabieramy mu uprawnienia
 
 ```sql
-CREATE TRIGGER przed_usunieciem_uzytkownik_usun_uprwanienie
-BEFORE DELETE ON uzytkownik
+CREATE TRIGGER po_usunieciu_z_tablica_ogloszeniowa_usun_uprwanienie
+AFTER DELETE ON tablica_ogloszeniowa_uzytkownik
 FOR EACH ROW
 DELETE FROM uprawnienie
-WHERE uzytkownik_id = OLD.id;
+WHERE uzytkownik_id = OLD.uzytkownik_id;
 ```
 
 > Usuwamy go z tablic
@@ -630,15 +638,16 @@ DELETE FROM pokrewienstwo
 WHERE uzytkownik_id = OLD.id OR spokrewniony_uzytkownik_id = OLD.id
 ```
 
-> Usuwamy posty które stworzył
+> Posty które stworzył sa przypisaywane autorowi o id = 1 aka 'usuniety uzytkownik'
 
 ```sql
 USE `smipegs_lublin`
 CREATE TRIGGER przed_usunieciem_uzytkownika_usun_posty
 BEFORE DELETE ON uzytkownik
 FOR EACH ROW
-DELETE FROM ogloszenie 
-WHERE autor_id = OLD.id;
+UPDATE ogloszenie 
+SET autor_id = 1
+WHERE autor_id = OLD.id
 ```
 
 > Usuamy adres zamieszkania z bazy, tylko wtedy jezeli nikt inny pod nim nie mieszka
@@ -679,8 +688,6 @@ FOR EACH ROW
 
 ![](assets/20260115_234334_Adam_Uprawniania.png)
 
-![](assets/20260115_234444_Adam_Uprawniania.png)
-
 ![](assets/20260115_234457_adam_Zyje_opis.png)
 
 ![](assets/20260115_234522_adam_Zyje_dane.png)
@@ -701,11 +708,13 @@ FOR EACH ROW
 
 ![](assets/20260115_235049_adam_smierc_dane.png)
 
-![](assets/20260115_235103_adam_smierc_ogloszenie.png)
-
 ![](assets/20260115_235117_adam_smierc_opis.png)
 
 ![](assets/20260115_235126_adam_stracil_rodzine.png)
+
+> Posty uzytkownika zostały przypisane autorowi o id = 1
+
+![](assets/20260116_193715_metamorfoza_Adama.png)
 
 > Pozostał jedynie adres uzytkownika poniewarz w bazie znajdowal sie inny uzytkownik który mieszkal pod tym samym adresem
 
@@ -830,8 +839,10 @@ chrontab -e
 
 #### 2. Nastepnie klikamy w nowo utworzona baze danych smipegs_lublin, wchodzimy w zakładke import i importujemy plik do_importu/2_initial_data_with_generated_data.sql wczesniej odznaczajac foregin key checks.
 
-![](assets/20260113_204408_import2.png)
+![](assets/20260116_183244_nonwy_import.png)
 
 > poprawna struktura danych po imporcie
 
-![](assets/20260113_212348_gotowy_import.png)
+![](assets/20260116_183412_nowa_struktura.png)
+
+![](assets/20260116_183619_triggery.png)

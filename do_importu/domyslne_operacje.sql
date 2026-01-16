@@ -41,7 +41,7 @@ FROM tablica_ogloszeniowa t
 LEFT JOIN tablica_ogloszeniowa_uzytkownik tou ON t.id = tou.tablica_ogloszeniowa_id 
 LEFT JOIN ogloszenie o ON o.tablica_ogloszeniowa_id = t.id 
 GROUP BY t.id, t.nazwa
-ORDER BY liczba_uzytkownikow DESC;
+ORDER BY liczba_postow DESC;
 
 
 DROP VIEW IF EXISTS plodnosc_parafii;
@@ -120,8 +120,8 @@ FROM adres a;
 -- Domysle dane
 -- -----------------------------------------------------
 
-ALTER TABLE uprawnienie
-DROP CONSTRAINT uq_uprawnienie;
+ALTER TABLE uprawnienie 
+DROP CONSTRAINT IF EXISTS uq_uprawnienie;
 
 TRUNCATE TABLE tablica_ogloszeniowa_uzytkownik;
 TRUNCATE TABLE uprawnienie;
@@ -142,11 +142,14 @@ ALTER TABLE uprawnienie
 ADD UNIQUE KEY uq_uprawnienie
 (tablica_ogloszeniowa_id, uzytkownik_id);
 
-ALTER IGNORE TABLE `uzytkownik` CHANGE `haslo` `haslo` VARCHAR(64) NULL DEFAULT 'uzytkownik';
-ALTER IGNORE TABLE `uzytkownik` CHANGE `login` `login` VARCHAR(128) NULL DEFAULT 'uzytkownik';
+ALTER IGNORE TABLE `uzytkownik` CHANGE `haslo` `haslo` VARCHAR(64) NULL DEFAULT NULL;
+ALTER IGNORE TABLE `uzytkownik` CHANGE `login` `login` VARCHAR(128) NULL DEFAULT NULL;
 
 INSERT IGNORE INTO uzytkownik (id)
 VALUES (1);
+
+ALTER IGNORE TABLE `uzytkownik` CHANGE `haslo` `haslo` VARCHAR(64) NULL DEFAULT 'uzytkownik';
+ALTER IGNORE TABLE `uzytkownik` CHANGE `login` `login` VARCHAR(128) NULL DEFAULT 'uzytkownik';
 
 DELETE FROM tablica_ogloszeniowa_uzytkownik WHERE uzytkownik_id = 1;
 
@@ -174,6 +177,7 @@ VALUES (1, 'Nieznana');
 
 INSERT IGNORE INTO obrazek (id, tekst_alternatywny)
 VALUES (1, 'Domyślne zdjęcie profilowe');
+-- rzyg
 
 -- -----------------------------------------------------
 -- Procedura

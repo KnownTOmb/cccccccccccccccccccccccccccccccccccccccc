@@ -1,4 +1,4 @@
--- Fri Jan 16 15:35:29 2026
+-- Fri Jan 16 19:09:42 2026
 
 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0;
 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0;
@@ -212,7 +212,7 @@ CREATE TABLE IF NOT EXISTS `smipegs_lublin`.`ogloszenie` (
   `tablica_ogloszeniowa_id` SMALLINT(255) UNSIGNED NOT NULL,
   `obrazek_id` INT UNSIGNED NULL,
   `autor_id` INT UNSIGNED NOT NULL,
-  `archiwalny` TINYINT(1) NULL,
+  `archiwalny` TINYINT(1) NOT NULL,
   PRIMARY KEY (`id`, `tablica_ogloszeniowa_id`, `autor_id`),
   UNIQUE INDEX `id_UNIQUE` (`id`),
   INDEX `fk_ogloszenie_tablica_ogloszeniowa1_idx` (`tablica_ogloszeniowa_id`),
@@ -294,13 +294,6 @@ CREATE TRIGGER przed_usunieciem_uzytkownik_usun_z_tablice
 BEFORE DELETE ON uzytkownik
 FOR EACH ROW
 DELETE FROM tablica_ogloszeniowa_uzytkownik
-WHERE uzytkownik_id = OLD.id;$$
-
-USE `smipegs_lublin`$$
-CREATE TRIGGER przed_usunieciem_uzytkownik_usun_uprwanienie
-BEFORE DELETE ON uzytkownik
-FOR EACH ROW
-DELETE FROM uprawnienie
 WHERE uzytkownik_id = OLD.id;$$
 
 USE `smipegs_lublin`$$
