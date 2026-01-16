@@ -39,9 +39,10 @@
 * [X] posortuj po liczbie użytkowników w płodności tablic
 * [ ] na końcu screeny zweryfikować i typy danych
 * [ ] administracje
-* [ ] widok opis imie nazwisko na końcu jak czas
+* [X] widok opis imie nazwisko na końcu jak czas
 * [X] dodac nowe triggery do trigerow
 * [ ] zapytania napisac z 8 podpunktu
+* [ ] zmien screeny do widoków
 * [ ] zabić projekt
 
 

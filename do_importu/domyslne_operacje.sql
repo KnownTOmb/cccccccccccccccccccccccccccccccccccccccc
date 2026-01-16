@@ -14,11 +14,11 @@ FROM dane_uzytkownika;
 
 DROP VIEW IF EXISTS plodnosc_kreatorow_postow;
 CREATE VIEW plodnosc_kreatorow_postow AS 
-SELECT ou.pseudonim, COUNT(o.id) AS liczba_postow 
+SELECT s.imie_pseudonim_nazwisko, COUNT(o.id) AS liczba_postow 
 FROM uzytkownik u 
-LEFT JOIN opis_uzytkownika ou ON ou.uzytkownik_id = u.id 
+LEFT JOIN sygnatura s ON s.id = u.id 
 LEFT JOIN ogloszenie o ON o.autor_id = u.id
-GROUP BY ou.pseudonim
+GROUP BY s.imie_pseudonim_nazwisko
 ORDER BY liczba_postow DESC;
 
 
@@ -73,9 +73,9 @@ ORDER BY liczba_czlonkow DESC;
 
 DROP VIEW IF EXISTS matuzal;
 CREATE VIEW matuzal AS
-SELECT u.id, ou.pseudonim, w.wiek
+SELECT u.id, s.imie_pseudonim_nazwisko, w.wiek
 FROM uzytkownik u
-JOIN opis_uzytkownika ou ON ou.uzytkownik_id = u.id
+JOIN sygnatura s ON s.id = u.id
 JOIN dane_uzytkownika du ON du.uzytkownik_id = u.id
 JOIN wiek w ON w.dane_uzytkownika_id = du.id
 WHERE w.wiek >= 90
@@ -90,9 +90,9 @@ FROM obrazek o;
 
 DROP VIEW IF EXISTS zmora;
 CREATE VIEW zmora AS
-SELECT u.id, ou.pseudonim
+SELECT u.id, s.imie_pseudonim_nazwisko
 FROM uzytkownik u
-JOIN opis_uzytkownika ou ON ou.uzytkownik_id = u.id
+JOIN sygnatura s ON s.id = u.id
 WHERE NOT EXISTS (
     SELECT 1 
     FROM tablica_ogloszeniowa_uzytkownik tou
@@ -102,17 +102,25 @@ WHERE NOT EXISTS (
 
 DROP VIEW IF EXISTS zmarly_uzytkownik;
 CREATE VIEW zmarly_uzytkownik AS
-SELECT u.id, ou.pseudonim, du.data_smierci
+SELECT u.id, s.imie_pseudonim_nazwisko, du.data_smierci
 FROM uzytkownik u
-JOIN opis_uzytkownika ou ON ou.uzytkownik_id = u.id
+JOIN sygnatura s ON s.id = u.id
 JOIN dane_uzytkownika du ON du.uzytkownik_id = u.id
 WHERE du.data_smierci IS NOT NULL;
+
 
 DROP VIEW IF EXISTS kod_pocztowy;
 CREATE VIEW kod_pocztowy AS
 SELECT a.id, CONCAT('20-',LEFT(a.kod_pocztowy, 3)) AS kod_pocztowy
 FROM adres a;
 
+
+DROP VIEW IF EXISTS sygnatura;
+CREATE VIEW sygnatura AS
+SELECT u.id, CONCAT(COALESCE(du.imie, ''), ' "', COALESCE(ou.pseudonim, ''), '" ', COALESCE(du.nazwisko, '')) AS imie_pseudonim_nazwisko
+FROM uzytkownik u
+LEFT JOIN opis_uzytkownika ou ON ou.uzytkownik_id = u.id
+LEFT JOIN dane_uzytkownika du ON du.uzytkownik_id = u.id;
 
 
 
