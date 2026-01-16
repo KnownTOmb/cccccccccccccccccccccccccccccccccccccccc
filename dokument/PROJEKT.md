@@ -283,7 +283,8 @@ Boolowski typ danych jest reprezentowany przez tinyint(1).
 
 # 5. Diagram ERD                             ඞ
 
-![](assets/20260115_090626_diagram_erd.png)
+
+![](assets/20260116_211000_diagram_erd_z_logo.png)
 
 # 7. Zróznicowane zapytania sql
 
@@ -321,20 +322,21 @@ WHERE a.rejon = 'Rury'
 > Nie mozemy edytowac struktury bazy danych
 
 > stworzenie zmory
+
 ```sql
 DELETE FROM tablica_ogloszeniowa_uzytkownik 
 WHERE tablica_ogloszeniowa_id = 1 AND uzytkownik_id = "dowolne id"
 ```
 
-> rozwód 
+> rozwód
+
 ```sql
 DELETE FROM pokrewienstwo 
 WHERE (typ_relacji = 'mąż' OR typ_relacji = 'żona') 
 AND ((SELECT uzytkownik_id FROM opis_uzytkownika WHERE pseudonim = 'Marian') OR spokrewniony_uzytkownik_id  = 165)
 ```
 
-> zareczyny 
-
+> zareczyny
 
 > degradacja nieaktywnych kreatorów postów
 > polecenie wypisuje wszyskich nieaktywnych postów i pozwala administratorowi zadecydowac nad ich losem.
@@ -365,11 +367,11 @@ HAVING MAX(o.data_wstawienia) < DATE_SUB(CURDATE(), INTERVAL 2 YEAR);
 ```sql
 DROP VIEW IF EXISTS plodnosc_kreatorow_postow;
 CREATE VIEW plodnosc_kreatorow_postow AS 
-SELECT ou.pseudonim, COUNT(o.id) AS liczba_postow 
+SELECT s.Imie_pseudonim_nazwisko, COUNT(o.id) AS liczba_postow 
 FROM uzytkownik u 
-LEFT JOIN opis_uzytkownika ou ON ou.uzytkownik_id = u.id 
+LEFT JOIN sygnatura s ON s.id = u.id 
 LEFT JOIN ogloszenie o ON o.autor_id = u.id
-GROUP BY ou.pseudonim
+GROUP BY s.Imie_pseudonim_nazwisko
 ORDER BY liczba_postow DESC;
 ```
 
@@ -446,9 +448,9 @@ GROUP BY r.id, r.nazwa;
 ```sql
 DROP VIEW IF EXISTS matuzal;
 CREATE VIEW matuzal AS
-SELECT u.id, ou.pseudonim, w.wiek
+SELECT u.id, s.Imie_pseudonim_nazwisko, w.wiek
 FROM uzytkownik u
-JOIN opis_uzytkownika ou ON ou.uzytkownik_id = u.id
+JOIN sygnatura s ON s.id = u.id
 JOIN dane_uzytkownika du ON du.uzytkownik_id = u.id
 JOIN wiek w ON w.dane_uzytkownika_id = du.id
 WHERE w.wiek >= 90
@@ -483,9 +485,9 @@ WHERE NOT EXISTS (
 ```sql
 DROP VIEW IF EXISTS zmarly_uzytkownik;
 CREATE VIEW zmarly_uzytkownik AS
-SELECT u.id, ou.pseudonim, du.data_smierci
+SELECT u.id, s.imie_pseudonim_nazwisko, du.data_smierci
 FROM uzytkownik u
-JOIN opis_uzytkownika ou ON ou.uzytkownik_id = u.id
+JOIN sygnatura s ON s.id = u.id
 JOIN dane_uzytkownika du ON du.uzytkownik_id = u.id
 WHERE du.data_smierci IS NOT NULL;
 ```
@@ -495,6 +497,21 @@ WHERE du.data_smierci IS NOT NULL;
 ## ---- Koniec statystyk ----
 
 ## ---- Dane zależne ----
+
+### Sygnatura
+
+> wyswietla imie, pseudonim i nazwisko w jednej komórce
+
+```sql
+DROP VIEW IF EXISTS sygnatura;
+CREATE VIEW sygnatura AS
+SELECT u.id, CONCAT(COALESCE(du.imie, ''), ' "', COALESCE(ou.pseudonim, ''), '" ', COALESCE(du.nazwisko, '')) AS imie_pseudonim_nazwisko
+FROM uzytkownik u
+LEFT JOIN opis_uzytkownika ou ON ou.uzytkownik_id = u.id
+LEFT JOIN dane_uzytkownika du ON du.uzytkownik_id = u.id;
+```
+
+![](assets/20260116_205604_imie_nazwisko_pseudonim.png)
 
 ### Wiek
 
