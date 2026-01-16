@@ -139,7 +139,12 @@ INSERT IGNORE INTO uzytkownik ()
 VALUES ();
 
 ALTER IGNORE TABLE `pokrewienstwo` CHANGE `widzi_dane_osobowe` `widzi_dane_osobowe` TINYINT(1) NULL DEFAULT '0'; 
-ALTER IGNORE TABLE `uzytkownik` CHANGE `haslo` `haslo` VARCHAR(64) NULL DEFAULT '';
+
+ALTER IGNORE TABLE `uzytkownik` CHANGE `haslo` `haslo` VARCHAR(64) NULL DEFAULT 'uzytkownik';
+
+ALTER IGNORE TABLE `uzytkownik` CHANGE `login` `login` VARCHAR(128) NULL DEFAULT 'uzytkownik';
+
+ALTER TABLE `opis_uzytkownika` CHANGE `zdjecie_profilowe_id` `zdjecie_profilowe_id` INT(10) UNSIGNED NOT NULL DEFAULT '1'; 
 
 INSERT IGNORE INTO tablica_ogloszeniowa (id, nazwa, opis)
 VALUES (1, 'Tablica główna', 'Witaj na naszym portalu!');
