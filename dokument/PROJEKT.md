@@ -1,6 +1,6 @@
 # -1. Załorzenia projektu cos? jesze?
 
-Zakładamy ze nasza baza danych stoi na serwerze dzialajacym na Linuxie, aby nasz skrypt tworzenia kopii zapasowej dzialal.
+Zakładamy ze nasza baza danych stoi na serwerze dzialajacym na Linuxie, aby nasz skrypt tworzenia kopii zapasowej działał.
 
 # 0. Nazwa Projektu
 
@@ -358,7 +358,7 @@ GROUP BY ou.pseudonim
 ORDER BY liczba_postow DESC;
 ```
 
-![](assets/20260115_102430_plodnoscKreatorowPostow.png)
+![](assets/20260116_091753_plodnosc_kreatora_postow.png)
 
 ### Plodnosc tablicy
 
