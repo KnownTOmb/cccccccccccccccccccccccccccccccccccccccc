@@ -40,7 +40,7 @@
 * [ ] na końcu screeny zweryfikować i typy danych
 * [ ] administracje
 * [ ] widok opis imie nazwisko na końcu jak czas
-* [ ] dodac nowe triggery do trigerow
+* [X] dodac nowe triggery do trigerow
 * [ ] zapytania napisac z 8 podpunktu
 * [ ] zabić projekt
 

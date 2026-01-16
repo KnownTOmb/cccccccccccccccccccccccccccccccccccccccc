@@ -319,34 +319,37 @@ WHERE a.rejon = 'Rury'
 # 8. Opracownie i prezentacja zapytan modyfikujacych dane w bazie
 
 > Nie mozemy edytowac struktury bazy danych
-> reczne stworzenie zmory
 
 > stworzenie zmory
+```sql
+DELETE FROM tablica_ogloszeniowa_uzytkownik 
+WHERE tablica_ogloszeniowa_id = 1 AND uzytkownik_id = "dowolne id"
+```
 
-> usuniecie kreatora
+> rozwód 
+```sql
+DELETE FROM pokrewienstwo 
+WHERE (typ_relacji = 'mąż' OR typ_relacji = 'żona') 
+AND ((SELECT uzytkownik_id FROM opis_uzytkownika WHERE pseudonim = 'Marian') OR spokrewniony_uzytkownik_id  = 165)
+```
 
-> dodanie uzytkownika
+> zareczyny 
 
-> rozwód
 
 > degradacja nieaktywnych kreatorów postów
+> polecenie wypisuje wszyskich nieaktywnych postów i pozwala administratorowi zadecydowac nad ich losem.
 
 ```sql
-SELECT 
-u.id AS uzytkownik_id,
-ou.pseudonim,
-pk.liczba_postow AS liczba_postow
+SELECT u.id AS uzytkownik_id, ou.pseudonim, pk.liczba_postow,
+MAX(o.data_wstawienia) AS ostatni_post
 FROM uprawnienie up
 JOIN uzytkownik u ON u.id = up.uzytkownik_id
 JOIN opis_uzytkownika ou ON ou.uzytkownik_id = u.id
 JOIN plodnosc_kreatorow_postow pk ON pk.pseudonim = ou.pseudonim
+LEFT JOIN ogloszenie o ON o.autor_id = u.id
 WHERE up.rola = 'kreator postów'
-AND NOT EXISTS (
-SELECT 1
-FROM ogloszenie o
-WHERE o.autor_id = u.id
-AND o.data_wstawienia >= DATE_SUB(CURDATE(), INTERVAL 2 YEAR)
-);
+GROUP BY u.id, ou.pseudonim, pk.liczba_postow
+HAVING MAX(o.data_wstawienia) < DATE_SUB(CURDATE(), INTERVAL 2 YEAR);
 ```
 
 #
