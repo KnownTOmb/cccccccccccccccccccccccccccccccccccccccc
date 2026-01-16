@@ -1,4 +1,4 @@
--- Thu Jan 15 23:02:00 2026
+-- Fri Jan 16 10:49:05 2026
 
 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0;
 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0;
@@ -20,7 +20,7 @@ USE `smipegs_lublin` ;
 CREATE TABLE IF NOT EXISTS `smipegs_lublin`.`uzytkownik` (
   `id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
   `login` VARCHAR(128) NOT NULL,
-  `haslo` VARCHAR(64) NOT NULL,
+  `haslo` VARCHAR(64) NULL,
   PRIMARY KEY (`id`),
   UNIQUE INDEX `iduzytkownik_UNIQUE` (`id`),
   UNIQUE INDEX `login_UNIQUE` (`login`));
@@ -213,7 +213,6 @@ CREATE TABLE IF NOT EXISTS `smipegs_lublin`.`ogloszenie` (
   `obrazek_id` INT UNSIGNED NULL,
   `autor_id` INT UNSIGNED NOT NULL,
   `archiwalny` TINYINT(1) NULL,
-  `ogloszeniecol` VARCHAR(45) NULL,
   PRIMARY KEY (`id`, `tablica_ogloszeniowa_id`, `autor_id`),
   UNIQUE INDEX `id_UNIQUE` (`id`),
   INDEX `fk_ogloszenie_tablica_ogloszeniowa1_idx` (`tablica_ogloszeniowa_id`),
@@ -329,8 +328,9 @@ USE `smipegs_lublin`$$
 CREATE TRIGGER przed_usunieciem_uzytkownika_usun_posty
 BEFORE DELETE ON uzytkownik
 FOR EACH ROW
-DELETE FROM ogloszenie 
-WHERE autor_id = OLD.id;$$
+UPDATE ogloszenie 
+SET autor_id = 1
+WHERE autor_id = OLD.id$$
 
 USE `smipegs_lublin`$$
 CREATE TRIGGER po_usunieciu_danych_usun_adres
