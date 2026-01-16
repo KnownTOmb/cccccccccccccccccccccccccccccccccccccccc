@@ -20,9 +20,11 @@
 > [X] cos jest popsute w widioku plodnosc kreatorow postów bo sa wartosci NULL na poczatku 
 > niewazne widok jest popsuty przez to ze wielu uzytkowników ma ten sam opis
 * [X] poszukac czy gdzies nie ma na screenach tinyint(4) bo nwm czamu ale tak był i zmieniłem na tinyint(1)
-* [ ] rozwiazac problem tego ze przy usuwaniu uzytkownika to razem z nim musza poleciec jego posty 
+* [X] rozwiazac problem tego ze przy usuwaniu uzytkownika to razem z nim musza poleciec jego posty - 
+> dodac uzytkownika usuniety uzytkownik i ustawiac go na autora przed usinieciem
 * [ ] dopisać w pdfie i gdzie tam trzeba że kombinacja id tablicy i użytkownika jest unikalna w uprawnieniach ()
 * [X] usunąć kolumnę ogłoszeniecol z ogłoszeń
 * [ ] poprawić kiedyś błędy językowe/niechlujstwa w pdfie
+od razu im przypisał id_autora = 1
 * [ ] login ma być null, dopisać to do pdfa
 * [ ] opis dla usuniętego użytkownika, też dopisać do pdfa
