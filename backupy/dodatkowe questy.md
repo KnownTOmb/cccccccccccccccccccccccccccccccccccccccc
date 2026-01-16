@@ -24,3 +24,5 @@
 * [ ] dopisać w pdfie i gdzie tam trzeba że kombinacja id tablicy i użytkownika jest unikalna w uprawnieniach ()
 * [X] usunąć kolumnę ogłoszeniecol z ogłoszeń
 * [ ] poprawić kiedyś błędy językowe/niechlujstwa w pdfie
+* [ ] login ma być null, dopisać to do pdfa
+* [ ] opis dla usuniętego użytkownika, też dopisać do pdfa
