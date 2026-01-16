@@ -1,4 +1,4 @@
--- Fri Jan 16 14:07:23 2026
+-- Fri Jan 16 15:35:29 2026
 
 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0;
 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0;
@@ -347,7 +347,16 @@ CREATE TRIGGER po_wstawieniu_do_tablica_ogloszeniowa_uzytkownik
 AFTER INSERT ON tablica_ogloszeniowa_uzytkownik
 FOR EACH ROW 
 INSERT INTO uprawnienie (rola,tablica_ogloszeniowa_id,uzytkownik_id)
-VALUES ('obserwator postow',NEW.tablica_ogloszeniowa_id,NEW.uzytkownik_id)$$
+VALUES ('obserwator postow',NEW.tablica_ogloszeniowa_id,NEW.uzytkownik_id)
+ON DUPLICATE KEY UPDATE
+rola = VALUES(rola);$$
+
+USE `smipegs_lublin`$$
+CREATE TRIGGER po_usunieciu_z_tablica_ogloszeniowa_usun_uprwanienie
+AFTER DELETE ON tablica_ogloszeniowa_uzytkownik
+FOR EACH ROW
+DELETE FROM uprawnienie
+WHERE uzytkownik_id = OLD.uzytkownik_id;$$
 
 DELIMITER ;
 

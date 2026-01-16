@@ -120,6 +120,9 @@ FROM adres a;
 -- Domysle dane
 -- -----------------------------------------------------
 
+ALTER TABLE uprawnienie
+DROP CONSTRAINT uq_uprawnienie;
+
 TRUNCATE TABLE tablica_ogloszeniowa_uzytkownik;
 TRUNCATE TABLE uprawnienie;
 TRUNCATE TABLE ogloszenie;
@@ -135,17 +138,22 @@ TRUNCATE TABLE modlitwa;
 TRUNCATE TABLE parafia;
 TRUNCATE TABLE proboszcz;
 
-INSERT IGNORE INTO uzytkownik ()
-VALUES ()
-
-DELETE FROM tablica_ogloszeniowa_uzytkownik WHERE uzytkownik_id = 1; 
-
-
-ALTER IGNORE TABLE `pokrewienstwo` CHANGE `widzi_dane_osobowe` `widzi_dane_osobowe` TINYINT(1) NULL DEFAULT '0'; 
+ALTER TABLE uprawnienie
+ADD UNIQUE KEY uq_uprawnienie
+(tablica_ogloszeniowa_id, uzytkownik_id);
 
 ALTER IGNORE TABLE `uzytkownik` CHANGE `haslo` `haslo` VARCHAR(64) NULL DEFAULT 'uzytkownik';
-
 ALTER IGNORE TABLE `uzytkownik` CHANGE `login` `login` VARCHAR(128) NULL DEFAULT 'uzytkownik';
+
+INSERT IGNORE INTO uzytkownik (id)
+VALUES (1);
+
+DELETE FROM tablica_ogloszeniowa_uzytkownik WHERE uzytkownik_id = 1;
+
+TRUNCATE TABLE uprawnienie;
+TRUNCATE TABLE tablica_ogloszeniowa_uzytkownik;
+
+ALTER IGNORE TABLE `pokrewienstwo` CHANGE `widzi_dane_osobowe` `widzi_dane_osobowe` TINYINT(1) NULL DEFAULT '0'; 
 
 ALTER IGNORE TABLE `opis_uzytkownika` CHANGE `zdjecie_profilowe_id` `zdjecie_profilowe_id` INT(10) UNSIGNED NOT NULL DEFAULT '1'; 
 
@@ -158,19 +166,14 @@ ALTER TABLE `opis_uzytkownika` CHANGE `parafia_id` `parafia_id` SMALLINT(255) UN
 INSERT IGNORE INTO tablica_ogloszeniowa (id, nazwa, opis)
 VALUES (1, 'Tablica główna', 'Witaj na naszym portalu!');
 
-INSERT IGNORE INTO opis_uzytkownika (uzytkownik_id, opis) 
-VALUES (1,'Usuniety użytkownik');
-
+INSERT IGNORE INTO opis_uzytkownika (uzytkownik_id, pseudonim, opis) 
+VALUES (1,'Usuniety użytkownik', 'Ten użytkownik został usunięty.');
 
 INSERT IGNORE INTO rodzina (id, nazwa)
 VALUES (1, 'Nieznana');
 
 INSERT IGNORE INTO obrazek (id, tekst_alternatywny)
 VALUES (1, 'Domyślne zdjęcie profilowe');
-
-ALTER TABLE uprawnienie
-ADD UNIQUE KEY uq_uprawnienie
-(tablica_ogloszeniowa_id, uzytkownik_id);
 
 -- -----------------------------------------------------
 -- Procedura
