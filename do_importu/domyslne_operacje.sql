@@ -135,8 +135,8 @@ TRUNCATE TABLE modlitwa;
 TRUNCATE TABLE parafia;
 TRUNCATE TABLE proboszcz;
 
-INSERT IGNORE INTO uzytkownik (id, login)
-VALUES (1, 'Usuniety Uzytkownik');
+INSERT IGNORE INTO uzytkownik ()
+VALUES ();
 
 ALTER IGNORE TABLE `pokrewienstwo` CHANGE `widzi_dane_osobowe` `widzi_dane_osobowe` TINYINT(1) NULL DEFAULT '0'; 
 ALTER IGNORE TABLE `uzytkownik` CHANGE `haslo` `haslo` VARCHAR(64) NULL DEFAULT '';
