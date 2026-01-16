@@ -144,7 +144,11 @@ INSERT IGNORE INTO rodzina (id, nazwa)
 VALUES (1, 'Nieznana');
 
 INSERT IGNORE INTO obrazek (id, tekst_alternatywny)
-VALUES (1, 'Default');
+VALUES (1, 'Domyślne zdjęcie profilowe');
+
+ALTER TABLE uprawnienie
+ADD UNIQUE KEY uq_uprawnienie
+(tablica_ogloszeniowa_id, uzytkownik_id);
 
 -- -----------------------------------------------------
 -- Procedura

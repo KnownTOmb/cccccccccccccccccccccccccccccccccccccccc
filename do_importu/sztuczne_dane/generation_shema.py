@@ -5,7 +5,7 @@ import datetime
 import config
 
 generation_config = config.config()
-def generated_table_data(table_name, generate_table_row_data, fill_table_row_with_column_data, column_to_replace, already_generated_column_data):
+def generated_table_data(table_name, additional_sqls, generate_table_row_data, fill_table_row_with_column_data, column_to_replace, already_generated_column_data):
     row_data_to_return = []
     def update_row_with_column_data(column_index, column_data):
         nonlocal  row_data_to_return
@@ -109,7 +109,7 @@ def generated_table_data(table_name, generate_table_row_data, fill_table_row_wit
             def generate_uzytkownik_id():
                 update_row_with_column_data(
                     0,
-                    range(0, generation_config.uzytkownik.number_of_rows+1)
+                    range(1, generation_config.uzytkownik.number_of_rows+1)
                 )
             def generate_plec():
                 update_row_with_column_data(
@@ -134,7 +134,7 @@ def generated_table_data(table_name, generate_table_row_data, fill_table_row_wit
                     profile_pictures_id.append(current_profile_picture_id)
 
                 update_row_with_column_data(
-                    0,
+                    6,
                     profile_pictures_id
                 )
 
@@ -330,7 +330,7 @@ def generated_table_data(table_name, generate_table_row_data, fill_table_row_wit
                 return random.randint(2, generation_config.tablica_ogloszeniowa.number_of_rows)
             
             row_data_to_return = generate_table_row_data(
-                generation_config.tablica_ogloszeniowa_uzytkownik.number_of_rows,
+                generation_config.tablica_ogloszeniowa_uzytkownik_definition.number_of_rows,
                 column_to_replace,
                 column_to_replace
             )
@@ -346,7 +346,7 @@ def generated_table_data(table_name, generate_table_row_data, fill_table_row_wit
                 "autor_id": [],
                 "tablica_ogloszeniowa_id": [],
             }
-            for row_index in range(generation_config.tablica_ogloszeniowa_uzytkownik.number_of_rows):
+            for row_index in range(generation_config.tablica_ogloszeniowa_uzytkownik_definition.number_of_rows):
                 current_user_id = None
                 current_board_id = None
                 user_exists_in_table = True
@@ -381,6 +381,7 @@ def generated_table_data(table_name, generate_table_row_data, fill_table_row_wit
                     0,
                     users_id
                 )
+
             def generate_tablica_ogloszeniowa_id(boards_id):
                 update_row_with_column_data(
                     1,
@@ -691,6 +692,7 @@ def generated_table_data(table_name, generate_table_row_data, fill_table_row_wit
                 column_to_replace,
                 column_to_replace
             )
+            additional_sqls["uprawnienie"] = "ON DUPLICATE KEY UPDATE\n  rola = VALUES(rola)"
 
             def generate_rola():
                 update_row_with_column_data(
