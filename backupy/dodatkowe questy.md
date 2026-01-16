@@ -27,4 +27,6 @@
 * [ ] poprawić kiedyś błędy językowe/niechlujstwa w pdfie
 od razu im przypisał id_autora = 1
 * [ ] login ma być null, dopisać to do pdfa
-* [ ] opis dla usuniętego użytkownika, też dopisać do pdfa
+* [ ] zdjecie profilowe nie może być null, default to 1
+* [ ] czy pseudonim powinien być null? chyba nie
+* [ ] opis dla usuniętego użytkownika, w opisie ma należeć do nieznanej rodziny też dopisać do pdfa
