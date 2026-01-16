@@ -57,11 +57,11 @@ Boolowski typ danych jest reprezentowany przez tinyint(1).
 ### uzytkownik
 
 
-| Atrybut | Typ          | Ograniczenia / opis |
-| --------- | -------------- | --------------------- |
-| id      | int          | klucz główny      |
-| login   | varchar(128) | unique              |
-| haslo   | varchar(64)  | mozliwy NULL        |
+| Atrybut | Typ          | Ograniczenia / opis                          |
+| --------- | -------------- | ---------------------------------------------- |
+| id      | int          | klucz główny                               |
+| login   | varchar(128) | unique, mozliwy NULL, DEFAULT = 'uzytkownik' |
+| haslo   | varchar(64)  | mozliwy NULL, DEFAULT = 'uzytkownik'         |
 
 > blob wykracza poza nasza widze
 > używać inet6_aton(‘ipv4 lub ipv6’)
@@ -71,7 +71,7 @@ Boolowski typ danych jest reprezentowany przez tinyint(1).
 ![](assets/20260116_102643_uzytkownik_struktura.png)
 
 > użytkownik o id == 1 to uzytkownik usuniety
->
+
 > Wartosc NULL jest nam potrzebna aby nikt nie mógł sie zalogowac na usunietego użytkowika.
 
 ### dane_uzytkownika

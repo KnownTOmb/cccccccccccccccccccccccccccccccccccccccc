@@ -1,4 +1,4 @@
--- Fri Jan 16 10:49:05 2026
+-- Fri Jan 16 14:07:23 2026
 
 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0;
 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0;
@@ -19,7 +19,7 @@ USE `smipegs_lublin` ;
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `smipegs_lublin`.`uzytkownik` (
   `id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
-  `login` VARCHAR(128) NOT NULL,
+  `login` VARCHAR(128) NULL,
   `haslo` VARCHAR(64) NULL,
   PRIMARY KEY (`id`),
   UNIQUE INDEX `iduzytkownik_UNIQUE` (`id`),
