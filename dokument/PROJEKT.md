@@ -331,12 +331,28 @@ WHERE tablica_ogloszeniowa_id = 1 AND uzytkownik_id = "dowolne id"
 > rozwód
 
 ```sql
-DELETE FROM pokrewienstwo 
-WHERE (typ_relacji = 'mąż' OR typ_relacji = 'żona') 
-AND ((SELECT uzytkownik_id FROM opis_uzytkownika WHERE pseudonim = 'Marian') OR spokrewniony_uzytkownik_id  = 165)
+DELETE p
+FROM pokrewienstwo p
+JOIN opis_uzytkownika ou
+  ON ou.uzytkownik_id IN (p.uzytkownik_id, p.spokrewniony_uzytkownik_id)
+WHERE ou.pseudonim = 'smutnyMarian'
+  AND p.typ_relacji IN ('mąż', 'żona');
 ```
 
-> zareczyny
+> ślub
+```sql
+INSERT INTO pokrewienstwo (typ_relacji, spokrewniony_uzytkownik_id, uzytkownik_id)
+SELECT 'żona' typ_relacji, c1.uzytkownik_id, c2.uzytkownik_id
+FROM
+(SELECT uzytkownik_id FROM opis_uzytkownika WHERE pseudonim = 'mariolkaRolka') c1,
+(SELECT uzytkownik_id FROM opis_uzytkownika WHERE pseudonim = 'wesołyMarian') c2;
+INSERT INTO pokrewienstwo (typ_relacji, spokrewniony_uzytkownik_id, uzytkownik_id)
+SELECT 'mąż' typ_relacji, c1.uzytkownik_id, c2.uzytkownik_id
+FROM
+(SELECT uzytkownik_id FROM opis_uzytkownika WHERE pseudonim = 'wesołyMarian') c1,
+(SELECT uzytkownik_id FROM opis_uzytkownika WHERE pseudonim = 'mariolkaRolka') c2;
+```
+
 
 > degradacja nieaktywnych kreatorów postów
 > polecenie wypisuje wszyskich nieaktywnych postów i pozwala administratorowi zadecydowac nad ich losem.
