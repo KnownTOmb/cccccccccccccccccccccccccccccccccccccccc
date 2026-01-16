@@ -2,6 +2,14 @@
 -- Widoki
 -- -----------------------------------------------------
 
+DROP VIEW IF EXISTS sygnatura;
+CREATE VIEW sygnatura AS
+SELECT u.id, CONCAT(COALESCE(du.imie, ''), ' "', COALESCE(ou.pseudonim, ''), '" ', COALESCE(du.nazwisko, '')) AS imie_pseudonim_nazwisko
+FROM uzytkownik u
+LEFT JOIN opis_uzytkownika ou ON ou.uzytkownik_id = u.id
+LEFT JOIN dane_uzytkownika du ON du.uzytkownik_id = u.id;
+
+
 DROP VIEW IF EXISTS wiek;
 CREATE VIEW wiek AS
 SELECT dane_uzytkownika.id AS dane_uzytkownika_id, 
@@ -113,16 +121,6 @@ DROP VIEW IF EXISTS kod_pocztowy;
 CREATE VIEW kod_pocztowy AS
 SELECT a.id, CONCAT('20-',LEFT(a.kod_pocztowy, 3)) AS kod_pocztowy
 FROM adres a;
-
-
-DROP VIEW IF EXISTS sygnatura;
-CREATE VIEW sygnatura AS
-SELECT u.id, CONCAT(COALESCE(du.imie, ''), ' "', COALESCE(ou.pseudonim, ''), '" ', COALESCE(du.nazwisko, '')) AS imie_pseudonim_nazwisko
-FROM uzytkownik u
-LEFT JOIN opis_uzytkownika ou ON ou.uzytkownik_id = u.id
-LEFT JOIN dane_uzytkownika du ON du.uzytkownik_id = u.id;
-
-
 
 -- -----------------------------------------------------
 -- Domysle dane

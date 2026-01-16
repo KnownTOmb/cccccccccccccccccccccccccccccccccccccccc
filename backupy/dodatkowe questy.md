@@ -41,7 +41,8 @@
 * [ ] administracje
 * [X] widok opis imie nazwisko na końcu jak czas
 * [X] dodac nowe triggery do trigerow
-* [ ] zapytania napisac z 8 podpunktu
+* [X] zapytania napisac z 8 podpunktu
+* [ ] uzupełnic podpunkt nr 6 generacja losowych danych
 * [ ] zmien screeny do widoków
 * [ ] zabić projekt
 
