@@ -46,6 +46,21 @@
 * [ ] zmien screeny do widoków
 * [ ] zabić projekt
 
+sekcja pdf:
+* [ ] import nowy screen
+* [ ] screen uzytkownik struktura
+* [ ] screen dane uzytkownika 
+* [ ] screen opis uzytkownika
+* [ ] screen pokrewienstwo
+* [ ] screen ogloszenie
+* [X] screen widok - plodnosci
+* [X] screen widok - plodnosc tablicy
+* [X] screen widok - matuzal
+* [X] screen widok - zmora
+* [X] screen widok - zmarly uzytkownik
+* [X] screen wszystkie wyzwalacze
+* [ ] wziasc uzytkownika z administracji i ustawic pod niego kopie zapasową
+
 
 
 > Życie po śmiertne

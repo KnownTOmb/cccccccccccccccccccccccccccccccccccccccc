@@ -56,17 +56,14 @@ Boolowski typ danych jest reprezentowany przez tinyint(1).
 
 ### uzytkownik
 
+> hasła powinny byc szyfrowane ale to zagadnienie wykracza poza naszą obecną wiedze.
+
 
 | Atrybut | Typ          | Ograniczenia / opis                          |
 | --------- | -------------- | ---------------------------------------------- |
 | id      | int          | klucz główny                               |
 | login   | varchar(128) | unique, mozliwy NULL, DEFAULT = 'uzytkownik' |
 | haslo   | varchar(64)  | mozliwy NULL, DEFAULT = 'uzytkownik'         |
-
-> blob wykracza poza nasza widze
-> używać inet6_aton(‘ipv4 lub ipv6’)
-> ip wykracza poza nasza wiedze
-> ip varbinary(16), unique
 
 ![](assets/20260116_102643_uzytkownik_struktura.png)
 
@@ -132,7 +129,7 @@ Boolowski typ danych jest reprezentowany przez tinyint(1).
 | numer_budynku    | small int(255) |                     |
 | numer_mieszkania | small int(255) | możliwy NULL       |
 
-> nie rzymamy 20 z przodu tylko same liczby
+> W kodzie pocztowym nie trzymamy 20 z przodu tylko same liczby ponieważ zakładamy, że wszyscy użytkownicy sa z Lublina
 
 ![](assets/20260114_094136_adres.png)
 
@@ -191,7 +188,6 @@ Boolowski typ danych jest reprezentowany przez tinyint(1).
 ### tablica_ogloszeniowa (board)
 
 > id == 1 to tablica glowna, kazdy uzytkownik jest tam automatycznie dodawany(trigger)
-> jeżeli istnieje użytkownik o tym samym adresie ip co nowy użytkownik i ten stary użytkownik nie jest w tablicy głównej (został z niej zbanowany), to nowy użytkownik nie jest przypsiwy
 
 
 | Atrybut | Typ           | Ograniczenia / opis |
@@ -233,12 +229,12 @@ Boolowski typ danych jest reprezentowany przez tinyint(1).
 ### uprawnienie
 
 
-| Atrybut                 | Typ       | Ograniczenia / opis |
-| ------------------------- | ----------- | --------------------- |
-| id                      | int       | klucz glówny       |
-| rola                    | enum(...) |                     |
-| tablica_ogloszeniowa_id |           | klucz obcy          |
-| uzytkownik_id           |           | klucz obcy          |
+| Atrybut                 | Typ                                                                                               | Ograniczenia / opis |
+| ------------------------- | --------------------------------------------------------------------------------------------------- | --------------------- |
+| id                      | int                                                                                               | klucz glówny       |
+| rola                    | ENUM('zarządzanie użytkownikami', 'kreator postów', 'moderator postów', 'obserwator postów') |                     |
+| tablica_ogloszeniowa_id |                                                                                                   | klucz obcy          |
+| uzytkownik_id           |                                                                                                   | klucz obcy          |
 
 ![](assets/20260114_094326_uprawnienie.png)
 
@@ -283,8 +279,9 @@ Boolowski typ danych jest reprezentowany przez tinyint(1).
 
 # 5. Diagram ERD                             ඞ
 
-
 ![](assets/20260116_211000_diagram_erd_z_logo.png)
+
+# 6. Generacja fałszywych danych
 
 # 7. Zróznicowane zapytania sql
 
@@ -321,14 +318,15 @@ WHERE a.rejon = 'Rury'
 
 > Nie mozemy edytowac struktury bazy danych
 
-> stworzenie zmory
+### Stworzenie zmory
 
 ```sql
 DELETE FROM tablica_ogloszeniowa_uzytkownik 
 WHERE tablica_ogloszeniowa_id = 1 AND uzytkownik_id = "dowolne id"
 ```
 
-> rozwód
+### Rozwód
+> rozwązanie ziwązku małżeńskiego zawartego między 2 uzytkownikami
 
 ```sql
 DELETE p
@@ -339,7 +337,9 @@ WHERE ou.pseudonim = 'smutnyMarian'
   AND p.typ_relacji IN ('mąż', 'żona');
 ```
 
-> ślub
+### Ślub
+> ustawianie małżenstwa dla 2 uzytkowników
+
 ```sql
 INSERT INTO pokrewienstwo (typ_relacji, spokrewniony_uzytkownik_id, uzytkownik_id)
 SELECT 'żona' typ_relacji, c1.uzytkownik_id, c2.uzytkownik_id
@@ -353,8 +353,7 @@ FROM
 (SELECT uzytkownik_id FROM opis_uzytkownika WHERE pseudonim = 'mariolkaRolka') c2;
 ```
 
-
-> degradacja nieaktywnych kreatorów postów
+### Degradacja nieaktywnych kreatorów postów
 > polecenie wypisuje wszyskich nieaktywnych postów i pozwala administratorowi zadecydowac nad ich losem.
 
 ```sql
@@ -391,7 +390,7 @@ GROUP BY s.Imie_pseudonim_nazwisko
 ORDER BY liczba_postow DESC;
 ```
 
-![](assets/20260116_091753_plodnosc_kreatora_postow.png)
+![](assets/20260116_234914_plodnosc_kreatorow_postow.png)
 
 ### Plodnosc tablicy
 
@@ -407,10 +406,10 @@ FROM tablica_ogloszeniowa t
 LEFT JOIN tablica_ogloszeniowa_uzytkownik tou ON t.id = tou.tablica_ogloszeniowa_id 
 LEFT JOIN ogloszenie o ON o.tablica_ogloszeniowa_id = t.id 
 GROUP BY t.id, t.nazwa
-ORDER BY liczba_uzytkownikow DESC;
+ORDER BY liczba_postow DESC;
 ```
 
-![](assets/20260115_102501_plodnoscTablicy.png)
+![](assets/20260116_234713_plodnosc_tablicy_widok.png)
 
 ### Plodnosc parafii
 
@@ -473,7 +472,7 @@ WHERE w.wiek >= 90
 ORDER BY w.wiek DESC;
 ```
 
-![](assets/20260115_102602_matuzal.png)
+![](assets/20260116_234314_matuzal_widok.png)
 
 ### Zmora
 
@@ -482,17 +481,18 @@ ORDER BY w.wiek DESC;
 ```sql
 DROP VIEW IF EXISTS zmora;
 CREATE VIEW zmora AS
-SELECT u.id, ou.pseudonim
+SELECT u.id, s.imie_pseudonim_nazwisko
 FROM uzytkownik u
-JOIN opis_uzytkownika ou ON ou.uzytkownik_id = u.id
+JOIN sygnatura s ON s.id = u.id
 WHERE NOT EXISTS (
     SELECT 1 
     FROM tablica_ogloszeniowa_uzytkownik tou
     WHERE tou.uzytkownik_id = u.id AND tou.tablica_ogloszeniowa_id = 1
 );
+
 ```
 
-![](assets/20260115_102616_zmora.png)
+![](assets/20260116_234058_zmora_widok.png)
 
 ### Zmarły uzytkownik
 
@@ -508,7 +508,7 @@ JOIN dane_uzytkownika du ON du.uzytkownik_id = u.id
 WHERE du.data_smierci IS NOT NULL;
 ```
 
-![](assets/20260115_102640_zmarlyUzytkownik.png)
+![](assets/20260116_233701_zmarly_uzytkownik.png)
 
 ## ---- Koniec statystyk ----
 
@@ -594,27 +594,21 @@ FROM adres a;
 > Dodaje uzytkownika do tablicy głównej przy dodaniu użytkownika
 
 ```sql
-DELIMITER $$
-USE `smipegs_lublin`$$
 CREATE TRIGGER po_wstawieniu_do_uzytkownik
 AFTER INSERT ON uzytkownik
 FOR EACH ROW
 INSERT INTO tablica_ogloszeniowa_uzytkownik (uzytkownik_id, tablica_ogloszeniowa_id)
-VALUES (NEW.id, 1);$$
-DELIMITER ;
+VALUES (NEW.id, 1);
 ```
 
 > Ustawia uzytkownikowi role obserwatora postów przy dodaniu do nowej tablicy
 
 ```sql
-DELIMITER $$
-USE `smipegs_lublin`$$
 CREATE TRIGGER po_wstawieniu_do_tablica_ogloszeniowa_uzytkownik
 AFTER INSERT ON tablica_ogloszeniowa_uzytkownik
 FOR EACH ROW 
 INSERT INTO uprawnienie (rola,tablica_ogloszeniowa_id,uzytkownik_id)
-VALUES ('obserwator postow',NEW.tablica_ogloszeniowa_id,NEW.uzytkownik_id)$$
-DELIMITER ;
+VALUES ('obserwator postow',NEW.tablica_ogloszeniowa_id,NEW.uzytkownik_id);
 ```
 
 ## Sprzatanie kiedy usuwamy uzytkownika
@@ -644,7 +638,6 @@ WHERE uzytkownik_id = OLD.id;
 > Usuwamy ustawiony przez niego opis
 
 ```sql
-USE `smipegs_lublin`
 CREATE TRIGGER przed_usunieciem_uzytkownik_usun_opis
 BEFORE DELETE ON uzytkownik
 FOR EACH ROW
@@ -652,10 +645,9 @@ DELETE FROM opis_uzytkownika
 WHERE uzytkownik_id = OLD.id;
 ```
 
-> Usuwamy wypełmione przez niego dane osobowe
+> Usuwamy wypełnione przez niego dane osobowe
 
 ```sql
-USE `smipegs_lublin`
 CREATE TRIGGER przed_usunieciem_uzytkownik_usun_dane
 BEFORE DELETE ON uzytkownik
 FOR EACH ROW
@@ -666,30 +658,27 @@ WHERE uzytkownik_id = OLD.id;
 > Usuwamy mu powiazania z innymi uzytkownikami
 
 ```sql
-USE `smipegs_lublin`
 CREATE TRIGGER przed_usunieciem_uzytkownik_usun_pokrewienstwo
 BEFORE DELETE ON uzytkownik
 FOR EACH ROW
 DELETE FROM pokrewienstwo 
-WHERE uzytkownik_id = OLD.id OR spokrewniony_uzytkownik_id = OLD.id
+WHERE uzytkownik_id = OLD.id OR spokrewniony_uzytkownik_id = OLD.id;
 ```
 
-> Posty które stworzył sa przypisaywane autorowi o id = 1 aka 'usuniety uzytkownik'
+> Posty które stworzył sa przypisaywane autorowi o id = 1 'usuniety uzytkownik'
 
 ```sql
-USE `smipegs_lublin`
 CREATE TRIGGER przed_usunieciem_uzytkownika_usun_posty
 BEFORE DELETE ON uzytkownik
 FOR EACH ROW
 UPDATE ogloszenie 
 SET autor_id = 1
-WHERE autor_id = OLD.id
+WHERE autor_id = OLD.id;
 ```
 
 > Usuamy adres zamieszkania z bazy, tylko wtedy jezeli nikt inny pod nim nie mieszka
 
 ```sql
-USE `smipegs_lublin`
 CREATE TRIGGER po_usunieciu_danych_usun_adres
 AFTER DELETE ON dane_uzytkownika
 FOR EACH ROW
@@ -716,13 +705,13 @@ FOR EACH ROW
 
 > Oraz zostanie mu przypisana rola 'obserwtor postów'
 
-![](assets/20260115_105144_Adam_Uprawniania.png)
+![](assets/20260115_234444_Adam_Uprawniania.png)
 
 ##### Usuwanie Uzytkownika
 
 ###### Stan przed usunieciem:
 
-![](assets/20260115_234334_Adam_Uprawniania.png)
+![](assets/20260115_234444_Adam_Uprawniania.png)
 
 ![](assets/20260115_234457_adam_Zyje_opis.png)
 
@@ -752,7 +741,7 @@ FOR EACH ROW
 
 ![](assets/20260116_193715_metamorfoza_Adama.png)
 
-> Pozostał jedynie adres uzytkownika poniewarz w bazie znajdowal sie inny uzytkownik który mieszkal pod tym samym adresem
+> Pozostał jedynie adres uzytkownika ponieważ w bazie znajdowal sie inny uzytkownik który mieszkal pod tym samym adresem
 
 ![](assets/20260115_235624_adam_umar_ale_dom_stoi.png)
 
@@ -813,7 +802,7 @@ DELIMITER ;
 
 ![](assets/20260115_103531_execute_routine.png)
 
-> Procedura pokarze ogloszenia starsze niz 1 rok, nie usunie ich poniewarz nie zmieniamy wartosci paramatru 'usunac'.
+> Procedura pokarze ogloszenia starsze niz 1 rok, nie usunie ich ponieważ nie zmieniamy wartosci paramatru 'usunac'.
 
 ![](assets/20260115_104018_procedure_wynik.png)
 
@@ -828,31 +817,34 @@ DELIMITER ;
 ```sh
 #!/bin/bash
 
+mkdir -p "$BACKUP_PATH"
+
 # Konfiguracja
 USER="root"
 PASSWORD=""   
-DATABASE="smipegs"   
+DATABASE="smipegs_lublin"   
 BACKUP_PATH="/home/server/backups"
+LOG_FILE="/home/server/logi.log"
 DATE=$(date +%Y-%m-%d_%H%M%S)
 
 # Wykonanie kopii
 mysqldump -root -p$PASSWORD $DATABASE > $BACKUP_PATH/$DATABASE-$DATE.sql
 
 # Logi
-echo "$DATE: Wykonanie kopii zapasowej." >> logi.txt
+echo "$DATE: Wykonanie kopii zapasowej." >> "LOG_FILE"
 ```
 
-> nadajemy prawo do wykonywania i dodajemy wpis do chrona aby automatycznie sie wykonywal
+> nadajemy prawo do wykonywania i dodajemy wpis do crona aby automatycznie sie wykonywal
 
 ```sh
 sudo chmod +x skrypt_do_automatycznej_kopii.sh
-chrontab -e
+crontab -e
 ```
 
 > wewnątrz dodajemy linie:
 
 ```sh
-30 2 * * * skrypt_do_automatycznej_kopii.sh
+30 2 * * * /home/server/scripts/skrypt_do_automatycznej_kopii.sh
 ```
 
 ## Jednorazowy Eksport bazy danych w graficzym panelu xampp
@@ -881,4 +873,4 @@ chrontab -e
 
 ![](assets/20260116_183412_nowa_struktura.png)
 
-![](assets/20260116_183619_triggery.png)
+![](assets/20260116_233211_nowetriggery.png)
