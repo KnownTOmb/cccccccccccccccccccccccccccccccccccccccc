@@ -65,11 +65,14 @@ def generated_table_data(table_name, additional_sqls, generate_table_row_data, f
             def generate_login():
                 logins = []
                 for i in range(generation_config.uzytkownik.number_of_rows):
-                    current_login = ''
-                    regenerate = True
-                    while regenerate:
-                        current_login = fake.unique.simple_profile()["username"]
-                        regenerate = current_login in logins
+                    if i == 1:
+                        current_login = "adam_tester"
+                    else:
+                        current_login = ''
+                        regenerate = True
+                        while regenerate:
+                            current_login = fake.unique.simple_profile()["username"]
+                            regenerate = current_login in logins
 
                     logins.append(current_login)
 
