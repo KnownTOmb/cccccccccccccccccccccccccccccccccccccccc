@@ -138,7 +138,6 @@ TRUNCATE TABLE proboszcz;
 INSERT IGNORE INTO uzytkownik ()
 VALUES ();
 
-
 ALTER IGNORE TABLE `pokrewienstwo` CHANGE `widzi_dane_osobowe` `widzi_dane_osobowe` TINYINT(1) NULL DEFAULT '0'; 
 
 ALTER IGNORE TABLE `uzytkownik` CHANGE `haslo` `haslo` VARCHAR(64) NULL DEFAULT 'uzytkownik';
@@ -2658,7 +2657,13 @@ INSERT INTO obrazek (tekst_alternatywny) VALUES
 ('Piętro określać podstawowy czterdzieści stan ciecz.'),
 ('Czterdzieści treść razem choć ! wioska otwarty.'),
 (NULL),
-('Zając zacząć włos.'),
+('Całkiem chronić Pan zacząć warunek.'),
+('— grupa rzadko tracić.'),
+('Pas Rumunia.'),
+('Szkło stały potem.'),
+('Odczuwać.'),
+('Surowy przechodzić powstanie przyjaźń. Wyjść wieś słoń mebel.'),
+('Atak przeciw ubranie w celu.'),
 (NULL),
 ('Znaczenie wzgórze korzyść prawny.'),
 (NULL),

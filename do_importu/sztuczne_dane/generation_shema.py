@@ -109,7 +109,7 @@ def generated_table_data(table_name, additional_sqls, generate_table_row_data, f
             def generate_uzytkownik_id():
                 update_row_with_column_data(
                     0,
-                    range(1, generation_config.uzytkownik.number_of_rows+1)
+                    range(2, generation_config.uzytkownik.number_of_rows+2)
                 )
             def generate_plec():
                 update_row_with_column_data(
@@ -325,9 +325,9 @@ def generated_table_data(table_name, additional_sqls, generate_table_row_data, f
                         return True
             
             def uzytkownik_id():
-                return random.randint(1, generation_config.uzytkownik.number_of_rows)
+                return random.randint(2, generation_config.uzytkownik.number_of_rows+2)
             def tablica_ogloszeniowa_id():
-                return random.randint(2, generation_config.tablica_ogloszeniowa.number_of_rows)
+                return random.randint(2, generation_config.tablica_ogloszeniowa.number_of_rows+2)
             
             row_data_to_return = generate_table_row_data(
                 generation_config.tablica_ogloszeniowa_uzytkownik_definition.number_of_rows,
@@ -429,7 +429,7 @@ def generated_table_data(table_name, additional_sqls, generate_table_row_data, f
                 return fake_pl.phone_number()
             
             row_data_to_return = generate_table_row_data(
-                generation_config.uzytkownik.number_of_rows,
+                generation_config.uzytkownik.number_of_rows-1,
                 column_to_replace,
                 nazwisko,
                 numer_telefonu,
@@ -510,7 +510,7 @@ def generated_table_data(table_name, additional_sqls, generate_table_row_data, f
             def generate_uzytkownik_id():
                 update_row_with_column_data(
                     6,
-                    range(1, generation_config.uzytkownik.number_of_rows+1)
+                    range(2, generation_config.uzytkownik.number_of_rows+2)
                 )
 
             generate_imie()
