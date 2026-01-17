@@ -1,4 +1,4 @@
-* [ ] zróżnicowanie zapytań:
+* [X] zróżnicowanie zapytań:
 * [X] trigger po usunięciu użytkownika usuwa:
   * [X] wszystkie uprawnienia
   * [X] go z tablic na których byl
@@ -12,11 +12,11 @@
 
 * [X] dodanie screenów z dzialania trigerow procedur i widokow
 
-* [] dodac załozenia projektu (server na linuxie zmora oznacza to, matuzal oznacza tamto)
+* [X] dodac załozenia projektu (server na linuxie zmora oznacza to, matuzal oznacza tamto)
 
 > opisy widoków sa w sekcji widoków to nie wiem czy trzeba to definiowac tutaj.
 
-* [ ] problem 3 zdjęć
+* [X] problem 3 zdjęć
 * [X] porawic widoki w diagram erd
 * [X] dodać do widzi dane w pokrewienstwo default na 0
 * [X] uga buga diagram zdj spokre
@@ -30,21 +30,21 @@
 
 > dodac uzytkownika usuniety uzytkownik i ustawiac go na autora przed usinieciem
 
-* [ ] dopisać w pdfie i gdzie tam trzeba że kombinacja id tablicy i użytkownika jest unikalna w uprawnieniach ()
+* [X] dopisać w pdfie i gdzie tam trzeba że kombinacja id tablicy i użytkownika jest unikalna w uprawnieniach ()
 * [X] usunąć kolumnę ogłoszeniecol z ogłoszeń
-* [ ] poprawić kiedyś błędy językowe/niechlujstwa w pdfie
+* [X] poprawić kiedyś błędy językowe/niechlujstwa w pdfie
 * [X] login ma być null, dopisać to do pdfa
 * [X] zdjecie profilowe nie może być null, default to 1
 * [X] opis dla usuniętego użytkownika, w opisie ma należeć do nieznanej rodziny też dopisać do pdfa
 * [X] posortuj po liczbie użytkowników w płodności tablic
-* [ ] na końcu screeny zweryfikować i typy danych
+* [X] na końcu screeny zweryfikować i typy danych
 * [X] administracje
 * [X] widok opis imie nazwisko na końcu jak czas
 * [X] dodac nowe triggery do trigerow
 * [X] zapytania napisac z 8 podpunktu
 * [X] uzupełnic podpunkt nr 6 generacja losowych danych
 * [X] zmien screeny do widoków
-* [ ] zabić projekt
+* [X] zabić projekt
 
 sekcja pdf:
 * [X] import nowy screen
@@ -63,6 +63,7 @@ sekcja pdf:
 * [X] wziasc uzytkownika z administracji i ustawic pod niego kopie zapasową
 
 
+> CZAS NA NOWE ŻYCIE :*
 
 > Życie po śmiertne
 * [ ] oddzielna tabela do haseł i loginów 
@@ -70,7 +71,9 @@ sekcja pdf:
 * [ ] w uprawnieniach pozamieniać post na ogłoszenie
 * [ ] posprzatac abominacje w domyslnych operacjach
 
-```
+jak ktos to czyta to pozdrawiam
+
+``` 
 Adam i Maria siedzą na brzegu małego jeziora, gdzie woda lśni jak rozpuszczone srebro. Zachód słońca barwi niebo w odcieniach moreli i fiołku. Adam wyciąga z kieszeni małe, aksamitne pudełeczko. Maria patrzy na niego zdziwiona, serce bije jej szybciej.
 
 Adam łapie jej dłonie w swoje i mówi:
