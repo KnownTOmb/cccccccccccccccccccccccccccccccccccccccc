@@ -83,7 +83,7 @@
   - [Sprzątanie po usuniętym użytkowniku](#sprzątanie-po-usuniętym-użytkowniku)
     - [Przed usunięciem użytkownika z bazy danych](#przed-usunięciem-użytkownika-z-bazy-danych)
     - [Po usunięciu użytkownika z bazy danych](#po-usunięciu-użytkownika-z-bazy-danych)
-    - [Przyklady działania:](#przyklady-działania)
+    - [Przykłady działania:](#przykłady-działania)
       - [Dodawanie użytkownika](#dodawanie-użytkownika)
       - [Usuwanie Uzytkownika](#usuwanie-uzytkownika)
 - [11. Opracowanie i prezentacja procedur składowanych](#11-opracowanie-i-prezentacja-procedur-składowanych)
@@ -250,6 +250,7 @@ Wszystkie id mają unique. Wszystkie id są autoinkrementowane. Boolowski typ da
 
 #### Opis użytkownika
 
+> Opis użytkownika o id 1 to opis usuniętego użytkownika.
 
 | Atrybut              | Typ           | Ograniczenia / opis       |
 | ---------------------- | --------------- | --------------------------- |
@@ -401,6 +402,7 @@ Wszystkie id mają unique. Wszystkie id są autoinkrementowane. Boolowski typ da
 
 #### Uprawnienie
 
+> Dodatkowo kombinacja id użytkownika i tablicy ogłoszeniowej musi być unikalna. Jest tak ustawione ponieważ użytkownik może mieć aby jedno uprawnienie w danej tablicy.
 
 | Atrybut                 | Typ                                                                                                 | Ograniczenia / opis |
 | ------------------------- | ----------------------------------------------------------------------------------------------------- | --------------------- |
@@ -1128,7 +1130,7 @@ DELETE FROM pokrewienstwo
 WHERE uzytkownik_id = OLD.id OR spokrewniony_uzytkownik_id = OLD.id;
 ```
 
-Ogłoszenia które stworzył sa przypisaywane autorowi o id = 1 'usuniety użytkownik'
+Ogłoszenia które stworzył sa przypisaywane autorowi o id 1 ('usuniety użytkownik').
 
 ```sql
 CREATE TRIGGER przed_usunieciem_uzytkownika_usun_posty
@@ -1139,7 +1141,7 @@ SET autor_id = 1
 WHERE autor_id = OLD.id;
 ```
 
-> Usuamy adres zamieszkania z bazy, tylko wtedy jezeli nikt inny pod nim nie mieszka
+Usuwamy adres zamieszkania z bazy danych, tylko wtedy jezeli nikt inny pod nim nie mieszka.
 
 ```sql
 CREATE TRIGGER po_usunieciu_danych_usun_adres
@@ -1152,21 +1154,27 @@ FOR EACH ROW
     END IF;
 ```
 
-#### Przyklady działania:
+#### Przykłady działania:
 
 ##### Dodawanie użytkownika
 
-> Nasze wyzwalacze działaja wspólnie ze soba, gdy dodajemy uzytkownika:
+Nasze wyzwalacze działaja wspólnie ze soba, gdy dodajemy uzytkownika:
+
+> Dodanie użytkownika 'TesterAdam'.
 
 ![](assets/20260115_104543_dodanie_uzytkownika.png)
 
+> 'TesterAdam' w użytkownikach.
+
 ![](assets/20260115_104820_testerAdam.png)
 
-> To automatycznie zostanie dodany do tablicy głównej:
+<hr>
+
+To automatycznie zostanie dodany do tablicy głównej.
 
 ![](assets/20260115_104950_Adam_w_tablicy.png)
 
-> Oraz zostanie mu przypisana rola 'obserwtor postów'
+Oraz zostanie mu przypisana rola 'obserwator postów'.
 
 ![](assets/20260115_234444_Adam_Uprawniania.png)
 
@@ -1174,13 +1182,21 @@ FOR EACH ROW
 
 ##### Usuwanie Uzytkownika
 
-Stan przed usunięciem:
+Stan przed usunięciem 'adam_tester:
+
+> Tablice ogłoszeniowe użytkownika:
 
 ![](assets/20260115_234444_Adam_Uprawniania.png)
 
+> Opis użytkownika:
+
 ![](assets/20260115_234457_adam_Zyje_opis.png)
 
+> Dane osobiste użytkownika:
+
 ![](assets/20260115_234522_adam_Zyje_dane.png)
+
+> Rodzina użytkownika:
 
 ![](assets/20260115_234530_adam_ma_Rodzine.png)
 
