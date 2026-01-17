@@ -252,6 +252,7 @@ Wszystkie id mają unique. Wszystkie id są autoinkrementowane. Boolowski typ da
 
 > Opis użytkownika o id 1 to opis usuniętego użytkownika.
 
+
 | Atrybut              | Typ           | Ograniczenia / opis       |
 | ---------------------- | --------------- | --------------------------- |
 | id                   | int           | klucz główny            |
@@ -402,6 +403,7 @@ Wszystkie id mają unique. Wszystkie id są autoinkrementowane. Boolowski typ da
 
 > Dodatkowo kombinacja id użytkownika i tablicy ogłoszeniowej musi być unikalna. Jest tak ustawione ponieważ użytkownik może mieć aby jedno uprawnienie w danej tablicy.
 
+
 | Atrybut                 | Typ                                                                                                 | Ograniczenia / opis |
 | ------------------------- | ----------------------------------------------------------------------------------------------------- | --------------------- |
 | id                      | int                                                                                                 | klucz glówny       |
@@ -456,7 +458,6 @@ Wszystkie id mają unique. Wszystkie id są autoinkrementowane. Boolowski typ da
 
 ## 5. Diagram ERD
 
-![](assets/20260116_211000_diagram_erd_z_logo.png)
 
 <div style="page-break-after: always;"></div>
 
@@ -786,7 +787,6 @@ Wywołanie zapytania:
 
 Polecenie wypisuje wszystkich nieaktywnych kreatorów postów i dane związane z ich produktywnością aby administrator mógł zadecydować nad ich losem.
 
-
 ```sql
 SELECT u.id AS uzytkownik_id, s.imie_pseudonim_nazwisko, COUNT(o.id) AS liczba_postow,
 MAX(o.data_wstawienia) AS ostatni_post
@@ -799,8 +799,8 @@ GROUP BY u.id, s.imie_pseudonim_nazwisko
 HAVING MAX(o.data_wstawienia) < DATE_SUB(CURDATE(), INTERVAL 5
 ```
 
-
 ![](assets/20260117_200851_uzytkownicy_do_eksterminacji.png)
+
 <div style="page-break-after: always;"></div>
 
 ## 9. Opracowanie i prezentacja widoków
