@@ -47,12 +47,12 @@
 * [ ] zabić projekt
 
 sekcja pdf:
-* [ ] import nowy screen
-* [ ] screen uzytkownik struktura
-* [ ] screen dane uzytkownika 
-* [ ] screen opis uzytkownika
-* [ ] screen pokrewienstwo
-* [ ] screen ogloszenie
+* [X] import nowy screen
+* [X] screen uzytkownik struktura
+* [X] screen dane uzytkownika 
+* [X] screen opis uzytkownika
+* [X] screen pokrewienstwo
+* [X] screen ogloszenie
 * [X] screen widok - plodnosci
 * [X] screen widok - plodnosc tablicy
 * [X] screen widok - matuzal
@@ -67,6 +67,7 @@ sekcja pdf:
 * [ ] oddzielna tabela do haseł i loginów 
 * [ ] tam gdzie możliwy null to ma czasami genrować null
 * [ ] w uprawnieniach pozamieniać post na ogłoszenie
+* [ ] posprzatac abominacje w domyslnych operacjach
 
 ```
 Adam i Maria siedzą na brzegu małego jeziora, gdzie woda lśni jak rozpuszczone srebro. Zachód słońca barwi niebo w odcieniach moreli i fiołku. Adam wyciąga z kieszeni małe, aksamitne pudełeczko. Maria patrzy na niego zdziwiona, serce bije jej szybciej.
