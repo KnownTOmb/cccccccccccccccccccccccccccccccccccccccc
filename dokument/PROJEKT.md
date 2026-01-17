@@ -9,98 +9,99 @@
 
 <div style="page-break-after: always;"></div>
 
-# Spis treści
+## Spis treści
 
 <div style="font-size: 10pt; line-height: 1.4">
 
 - [Spis treści](#spis-treści)
-  - [0. Nazwa Projektu](#0-nazwa-projektu)
-  - [1. Motywacja](#1-motywacja)
-    - [Opis problematyki](#opis-problematyki)
-    - [Dlaczego warto to zrealizować i co ma rozwiązać](#dlaczego-warto-to-zrealizować-i-co-ma-rozwiązać)
-  - [2. Opis słowny](#2-opis-słowny)
-  - [2,5. Założenia projektu](#25-założenia-projektu)
-    - [Administracja](#administracja)
-      - [Admin kreator](#admin-kreator)
-      - [Admin moderator](#admin-moderator)
-      - [Admin kierownik](#admin-kierownik)
-      - [Admin](#admin)
-    - [Serwer](#serwer)
-    - [Terminologia](#terminologia)
-      - [Matuzal](#matuzal)
-      - [Zmora](#zmora)
-  - [3. Tabele](#3-tabele)
-  - [4. Atrybuty encji i relacje](#4-atrybuty-encji-i-relacje)
-    - [Atrybuty encji](#atrybuty-encji)
-      - [uzytkownik](#uzytkownik)
-      - [dane uzytkownika](#dane-uzytkownika)
-      - [opis użytkownika](#opis-użytkownika)
-      - [modlitwa](#modlitwa)
-      - [adres](#adres)
-      - [rodzina](#rodzina)
-      - [pokrewienstwo](#pokrewienstwo)
-      - [proboszcz](#proboszcz)
-      - [parafia](#parafia)
-      - [tablica ogloszeniowa (board)](#tablica-ogloszeniowa-board)
-      - [ogloszenie](#ogloszenie)
-      - [obrazek](#obrazek)
-      - [uprawnienie](#uprawnienie)
-      - [tablica ogloszeniowa uzytkownik](#tablica-ogloszeniowa-uzytkownik)
-    - [Relacje](#relacje)
-  - [5. Diagram ERD](#5-diagram-erd)
-  - [6. Generacja danych syntetycznych](#6-generacja-danych-syntetycznych)
-    - [Generacja pliku SQL do importu](#generacja-pliku-sql-do-importu)
-    - [Pisanie własnych schematów](#pisanie-własnych-schematów)
-  - [7. Zróznicowane zapytania sql](#7-zróznicowane-zapytania-sql)
-    - [Tablice ogłoszeń](#tablice-ogłoszeń)
-    - [Profil użytkownika](#profil-użytkownika)
-    - [Rodzina użytkownika](#rodzina-użytkownika)
-    - [Procentowy podzial na płci](#procentowy-podzial-na-płci)
-    - [Użytkownicy z rejonu Rury](#użytkownicy-z-rejonu-rury)
-  - [8. Opracownie i prezentacja zapytań modyfikujacych dane w bazie](#8-opracownie-i-prezentacja-zapytań-modyfikujacych-dane-w-bazie)
-      - [Stworzenie zmory](#stworzenie-zmory)
-      - [Rozwód](#rozwód)
-      - [Ślub](#ślub)
-      - [Degradacja nieaktywnych kreatorów postów](#degradacja-nieaktywnych-kreatorów-postów)
-  - [9. Opracowanie i prezentacja widoków](#9-opracowanie-i-prezentacja-widoków)
-    - [Statystyki](#statystyki)
-      - [Plodnosc kreatorow postow](#plodnosc-kreatorow-postow)
-      - [Plodnosc tablicy](#plodnosc-tablicy)
-      - [Plodnosc parafii](#plodnosc-parafii)
-      - [Pozycja modlitwy](#pozycja-modlitwy)
-      - [Pozycja rodziny](#pozycja-rodziny)
-      - [Matuzal](#matuzal-1)
-      - [Zmora](#zmora-1)
-      - [Zmarły uzytkownik](#zmarły-uzytkownik)
-    - [Dane zależne](#dane-zależne)
-      - [Sygnatura](#sygnatura)
-      - [Wiek](#wiek)
-      - [Rodzina wrzeniona](#rodzina-wrzeniona)
-      - [url obrazka](#url-obrazka)
-      - [Kod pocztowy](#kod-pocztowy)
-  - [10.Opracowanie i prezentacja wyzwalaczy (triggerów)](#10opracowanie-i-prezentacja-wyzwalaczy-triggerów)
-    - [Sprzatanie kiedy usuwamy uzytkownika](#sprzatanie-kiedy-usuwamy-uzytkownika)
-        - [Przed usunieciem uzytkownika z bazy danych:](#przed-usunieciem-uzytkownika-z-bazy-danych)
-      - [Przyklady działania:](#przyklady-działania)
-        - [Dodawanie uzytkownika](#dodawanie-uzytkownika)
-      - [Usuwanie Uzytkownika](#usuwanie-uzytkownika)
-        - [Stan przed usunieciem:](#stan-przed-usunieciem)
-  - [11.Opracowanie i prezentacja procedur składowanych](#11opracowanie-i-prezentacja-procedur-składowanych)
-    - [Opis procedury](#opis-procedury)
-      - [Przykladowe uzycie](#przykladowe-uzycie)
-  - [12.Prezenatcja zażądzania uzytkownikami](#12prezenatcja-zażądzania-uzytkownikami)
-  - [13.Prezentacja tworzenia kopii zapasowej, importu i eksportu bazy danych](#13prezentacja-tworzenia-kopii-zapasowej-importu-i-eksportu-bazy-danych)
-    - [Początkowa konfiguracja z poziomu admina serwera](#początkowa-konfiguracja-z-poziomu-admina-serwera)
-        - [Zawartosc skryptu:](#zawartosc-skryptu)
-    - [Jednorazowy Eksport bazy danych w graficzym panelu xampp](#jednorazowy-eksport-bazy-danych-w-graficzym-panelu-xampp)
-      - [1. Na górnym panelu klikamy w zakladke Eksport i wybieramy opcje szybko](#1-na-górnym-panelu-klikamy-w-zakladke-eksport-i-wybieramy-opcje-szybko)
-      - [2.Klikamy Export i wybieramy gdzie chcemy zapisac nasza baze danych](#2klikamy-export-i-wybieramy-gdzie-chcemy-zapisac-nasza-baze-danych)
-    - [Import bazy danych w graficznym panelu xampp](#import-bazy-danych-w-graficznym-panelu-xampp)
-      - [Szybki import pliku bazy danych](#szybki-import-pliku-bazy-danych)
-      - [Proces budowy bazy danych podczas testów](#proces-budowy-bazy-danych-podczas-testów)
-        - [1. Eksport projektu bazy danych z workbencha:](#1-eksport-projektu-bazy-danych-z-workbencha)
-      - [2. Generowanie plików sql do importu](#2-generowanie-plików-sql-do-importu)
-        - [3. Import bazy danych w panelu administracyjnym xampa](#3-import-bazy-danych-w-panelu-administracyjnym-xampa)
+- [0. Nazwa Projektu](#0-nazwa-projektu)
+- [1. Motywacja](#1-motywacja)
+  - [Opis problematyki](#opis-problematyki)
+  - [Dlaczego warto to zrealizować i co ma rozwiązać](#dlaczego-warto-to-zrealizować-i-co-ma-rozwiązać)
+- [2. Opis słowny](#2-opis-słowny)
+- [2,5. Założenia projektu](#25-założenia-projektu)
+  - [Adminokracja](#adminokracja)
+    - [Admin kreator](#admin-kreator)
+    - [Admin moderator](#admin-moderator)
+    - [Admin kierownik](#admin-kierownik)
+    - [Admin](#admin)
+  - [Serwer](#serwer)
+  - [Terminologia](#terminologia)
+    - [Matuzal](#matuzal)
+    - [Zmora](#zmora)
+- [3. Tabele](#3-tabele)
+- [4. Atrybuty encji i relacje](#4-atrybuty-encji-i-relacje)
+  - [Atrybuty encji](#atrybuty-encji)
+    - [użytkownik](#użytkownik)
+    - [dane użytkownika](#dane-użytkownika)
+    - [opis użytkownika](#opis-użytkownika)
+    - [modlitwa](#modlitwa)
+    - [adres](#adres)
+    - [rodzina](#rodzina)
+    - [pokrewieństwo](#pokrewieństwo)
+    - [proboszcz](#proboszcz)
+    - [parafia](#parafia)
+    - [tablica ogłoszeniowa](#tablica-ogłoszeniowa)
+    - [ogłoszenie](#ogłoszenie)
+    - [obrazek](#obrazek)
+    - [uprawnienie](#uprawnienie)
+    - [tablica ogłoszeniowa użytkownik](#tablica-ogłoszeniowa-użytkownik)
+  - [Relacje](#relacje)
+- [5. Diagram ERD](#5-diagram-erd)
+- [6. Generacja danych syntetycznych](#6-generacja-danych-syntetycznych)
+  - [Generacja pliku SQL do importu](#generacja-pliku-sql-do-importu)
+  - [Pisanie własnych schematów](#pisanie-własnych-schematów)
+- [7. Zróznicowane zapytania sql](#7-zróznicowane-zapytania-sql)
+  - [Tablice ogłoszeń](#tablice-ogłoszeń)
+  - [Profil użytkownika](#profil-użytkownika)
+  - [Rodzina użytkownika](#rodzina-użytkownika)
+  - [Procentowy podzial na płci](#procentowy-podzial-na-płci)
+  - [Użytkownicy z rejonu Rury](#użytkownicy-z-rejonu-rury)
+- [8. Opracownie i prezentacja zapytań modyfikujacych dane w bazie](#8-opracownie-i-prezentacja-zapytań-modyfikujacych-dane-w-bazie)
+    - [Stworzenie zmory](#stworzenie-zmory)
+    - [Rozwód](#rozwód)
+    - [Ślub](#ślub)
+    - [Degradacja nieaktywnych kreatorów postów](#degradacja-nieaktywnych-kreatorów-postów)
+- [9. Opracowanie i prezentacja widoków](#9-opracowanie-i-prezentacja-widoków)
+  - [Statystyki](#statystyki)
+    - [płodność kreatorów postow](#płodność-kreatorów-postow)
+    - [płodność tablicy](#płodność-tablicy)
+    - [płodność parafii](#płodność-parafii)
+    - [Pozycja modlitwy](#pozycja-modlitwy)
+    - [Pozycja rodziny](#pozycja-rodziny)
+    - [Matuzal](#matuzal-1)
+    - [Zmora](#zmora-1)
+    - [Zmarły użytkownik](#zmarły-użytkownik)
+  - [Dane zależne](#dane-zależne)
+    - [Sygnatura](#sygnatura)
+    - [Wiek](#wiek)
+    - [Rodzina wrzeniona](#rodzina-wrzeniona)
+    - [url obrazka](#url-obrazka)
+    - [Kod pocztowy](#kod-pocztowy)
+- [10.Opracowanie i prezentacja wyzwalaczy (triggerów)](#10opracowanie-i-prezentacja-wyzwalaczy-triggerów)
+  - [Sprzatanie kiedy usuwamy uzytkownika](#sprzatanie-kiedy-usuwamy-uzytkownika)
+      - [Przed usunieciem uzytkownika z bazy danych:](#przed-usunieciem-uzytkownika-z-bazy-danych)
+    - [Przyklady działania:](#przyklady-działania)
+      - [Dodawanie uzytkownika](#dodawanie-uzytkownika)
+    - [Usuwanie Uzytkownika](#usuwanie-uzytkownika)
+      - [Stan przed usunieciem:](#stan-przed-usunieciem)
+- [11.Opracowanie i prezentacja procedur składowanych](#11opracowanie-i-prezentacja-procedur-składowanych)
+  - [Opis procedury](#opis-procedury)
+    - [Przykladowe uzycie](#przykladowe-uzycie)
+- [12.Prezenatcja zarządzania uzytkownikami](#12prezenatcja-zarządzania-uzytkownikami)
+  - [Logowanie i przykładowe zapytania](#logowanie-i-przykładowe-zapytania)
+- [13.Prezentacja tworzenia kopii zapasowej, importu i eksportu bazy danych](#13prezentacja-tworzenia-kopii-zapasowej-importu-i-eksportu-bazy-danych)
+  - [Początkowa konfiguracja z poziomu admina serwera](#początkowa-konfiguracja-z-poziomu-admina-serwera)
+      - [Zawartosc skryptu:](#zawartosc-skryptu)
+  - [Jednorazowy Eksport bazy danych w graficzym panelu xampp](#jednorazowy-eksport-bazy-danych-w-graficzym-panelu-xampp)
+    - [1. Na górnym panelu klikamy w zakladke Eksport i wybieramy opcje szybko](#1-na-górnym-panelu-klikamy-w-zakladke-eksport-i-wybieramy-opcje-szybko)
+    - [2.Klikamy Export i wybieramy gdzie chcemy zapisac nasza baze danych](#2klikamy-export-i-wybieramy-gdzie-chcemy-zapisac-nasza-baze-danych)
+  - [Import bazy danych w graficznym panelu xampp](#import-bazy-danych-w-graficznym-panelu-xampp)
+    - [Szybki import pliku bazy danych](#szybki-import-pliku-bazy-danych)
+    - [Proces budowy bazy danych podczas testów](#proces-budowy-bazy-danych-podczas-testów)
+      - [1. Eksport projektu bazy danych z workbencha:](#1-eksport-projektu-bazy-danych-z-workbencha)
+    - [2. Generowanie plików sql do importu](#2-generowanie-plików-sql-do-importu)
+      - [3. Import bazy danych w panelu administracyjnym xampa](#3-import-bazy-danych-w-panelu-administracyjnym-xampa)
 
 </div>
 
@@ -118,13 +119,13 @@ Emeryci mogą mieć problem w dowiadywaniu się o zmianach w ich najbliższym ot
 
 ### Dlaczego warto to zrealizować i co ma rozwiązać
 
-Wierzymy, iż nasz SMIPEGS Lublin pomoże w bycie na bieżąco z najbliższym środowiskiem co jest trudniejsze z wiekiem. Każdy z nas się kiedyś znajdzie, więc już dziś myślmy o naszej niedalekiej przyszłości, bo kiedyś my sami staniemy się emerytami. Memento mori.
+Wierzymy, iż nasz SMIPEGS Lublin pomoże w byciu na bieżąco z najbliższym środowiskiem co jest trudniejsze z wiekiem. Każdy z nas się kiedyś znajdzie w tej syruacji, więc już dziś myślmy o naszej niedalekiej przyszłości, bo kiedyś my sami staniemy się emerytami. Memento mori.
 
 ## 2. Opis słowny
 
-Portal społecznościowy dla emerytów wiary chrześcijańskiej, z którego również mogą korzystać użytkownicy nie podzielający tej wiary. Portal składa się z dwóch części:
+Portal społecznościowy dla emerytów wiary chrześcijańskiej, z którego również mogą korzystać użytkownicy nie podzielający tej wiary. Portal składa się z trzech części:
 
-* Główna **Tablica ogłoszeniowa** (o indeksie 0) i prywatne **tablice ogłoszeniowe użytkowników** na które **użytkownicy** o odpowiednich **uprawnieniach** mogą wstawiać **ogłoszenia** zawierające tekst i **obrazki**. Znajduje się tam również lista członków danej tablicy z której można wejść na **opis** danego użytkownika zawierający:
+* Główna **Tablica ogłoszeniowa** (o indeksie 0) i prywatne **tablice ogłoszeniowe użytkowników** na które **użytkownicy** o odpowiednich **uprawnieniach** mogą wstawiać **ogłoszenia** zawierające tekst i **obrazki**. znajduje się tam również lista członków danej tablicy z której można wejść do **opisu** danego użytkownika zawierającego:
   * Ulubione **modlitwy**.
   * **Parafie** i ich **proboszcza** na oddzielnej podstronie.
 * Zakładke "profil użytkownika" na której użytkownik może zobaczyć jak widzą go inni.
@@ -134,7 +135,7 @@ Portal społecznościowy dla emerytów wiary chrześcijańskiej, z którego rów
 
 ## 2,5. Założenia projektu
 
-### Administracja
+### Adminokracja
 
 1. Użytkownicy nie mają możliwości wpływania na zawartość bazy danych, jedynie mogą przeglądać jej zawartość.
 2. Nad zawartością bazy czuwają admini, nad tablicami użytkownicy o odpowiednich uprawnieniach, którzy nadal nie mają siły sprawczej.
@@ -159,6 +160,8 @@ Użytkownicy o uprawnieniu "zarządzanie użytkownikami" przekazują adminowi ki
 
 Admin mający całkowitą władzę nad bazą danych.
 
+<div style="page-break-after: always;"></div>
+
 ### Serwer
 
 Nasza baza danych stoi na serwerze z systemem operacyjnym Debian. System do tworzenia kopii zapasowej jedynie działa na systemach z rodziny GNU/Linux.
@@ -169,15 +172,15 @@ Nasza baza danych stoi na serwerze z systemem operacyjnym Debian. System do twor
 
 Matuzal, syn Henocha, był człowiekiem któremu Bóg dał 969 lat życia i zaszczyt bycia jednym z przodków wszystkich ludzi po potopie. Tym mianem w naszej społeczności nazywamy użytkowników którzy dożyli 90 godnych lat. Są chlubą naszego systemu SMIPEGS Lublin.
 
-<div style="page-break-after: always;"></div>
-
 #### Zmora
 
 W dawnych wierzeniach słowiańskim była demonem narodzonym z duszy grzesznika, a jeżeli ktoś był kierowany w życiu złością, to mógł się nią stać i za życia. Tak nazywamy w naszej społeczności użytkowników usuniętych z tablicy głównej z powodu ich udręczających zachowań w obrębach naszego systemu SMIPEGS.
 
+<div style="page-break-after: always;"></div>
+
 ## 3. Tabele
 
-* uzytkownik
+* użytkownik
 * dane_uzytkownika
 * modlitwa
 * parafia
@@ -185,12 +188,14 @@ W dawnych wierzeniach słowiańskim była demonem narodzonym z duszy grzesznika,
 * rodzina
 * pokrewienstwo
 * proboszcz
-* opis użytkownika
+* opis_uzytkownika
 * tablica_ogloszeniowa
-* ogłoszenie
+* ogloszenie
 * uprawnienie
 * obraz
 * tablica_ogloszeniowa_uzytkownik
+
+<div style="page-break-after: always;"></div>
 
 ## 4. Atrybuty encji i relacje
 
@@ -201,45 +206,41 @@ Jeżeli nie zostało napisane inaczej, to domyślne wartości dla każdego atryb
 * unsigned (przy varcharze nie można ustawić unsigned)
 * not null
 
-Wszystkie id mają unique.
+Wszystkie id mają unique. Wszystkie id są autoinkrementowane. Boolowski typ danych jest reprezentowany przez tinyint(1).
 
-Wszystkie id są autoinkrementowane.
+#### użytkownik
 
-Boolowski typ danych jest reprezentowany przez tinyint(1).
-
-<div style="page-break-after: always;"></div>
-
-#### uzytkownik
-
-> hasła powinny byc szyfrowane ale to zagadnienie wykracza poza naszą obecną wiedze.
+> Hasła powinny byc szyfrowane ale to zagadnienie wykracza poza naszą obecną wiedze.
+> Użytkownik o id 1 to użytkownik usunięty.
+> Wartosc NULL jest nam potrzebna aby nikt nie mógł sie zalogowac na usunietego użytkowika.
 
 | Atrybut | Typ          | Ograniczenia / opis                        |
 | ------- | ------------ | ------------------------------------------ |
 | id      | int          | klucz główny                             |
-| login   | varchar(128) | unique, mozliwy NULL, DEFAULT 'uzytkownik' |
-| haslo   | varchar(64)  | mozliwy NULL, DEFAULT 'uzytkownik'         |
+| login   | varchar(128) | unique, mozliwy NULL, DEFAULT 'użytkownik' |
+| haslo   | varchar(64)  | mozliwy NULL, DEFAULT 'użytkownik'         |
 
 ![](assets/20260117_004631_uzytkownik_encje.png)
 
-> użytkownik o id == 1 to uzytkownik usuniety
+<div style="page-break-after: always;"></div>
 
-> Wartosc NULL jest nam potrzebna aby nikt nie mógł sie zalogowac na usunietego użytkowika.
-
-#### dane uzytkownika
+#### dane użytkownika
 
 | Atrybut        | Typ         | Ograniczenia / opis       |
 | -------------- | ----------- | ------------------------- |
 | id             | int         | klucz główny            |
-| uzytkownik id  |             | klucz obcy                |
+| uzytkownik_id  |             | klucz obcy                |
 | imie           | varchar(64) |                           |
 | nazwisko       | varchar(64) |                           |
 | numer_telefonu | varchar(16) | możliwy NULL             |
 | data_urodzenia | date        |                           |
 | data_smierci   | date        | możliwy NULL             |
 | adres_id       |             | klucz obcy, możliwy NULL |
-| użytkownik_id |             | klucz obcy                |
+| uzytkownik_id |             | klucz obcy                |
 
 ![](assets/20260117_003050_dane_uzytkownika_encje.png)
+
+<div style="page-break-after: always;"></div>
 
 #### opis użytkownika
 
@@ -253,9 +254,11 @@ Boolowski typ danych jest reprezentowany przez tinyint(1).
 | parafia_id           |               | klucz obcy, możliwy NULL |
 | rodzina_id           |               | klucz obcy, DEFAULT '1'   |
 | zdjecie_profilowe_id |               | klucz obcy, DEFAULT '1'   |
-| ulubiona\modlitwa_id |               | klucz obcy, możliwy NULL |
+| ulubiona_modlitwa_id |               | klucz obcy, możliwy NULL |
 
 ![](assets/20260117_001843_opis_uzytkownika_encje.png)
+
+<div style="page-break-after: always;"></div>
 
 #### modlitwa
 
@@ -268,9 +271,9 @@ Boolowski typ danych jest reprezentowany przez tinyint(1).
 
 ![](assets/20260114_094125_modlitwa.png)
 
-<div style="page-break-after: always;"></div>
-
 #### adres
+
+> W kodzie pocztowym nie trzymamy "20-" z przodu tylko same liczby ponieważ zakładamy, że wszyscy użytkownicy są z Lublina. Kod pocztowy w formacie "20-XXX" znajduje się w widoku "kod_pocztowy".
 
 | Atrybut          | Typ            | Ograniczenia / opis |
 | ---------------- | -------------- | ------------------- |
@@ -281,11 +284,13 @@ Boolowski typ danych jest reprezentowany przez tinyint(1).
 | numer_budynku    | small int(255) |                     |
 | numer_mieszkania | small int(255) | możliwy NULL       |
 
-> W kodzie pocztowym nie trzymamy 20 z przodu tylko same liczby ponieważ zakładamy, że wszyscy użytkownicy sa z Lublina
-
 ![](assets/20260114_094136_adres.png)
 
+<div style="page-break-after: always;"></div>
+
 #### rodzina
+
+> Rodzina o id 0 to rodzina "Nieznana".
 
 | Atrybut | Typ           | Ograniczenia / opis |
 | ------- | ------------- | ------------------- |
@@ -293,27 +298,26 @@ Boolowski typ danych jest reprezentowany przez tinyint(1).
 | nazwa   | varchar(128)  |                     |
 | opis    | varchar(1024) | możliwy NULL       |
 
-> id == 0 to rodzina "Nieznana"
-
 ![](assets/20260114_094149_rodzina.png)
 
 <div style="page-break-after: always;"></div>
 
-#### pokrewienstwo
+#### pokrewieństwo
 
 > Użytkownik zgłasza swoją relacje z innym użytkownikiem, relacje nie są symetryczne ponieważ drugi użytkownik nie musi ją uznawać, co nie jest problemem gdyż są one czysto informacyjne.
 
 | Atrybut                    | Typ                                                                                                                                                                                                                                                                                                                                     | Ograniczenia / opis |
 | -------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------- |
 | id                         | int                                                                                                                                                                                                                                                                                                                                     | klucz główny      |
-| typ_relacji                | enum('mama', 'ojciec', 'córka', 'syn', 'siostra', 'brat', 'ciotka', 'wujek', 'siostrzenica', 'bratanica', 'siostrzeniec', 'bratanek', 'kuzyn', 'kuzynka', 'babcia', 'dziadek', 'wnuczka', 'wnuk', 'ojczym', 'macocha', 'pasierb', 'pasierbica', 'szwagier', 'szwagierka', 'teść', 'teściowa', 'zięć', 'synowa', 'mąż', 'żona') |                     |
+| typ_relacji                | enum(*'mama', 'ojciec', 'córka', 'syn', 'siostra', 'brat', 'ciotka', 'wujek', 'siostrzenica', 'bratanica', 'siostrzeniec', 'bratanek', 'kuzyn', 'kuzynka', 'babcia', 'dziadek', 'wnuczka', 'wnuk', 'ojczym', 'macocha', 'pasierb', 'pasierbica', 'szwagier', 'szwagierka', 'teść', 'teściowa', 'zięć', 'synowa', 'mąż', 'żona'*) |                     |
 | widzi_dane_osobowe         | bool                                                                                                                                                                                                                                                                                                                                    |                     |
 | uzytkownik_id              |                                                                                                                                                                                                                                                                                                                                         | klucz obcy          |
 | spokrewniony_uzytkownik_id |                                                                                                                                                                                                                                                                                                                                         | klucz obcy          |
-
-![](assets/20260114_134039_mapa_pokrewienstw.png)
-
 ![](assets/20260117_001635_pokrewienstwo_encje.png)
+
+<img src="assets/20260114_134039_mapa_pokrewienstw.png" style="width: 85%"/>
+
+<div style="page-break-after: always;"></div>
 
 #### proboszcz
 
@@ -335,11 +339,9 @@ Boolowski typ danych jest reprezentowany przez tinyint(1).
 
 ![](assets/20260114_094230_parafia.png)
 
-<div style="page-break-after: always;"></div>
+#### tablica ogłoszeniowa
 
-#### tablica ogloszeniowa (board)
-
-> id == 1 to tablica glowna, kazdy uzytkownik jest tam automatycznie dodawany przez trigger
+> Tablica ogłoszeniowa o id 1 to tablica główna, każdy użytkownik jest tam automatycznie dodawany za pomocą triggera.
 
 | Atrybut | Typ           | Ograniczenia / opis |
 | ------- | ------------- | ------------------- |
@@ -349,7 +351,9 @@ Boolowski typ danych jest reprezentowany przez tinyint(1).
 
 ![](assets/20260114_094243_tablica_ogloszeniowa.png)
 
-#### ogloszenie
+<div style="page-break-after: always;"></div>
+
+#### ogłoszenie
 
 | Atrybut                 | Typ          | Ograniczenia / opis       |
 | ----------------------- | ------------ | ------------------------- |
@@ -364,11 +368,9 @@ Boolowski typ danych jest reprezentowany przez tinyint(1).
 
 ![](assets/20260117_000458_ogloszenie_encje.png)
 
-<div style="page-break-after: always;"></div>
-
 #### obrazek
 
-> obrazek o id 1 to domyślne zdjęcie profilowe użytkownika
+> Obrazek o id 1 to domyślne zdjęcie profilowe użytkownika.
 
 | Atrybut            | Typ          | Ograniczenia / opis |
 | ------------------ | ------------ | ------------------- |
@@ -377,18 +379,20 @@ Boolowski typ danych jest reprezentowany przez tinyint(1).
 
 ![](assets/20260114_094310_obrazek.png)
 
+<div style="page-break-after: always;"></div>
+
 #### uprawnienie
 
 | Atrybut                 | Typ                                                                                               | Ograniczenia / opis |
 | ----------------------- | ------------------------------------------------------------------------------------------------- | ------------------- |
 | id                      | int                                                                                               | klucz glówny       |
-| rola                    | ENUM('zarządzanie użytkownikami', 'kreator postów', 'moderator postów', 'obserwator postów') |                     |
+| rola                    | enum(*'zarządzanie użytkownikami', 'kreator postów', 'moderator postów', 'obserwator postów'*) |                     |
 | tablica_ogloszeniowa_id |                                                                                                   | klucz obcy          |
 | uzytkownik_id           |                                                                                                   | klucz obcy          |
 
 ![](assets/20260114_094326_uprawnienie.png)
 
-#### tablica ogloszeniowa uzytkownik
+#### tablica ogłoszeniowa użytkownik
 
 | Atrybut                 | Typ | Ograniczenia / opis |
 | ----------------------- | --- | ------------------- |
@@ -402,28 +406,28 @@ Boolowski typ danych jest reprezentowany przez tinyint(1).
 
 ### Relacje
 
-**(I)** – relacja identyfikująca
-**(NI)** – relacja nie-identyfikująca
+**(I)** – Relacja identyfikująca,
+**(NI)** – Relacja nie-identyfikująca
 
 | Encja A                         | Relacja | Encja B                         | Opis                      |
 | ------------------------------- | :------: | ------------------------------- | ------------------------- |
-| uzytkownik                      | 1:1 (NI) | dane_uzytkownika                |                           |
-| opis_uzytkownika                | 1:1 (NI) | uzytkownik                      |                           |
-| modlitwa                        | 1:N (NI) | opis_uzytkownika                | ulubiona_modlitwa_id      |
-| parafia                         | 1:N (NI) | opis_uzytkownika                |                           |
-| parafia                         | 1:1 (I) | proboszcz                       |                           |
-| adres                           | 1:1 (NI) | dane_uzytkownika                |                           |
-| rodzina                         | 1:N (I) | opis_uzytkownika                |                           |
-| uzytkownik                      | 1:N (I) | pokrewienstwo                   | tabela pośrednia         |
-| pokrewienstwo                   | N:1 (I) | uzytkownik                      | spokrewiony_uzytkownik_id |
-| tablica_ogloszeniowa            | 1:N (I) | tablica_ogloszeniowa_uzytkownik |                           |
-| tablica_ogloszeniowa_uzytkownik | N:1 (I) | uzytkownik                      |                           |
-| ogloszenie                      | N:1 (I) | tablica                         |                           |
-| ogloszenie                      | N:1 (I) | uzytkownik                      | autor_id                  |
-| tablica_ogloszeniowa            | 1:N (I) | uprawnienie                     | tabela pośrednia         |
-| uprawnienie                     | N:1 (I) | uzytkownik                      |                           |
-| obrazek                         | 1:1 (NI) | opis_uzytkownika                | zdjecie_profilowe_id      |
-| obrazek                         | 1:1 (NI) | ogloszenie                      |                           |
+| uzytkownik                      | 1:<sub>(I)</sub>1  | dane_uzytkownika                |                           |
+| opis_uzytkownika                | 1:<sub>(I)</sub>1 | uzytkownik                      |                           |
+| modlitwa                        | 1:<sub>(NI)</sub>N | opis_uzytkownika                | ulubiona_modlitwa_id      |
+| parafia                         | 1:<sub>(NI)</sub>N | opis_uzytkownika                |                           |
+| parafia                         | 1:<sub>(I)</sub>1 | proboszcz                       |                           |
+| adres                           | 1:<sub>(NI)</sub>1 | dane_uzytkownika                |                           |
+| rodzina                         | 1:<sub>(I)</sub>N | opis_uzytkownika                |                           |
+| uzytkownik                      | 1:<sub>(I)</sub>N | pokrewienstwo                   | tabela pośrednia         |
+| pokrewienstwo                   | N:<sub>(I)</sub>1 | uzytkownik                      | spokrewiony_uzytkownik_id |
+| tablica_ogloszeniowa            | 1:<sub>(I)</sub>N | tablica_ogloszeniowa_uzytkownik |                           |
+| tablica_ogloszeniowa_uzytkownik | N:<sub>(I)</sub>1 | uzytkownik                      |                           |
+| ogloszenie                      | N:<sub>(I)</sub>1 | tablica                         |                           |
+| ogloszenie                      | N:<sub>(I)</sub>1 | uzytkownik                      | autor_id                  |
+| tablica_ogloszeniowa            | 1:<sub>(I)</sub>N | uprawnienie                     | tabela pośrednia         |
+| uprawnienie                     | N:<sub>(I)</sub>1 | uzytkownik                      |                           |
+| obrazek                         | 1:<sub>(NI)</sub>1 | opis_uzytkownika                | zdjecie_profilowe_id      |
+| obrazek                         | 1:1 | ogloszenie                      |                           |
 
 ![](assets/20260114_125414_relacje.png)
 
@@ -726,9 +730,9 @@ HAVING MAX(o.data_wstawienia) < DATE_SUB(CURDATE(), INTERVAL 2 YEAR);
 
 ### Statystyki
 
-#### Plodnosc kreatorow postow
+#### płodność kreatorów postow
 
-> wyswietla ile postów dodał dany uzytkownik
+> wyświetla ile postów dodał dany użytkownik
 
 ```sql
 DROP VIEW IF EXISTS plodnosc_kreatorow_postow;
@@ -745,9 +749,9 @@ ORDER BY liczba_postow DESC;
 
 <div style="page-break-after: always;"></div>
 
-#### Plodnosc tablicy
+#### płodność tablicy
 
-> wyswietla ile postów znajduje sie na danej tablicy
+> wyświetla ile postów znajduje się na danej tablicy
 
 ```sql
 DROP VIEW IF EXISTS plodnosc_tablicy;
@@ -766,9 +770,9 @@ ORDER BY liczba_postow DESC;
 
 <div style="page-break-after: always;"></div>
 
-#### Plodnosc parafii
+#### płodność parafii
 
-> wyswietla ilu uzytkowników jest w danej parafii
+> wyświetla ilu uzytkowników jest w danej parafii
 
 ```sql
 DROP VIEW IF EXISTS plodnosc_parafii;
@@ -783,7 +787,7 @@ GROUP BY p.id, p.nazwa;
 
 #### Pozycja modlitwy
 
-> wyswietla które modlitwy najczesciej znajduja sie w opisach uzytkowników
+> wyświetla które modlitwy najczesciej znajduja sie w opisach uzytkowników
 
 ```sql
 DROP VIEW IF EXISTS pozycja_modlitwy;
@@ -798,7 +802,7 @@ GROUP BY m.id, m.nazwa;
 
 #### Pozycja rodziny
 
-> wyswietla które rodziny maja najwiecej członków
+> wyświetla które rodziny maja najwiecej członków
 
 ```sql
 DROP VIEW IF EXISTS pozycja_rodziny;
@@ -815,7 +819,7 @@ GROUP BY r.id, r.nazwa;
 
 #### Matuzal
 
-> wyswietla uzytkownikow mających co namniej 90 lat
+> wyświetla uzytkownikow mających co namniej 90 lat
 
 ```sql
 DROP VIEW IF EXISTS matuzal;
@@ -855,7 +859,7 @@ WHERE NOT EXISTS (
 
 <div style="page-break-after: always;"></div>
 
-#### Zmarły uzytkownik
+#### Zmarły użytkownik
 
 > uzytkownicy którzy nie żyja
 
@@ -877,7 +881,7 @@ WHERE du.data_smierci IS NOT NULL;
 
 #### Sygnatura
 
-> wyswietla imie, pseudonim i nazwisko w jednej komórce
+> wyświetla imie, pseudonim i nazwisko w jednej komórce
 
 ```sql
 DROP VIEW IF EXISTS sygnatura;
@@ -894,7 +898,7 @@ LEFT JOIN dane_uzytkownika du ON du.uzytkownik_id = u.id;
 
 #### Wiek
 
-> wyswietla ile lat ma kazdy uzytkownik
+> wyświetla ile lat ma kazdy użytkownik
 
 ```sql
 DROP VIEW IF EXISTS wiek;
@@ -913,7 +917,7 @@ FROM dane_uzytkownika;
 
 #### Rodzina wrzeniona
 
-> wyswietla rodzina małzonka
+> wyświetla rodzina małzonka
 
 ```sql
 DROP VIEW IF EXISTS rodzina_wzeniona;
@@ -932,7 +936,7 @@ WHERE p.typ_relacji IN ('mąż', 'żona');
 
 #### url obrazka
 
-> wyswietla url obrazka
+> wyświetla url obrazka
 
 ```sql
 DROP VIEW IF EXISTS url_obrazka;
@@ -947,7 +951,7 @@ FROM obrazek o;
 
 #### Kod pocztowy
 
-> wyswietla kod pocztowy uzytkownika
+> wyświetla kod pocztowy uzytkownika
 
 ```sql
 DROP VIEW IF EXISTS kod_pocztowy;
@@ -1038,7 +1042,7 @@ DELETE FROM pokrewienstwo
 WHERE uzytkownik_id = OLD.id OR spokrewniony_uzytkownik_id = OLD.id;
 ```
 
-> Posty które stworzył sa przypisaywane autorowi o id = 1 'usuniety uzytkownik'
+> Posty które stworzył sa przypisaywane autorowi o id = 1 'usuniety użytkownik'
 
 ```sql
 CREATE TRIGGER przed_usunieciem_uzytkownika_usun_posty
@@ -1116,7 +1120,7 @@ FOR EACH ROW
 
 ![](assets/20260116_193715_metamorfoza_Adama.png)
 
-> Pozostał jedynie adres uzytkownika ponieważ w bazie znajdowal sie inny uzytkownik który mieszkal pod tym samym adresem
+> Pozostał jedynie adres uzytkownika ponieważ w bazie znajdował sie inny użytkownik który mieszkal pod tym samym adresem
 
 ![](assets/20260115_235624_adam_umar_ale_dom_stoi.png)
 
@@ -1128,7 +1132,7 @@ Nasz system SMIPEGS potrzebuje aby jednej procedury, gdyż inne czynności są d
 
 ### Opis procedury
 
-> Pozwala admistratorowi podejrzec przedawnione posty na podstawie daty wstawienia z pominieciem postów oznaczonych jako 'do  archiwizacji'. Procedura pozwala na wyszukanie postów starszych niz x lat lub postów stworzonych do konkretnej daty. Mozna tez podejrzec kolumny do usuniecia jesli nie ustawimy parametru usunac na 'true'.
+> Pozwala admistratorowi podejrzeć przedawnione posty na podstawie daty wstawienia z pominieciem postów oznaczonych jako 'do  archiwizacji'. Procedura pozwala na wyszukanie postów starszych niz x lat lub postów stworzonych do konkretnej daty. Można tez podejrzeć kolumny do usuniecia jesli nie ustawimy parametru usunac na 'true'.
 
 ```sql
 DROP PROCEDURE IF EXISTS usun_stare_ogloszenia;
@@ -1183,15 +1187,15 @@ DELIMITER ;
 
 ![](assets/20260115_103531_execute_routine.png)
 
-> Procedura pokarze ogloszenia starsze niz 1 rok, nie usunie ich ponieważ nie zmieniamy wartosci paramatru 'usunac'.
+> Procedura pokarze ogłoszenia starsze niz 1 rok, nie usunie ich ponieważ nie zmieniamy wartosci paramatru 'usunac'.
 
 ![](assets/20260115_104018_procedure_wynik.png)
 
 <div style="page-break-after: always;"></div>
 
-## 12.Prezenatcja zażądzania uzytkownikami
+## 12.Prezenatcja zarządzania uzytkownikami
 
-Tworzenie uzytkowników i nadawanie im uprawnien znajduje sie w pliku:
+Tworzenie uzytkowników i nadawanie im uprawnień znajduje się w pliku:
 do_importu\3_uzytkownicy.sql
 
 > tworzenie uzytkowników
@@ -1225,7 +1229,7 @@ MAX_CONNECTIONS_PER_HOUR 500
 MAX_USER_CONNECTIONS 500;
 ```
 
-> nadawanie uprawnien
+> nadawanie uprawnień
 
 ```sql
 -- Uprawnienia admin
@@ -1253,7 +1257,7 @@ GRANT SELECT ON smipegs_lublin.tablica_ogloszeniowa TO 'admin_kierownik'@'localh
 GRANT INSERT, UPDATE, DELETE, SELECT ON smipegs_lublin.tablica_ogloszeniowa_uzytkownik TO 'admin_kierownik'@'localhost';
 GRANT INSERT, UPDATE, DELETE, SELECT ON smipegs_lublin.uprawnienie TO 'admin_kierownik'@'localhost';
 
--- Uprawnienia uzytkownik
+-- Uprawnienia użytkownik
 GRANT SELECT ON smipegs_lublin.adres TO 'uzytkownik'@'localhost';
 GRANT SELECT ON smipegs_lublin.dane_uzytkownika TO 'uzytkownik'@'localhost';
 GRANT SELECT ON smipegs_lublin.kod_pocztowy TO 'uzytkownik'@'localhost';
@@ -1276,43 +1280,43 @@ GRANT SELECT ON smipegs_lublin.sygnatura TO 'uzytkownik'@'localhost';
 ```
 
 Opis kont:
-W naszej bazie danych znajduje sie 6 uzytkowników kazde konto ma inne prawa do wyswietania wstawiania i usuwania danych.
+W naszej bazie danych znajduje się 6 uzytkowników kazde konto ma inne prawa do wyswietania wstawiania i usuwania danych.
 
-Admin - konto z najwyższymi uprawnienimi pozwalajacymi na dowolne modyfikowanie wyswietlania i usuwanie danych, modyfikowanie struktóry bazy danych wywoływanie procedur oraz zażądzanie innymi uzytkownikami.
+Admin - konto z najwyższymi uprawnienimi pozwalajacymi na dowolne modyfikowanie wyświetlania i usuwanie danych, modyfikowanie struktóry bazy danych wywoływanie procedur oraz zażądzanie innymi uzytkownikami.
 
-Admin_kierownik - konto pozwalajace na dodawanie i usuwanie uzytkowników z tablic ogłoszeniowych oraz przyznawanie uprawnien do tworzenia i usuwania postów na tablicach
+Admin_kierownik - konto pozwalajace na dodawanie i usuwanie uzytkowników z tablic ogłoszeniowych oraz przyznawanie uprawnień do tworzenia i usuwania postów na tablicach
 
 Admin_moderator - konto pozwalajace na usuwanie i zmiane tresci ogłoszen na tablicach
 
 Admin_kreator - konto pozwalajace na tworzenie postow na tablicach ogłoszeniowych
 
-Analityk - konto przeznaczone dla analityków, pozwala na wyswietlanie wszystkich widoków zwiazanych ze statystykami.
+Analityk - konto przeznaczone dla analityków, pozwala na wyświetlanie wszystkich widoków zwiazanych ze statystykami.
 
-Użytkownik - bazowe konto potrzebne do prawidłowego działania strony internetowej, pozwala tylko na wyswietlanie rekordów z tablic.
+Użytkownik - bazowe konto potrzebne do prawidłowego działania strony internetowej, pozwala tylko na wyświetlanie rekordów z tablic.
 
-Logowanie i przyładowe zapytania sql w obrębie danego konta:
+### Logowanie i przykładowe zapytania
 
-Uzytkownik:
+**Użytkownik:**
 
 ![](assets/20260117_122916_polecenia_z_uzytkownika.png)
 
-Analityk:
+**Analityk:**
 
 ![](assets/20260117_123347_polecenia_z_analityka.png)
 
-Admin_kreator:
+**Admin Kreator:**
 
 ![](assets/20260117_124251_polecenia_admin_kreator.png)
 
-Admin_moderator:
+**Admin Moderator:**
 
 ![](assets/20260117_124825_polecenia_admin_moderator.png)
 
-Admin_kierownik:
+**Admin Kierownik:**
 
 ![](assets/20260117_131905_polecenia_admin_kierownik.png)
 
-Admin:
+**Admin:**
 
 ![](assets/20260117_134151_polecenia_amin.png)
 
@@ -1458,7 +1462,7 @@ uprawnienia bazy danych
 
 ![](assets/20260117_023026_uprawnienia_bazy_danych.png)
 
-uprawnienia tablicy: ogloszenie
+uprawnienia tablicy: ogłoszenie
 
 ![](assets/20260117_023057_uprawnienia_tablicy_ogloszenie_.png)
 
