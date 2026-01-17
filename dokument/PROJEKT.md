@@ -252,6 +252,7 @@ Wszystkie id mają unique. Wszystkie id są autoinkrementowane. Boolowski typ da
 
 > Opis użytkownika o id 1 to opis usuniętego użytkownika.
 
+
 | Atrybut              | Typ           | Ograniczenia / opis       |
 | ---------------------- | --------------- | --------------------------- |
 | id                   | int           | klucz główny            |
@@ -403,6 +404,7 @@ Wszystkie id mają unique. Wszystkie id są autoinkrementowane. Boolowski typ da
 #### Uprawnienie
 
 > Dodatkowo kombinacja id użytkownika i tablicy ogłoszeniowej musi być unikalna. Jest tak ustawione ponieważ użytkownik może mieć aby jedno uprawnienie w danej tablicy.
+
 
 | Atrybut                 | Typ                                                                                                 | Ograniczenia / opis |
 | ------------------------- | ----------------------------------------------------------------------------------------------------- | --------------------- |
