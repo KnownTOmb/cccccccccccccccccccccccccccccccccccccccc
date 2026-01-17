@@ -154,23 +154,14 @@ ALTER IGNORE TABLE `uzytkownik` CHANGE `login` `login` VARCHAR(128) NULL DEFAULT
 INSERT IGNORE INTO uzytkownik (id)
 VALUES (1);
 
-ALTER IGNORE TABLE `uzytkownik` CHANGE `haslo` `haslo` VARCHAR(64) NULL DEFAULT 'uzytkownik';
-ALTER IGNORE TABLE `uzytkownik` CHANGE `login` `login` VARCHAR(128) NULL DEFAULT 'uzytkownik';
+ALTER IGNORE TABLE `uzytkownik` CHANGE `haslo` `haslo` VARCHAR(64) NOT NULL DEFAULT 'uzytkownik';
+ALTER IGNORE TABLE `uzytkownik` CHANGE `login` `login` VARCHAR(128) NOT NULL DEFAULT 'uzytkownik';
 
 DELETE FROM tablica_ogloszeniowa_uzytkownik WHERE uzytkownik_id = 1;
 
 TRUNCATE TABLE uprawnienie;
 TRUNCATE TABLE tablica_ogloszeniowa_uzytkownik;
 
-ALTER IGNORE TABLE `pokrewienstwo` CHANGE `widzi_dane_osobowe` `widzi_dane_osobowe` TINYINT(1) NULL DEFAULT '0'; 
-
-ALTER IGNORE TABLE `opis_uzytkownika` CHANGE `zdjecie_profilowe_id` `zdjecie_profilowe_id` INT(10) UNSIGNED NOT NULL DEFAULT '1'; 
-
-ALTER IGNORE TABLE `opis_uzytkownika` CHANGE `rodzina_id` `rodzina_id` INT(10) UNSIGNED NOT NULL DEFAULT '1'; 
-
-ALTER TABLE `opis_uzytkownika` CHANGE `ulubiona_modlitwa_id` `ulubiona_modlitwa_id` SMALLINT(255) UNSIGNED NULL DEFAULT NULL; 
-
-ALTER TABLE `opis_uzytkownika` CHANGE `parafia_id` `parafia_id` SMALLINT(255) UNSIGNED NULL DEFAULT NULL; 
 
 INSERT IGNORE INTO tablica_ogloszeniowa (id, nazwa, opis)
 VALUES (1, 'Tablica główna', 'Witaj na naszym portalu!');
@@ -183,7 +174,7 @@ VALUES (1, 'Nieznana');
 
 INSERT IGNORE INTO obrazek (id, tekst_alternatywny)
 VALUES (1, 'Domyślne zdjęcie profilowe');
--- rzyg
+-- deadline vomit 
 
 -- -----------------------------------------------------
 -- Procedura

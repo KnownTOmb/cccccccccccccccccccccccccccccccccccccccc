@@ -1,4 +1,4 @@
--- Fri Jan 16 21:52:17 2026
+-- Sat Jan 17 00:49:17 2026
 
 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0;
 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0;
@@ -19,7 +19,7 @@ USE `smipegs_lublin` ;
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `smipegs_lublin`.`uzytkownik` (
   `id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
-  `login` VARCHAR(128) NULL,
+  `login` VARCHAR(128) NOT NULL,
   `haslo` VARCHAR(64) NULL,
   PRIMARY KEY (`id`),
   UNIQUE INDEX `iduzytkownik_UNIQUE` (`id`),
@@ -33,8 +33,8 @@ CREATE TABLE IF NOT EXISTS `smipegs_lublin`.`adres` (
   `rejon` VARCHAR(64) NOT NULL,
   `kod_pocztowy` SMALLINT(3) ZEROFILL UNSIGNED NOT NULL,
   `ulica` VARCHAR(64) NOT NULL,
-  `numer_budynku` SMALLINT(255) NOT NULL,
-  `numer_mieszkania` SMALLINT(255) NULL,
+  `numer_budynku` SMALLINT(255) UNSIGNED NOT NULL,
+  `numer_mieszkania` SMALLINT(255) UNSIGNED NULL,
   PRIMARY KEY (`id`),
   UNIQUE INDEX `id_UNIQUE` (`id`));
 
@@ -45,10 +45,10 @@ CREATE TABLE IF NOT EXISTS `smipegs_lublin`.`dane_uzytkownika` (
   `id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
   `imie` VARCHAR(64) NOT NULL,
   `nazwisko` VARCHAR(64) NOT NULL,
-  `numer_telefonu` VARCHAR(16) NOT NULL,
+  `numer_telefonu` VARCHAR(16) NULL,
   `data_urodzenia` DATE NOT NULL,
   `data_smierci` DATE NULL,
-  `adres_id` INT UNSIGNED NOT NULL,
+  `adres_id` INT UNSIGNED NULL,
   `uzytkownik_id` INT UNSIGNED NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE INDEX `id_UNIQUE` (`id`),
@@ -130,10 +130,10 @@ CREATE TABLE IF NOT EXISTS `smipegs_lublin`.`opis_uzytkownika` (
   `plec` CHAR(1) NULL,
   `pseudonim` VARCHAR(64) NULL,
   `opis` VARCHAR(1024) NULL,
-  `rodzina_id` INT UNSIGNED NOT NULL,
-  `zdjecie_profilowe_id` INT UNSIGNED NOT NULL,
-  `ulubiona_modlitwa_id` SMALLINT(255) UNSIGNED NOT NULL,
-  `parafia_id` SMALLINT(255) UNSIGNED NOT NULL,
+  `rodzina_id` INT UNSIGNED NOT NULL DEFAULT 1,
+  `zdjecie_profilowe_id` INT UNSIGNED NOT NULL DEFAULT 1,
+  `ulubiona_modlitwa_id` SMALLINT(255) UNSIGNED NULL DEFAULT NULL,
+  `parafia_id` SMALLINT(255) UNSIGNED NULL DEFAULT NULL,
   PRIMARY KEY (`id`, `rodzina_id`),
   UNIQUE INDEX `id_UNIQUE` (`id`),
   INDEX `fk_opis_uzytkownika_rodzina1_idx` (`rodzina_id`),
@@ -173,7 +173,7 @@ CREATE TABLE IF NOT EXISTS `smipegs_lublin`.`opis_uzytkownika` (
 CREATE TABLE IF NOT EXISTS `smipegs_lublin`.`pokrewienstwo` (
   `id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
   `typ_relacji` ENUM('mama', 'ojciec', 'córka', 'syn', 'siostra', 'brat', 'ciotka', 'wujek', 'siostrzenica', 'bratanica', 'siostrzeniec', 'bratanek', 'kuzyn', 'kuzynka', 'babcia', 'dziadek', 'wnuczka', 'wnuk', 'ojczym', 'macocha', 'pasierb', 'pasierbica', 'szwagier', 'szwagierka', 'teść', 'teściowa', 'zięć', 'synowa', 'mąż', 'żona') NOT NULL,
-  `widzi_dane_osobowe` TINYINT(1) NULL,
+  `widzi_dane_osobowe` TINYINT(1) NOT NULL DEFAULT 0,
   `spokrewniony_uzytkownik_id` INT UNSIGNED NOT NULL,
   `uzytkownik_id` INT UNSIGNED NOT NULL,
   PRIMARY KEY (`id`, `spokrewniony_uzytkownik_id`, `uzytkownik_id`),

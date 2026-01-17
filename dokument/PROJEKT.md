@@ -59,13 +59,13 @@ Boolowski typ danych jest reprezentowany przez tinyint(1).
 > hasła powinny byc szyfrowane ale to zagadnienie wykracza poza naszą obecną wiedze.
 
 
-| Atrybut | Typ          | Ograniczenia / opis                          |
-| --------- | -------------- | ---------------------------------------------- |
-| id      | int          | klucz główny                               |
-| login   | varchar(128) | unique, mozliwy NULL, DEFAULT = 'uzytkownik' |
-| haslo   | varchar(64)  | mozliwy NULL, DEFAULT = 'uzytkownik'         |
+| Atrybut | Typ          | Ograniczenia / opis                        |
+| --------- | -------------- | -------------------------------------------- |
+| id      | int          | klucz główny                             |
+| login   | varchar(128) | unique, mozliwy NULL, DEFAULT 'uzytkownik' |
+| haslo   | varchar(64)  | mozliwy NULL, DEFAULT 'uzytkownik'         |
 
-![](assets/20260116_102643_uzytkownik_struktura.png)
+![](assets/20260117_004631_uzytkownik_encje.png)
 
 > użytkownik o id == 1 to uzytkownik usuniety
 
@@ -86,7 +86,7 @@ Boolowski typ danych jest reprezentowany przez tinyint(1).
 | adres_id       |             | klucz obcy, możliwy NULL |
 | użytkownik_id |             | klucz obcy                |
 
-![](assets/20260114_094101_dane_uzytkownika.png)
+![](assets/20260117_003050_dane_uzytkownika_encje.png)
 
 ### opis_użytkownika
 
@@ -103,7 +103,7 @@ Boolowski typ danych jest reprezentowany przez tinyint(1).
 | zdjecie_profilowe_id |               | klucz obcy, DEFAULT '1'   |
 | ulubiona\modlitwa_id |               | klucz obcy, możliwy NULL |
 
-![](assets/20260114_094113_opis_uzytkownika.png)
+![](assets/20260117_001843_opis_uzytkownika_encje.png)
 
 ### modlitwa
 
@@ -161,7 +161,7 @@ Boolowski typ danych jest reprezentowany przez tinyint(1).
 
 ![](assets/20260114_134039_mapa_pokrewienstw.png)
 
-![](assets/20260116_000057_relacje_struktura_danych.png)
+![](assets/20260117_001635_pokrewienstwo_encje.png)
 
 ### proboszcz
 
@@ -187,7 +187,7 @@ Boolowski typ danych jest reprezentowany przez tinyint(1).
 
 ### tablica_ogloszeniowa (board)
 
-> id == 1 to tablica glowna, kazdy uzytkownik jest tam automatycznie dodawany(trigger)
+> id == 1 to tablica glowna, kazdy uzytkownik jest tam automatycznie dodawany przez trigger
 
 
 | Atrybut | Typ           | Ograniczenia / opis |
@@ -212,7 +212,7 @@ Boolowski typ danych jest reprezentowany przez tinyint(1).
 | obrazek_id              |              | klucz obcy, możliwy NULL |
 | archiwalny              | bool         |                           |
 
-![](assets/20260116_000306_ogloszenie_struktura.png)
+![](assets/20260117_000458_ogloszenie_encje.png)
 
 ### obrazek
 
@@ -314,7 +314,7 @@ JOIN adres a ON a.id = du.adres_id
 WHERE a.rejon = 'Rury'
 ```
 
-# 8. Opracownie i prezentacja zapytan modyfikujacych dane w bazie
+# 8. Opracownie i prezentacja zapytań modyfikujacych dane w bazie
 
 > Nie mozemy edytowac struktury bazy danych
 
@@ -326,6 +326,7 @@ WHERE tablica_ogloszeniowa_id = 1 AND uzytkownik_id = "dowolne id"
 ```
 
 ### Rozwód
+
 > rozwązanie ziwązku małżeńskiego zawartego między 2 uzytkownikami
 
 ```sql
@@ -338,6 +339,7 @@ WHERE ou.pseudonim = 'smutnyMarian'
 ```
 
 ### Ślub
+
 > ustawianie małżenstwa dla 2 uzytkowników
 
 ```sql
@@ -354,6 +356,7 @@ FROM
 ```
 
 ### Degradacja nieaktywnych kreatorów postów
+
 > polecenie wypisuje wszyskich nieaktywnych postów i pozwala administratorowi zadecydowac nad ich losem.
 
 ```sql
@@ -859,18 +862,85 @@ crontab -e
 
 ## Import bazy danych w graficznym panelu xampp
 
+### Szybki import pliku bazy danych
+
 > nie musimy wybierac nowej pustej bazy danych, skrypt sam utworzy baze o nazwie smipegs_lublin
 
-#### 1. Na górnym panelu klikamy w zakladke import wybieramy plik do_importu/1_pusta_baza_z_triggerami.sql, odznaczamy foregin key checks a reszte opcji pozostawiamy ustawionych domyslnie.
+### Proces budowy bazy danych podczas testów
+
+#### 1. Eksport projektu bazy danych z workbencha:
+
+Otwieramy projekt zawierajacy baze danych lokalizacja pliku: do_importu\projekt_bazy_babaa_kabaaba.mwb
+
+![](assets/20260117_015959_workbench_otwierazie.png)
+
+![](assets/20260117_013253_workbench_inport_overwiew.png)
+
+W górnym rogu klikamy w File i wybieramy opcje Export --> Forward Engineer SQL Script
+
+![](assets/20260117_013754_workbench_forward_engeneer.png)
+
+W panelu wybieramy opcje ukazane na zrzucie ekranu i klikamy przycisk Next
+
+![](assets/20260117_013948_workbench_inport1.png)
+
+W kolejnym panelu odznaczamy importowanie widoków (Views) i klikamy przycisk Next
+
+![](assets/20260117_014238__12077D34-F2C7-4479-9CFA-85CEAB1A9AFD}.png)
+
+W ostatnim panelu wybieramy opcje "Save to Other File" i nadpiujemy plik w tej lokalizacji do_importu\konwersja_workbench_xampp\pusta_baza_mysql.sql
+
+![](assets/20260117_015002_workbench_import3.png)
+
+![](assets/20260117_020441_workbench_nadpisaniepliku.png)
+
+#### 2. Generowanie plików sql do importu
+
+Uruchamiany program z tej lokalizacji:
+do_importu\konwersja_workbench_xampp\smipegs_mysql_to_mariadb_translator.py
+
+![](assets/20260117_021933_tworzenie_pliku_sql.png)
+
+Nastepnie uruchamiamy kolejny proram z tej lokalizacji: do_importu\sztuczne_dane\smipegs_fake_data_generator.py
+
+![](assets/20260117_022343_tworzenie-pliku_sql2.png)
+
+#### 3. Import bazy danych w panelu administracyjnym xampa
+
+Na górnym panelu klikamy w zakladke import wybieramy plik do_importu/1_pusta_baza_z_triggerami.sql, odznaczamy foregin key checks a reszte opcji pozostawiamy ustawionych domyslnie.
 
 ![](assets/20260113_202828_import1.png)
 
-#### 2. Nastepnie klikamy w nowo utworzona baze danych smipegs_lublin, wchodzimy w zakładke import i importujemy plik do_importu/2_initial_data_with_generated_data.sql wczesniej odznaczajac foregin key checks.
+Nastepnie klikamy w nowo utworzona baze danych smipegs_lublin, wchodzimy w zakładke import i importujemy plik do_importu/2_initial_data_with_generated_data.sql wczesniej odznaczajac foregin key checks.
 
 ![](assets/20260116_183244_nonwy_import.png)
 
+Na Koniec importujemy w tej samej zakładce plik do_importu\3_uzytkownicy.sql z zachowaniem domyślych ustawień.
+
+![](assets/20260117_011519_import_3.png)
+
 > poprawna struktura danych po imporcie
 
-![](assets/20260116_183412_nowa_struktura.png)
+![](assets/20260117_010146_poprawna_struktura_po_import.png)
 
 ![](assets/20260116_233211_nowetriggery.png)
+
+uprawnienia widoków: matuzal, plodnosc_kreatorow_postow, plodnosc_parafii, plodnosc_tablicy, pozycja_modlitwy, pozycja_rodziny, zmora, zmarly_uzytkownik
+
+![](assets/20260117_022953_uprawnienia_widokow.png)
+
+uprawnienia bazy danych
+
+![](assets/20260117_023026_uprawnienia_bazy_danych.png)
+
+uprawnienia tablicy: ogloszenie
+
+![](assets/20260117_023057_uprawnienia_tablicy_ogloszenie_.png)
+
+uprawnienia tablicy: tablica_ogloszeniowa_uzytkownik, uprawnienie
+
+![](assets/20260117_023121_unrawnienia_tablicy_tablica_ogloszeniowa_uzytkownik_uprawnienie.png)
+
+uprawnienia wszystkich innych tabel i widoków
+
+![](assets/20260117_023142_uprawnienia_innych_tabel_i_widok_w.png)

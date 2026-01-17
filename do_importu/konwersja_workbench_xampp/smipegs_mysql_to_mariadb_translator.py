@@ -66,7 +66,7 @@ def convert_mysql_to_mariadb(sql: str) -> str:
 
 
 def main():
-    input_file = Path("test.sql")
+    input_file = Path("pusta_baza_mysql.sql")
     output_file = Path("../1_pusta_baza_z_triggerami.sql")
 
     sql = input_file.read_text(encoding="utf-8")
