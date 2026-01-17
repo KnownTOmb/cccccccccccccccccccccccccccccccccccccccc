@@ -32,41 +32,41 @@
 - [3. Tabele](#3-tabele)
 - [4. Atrybuty encji i relacje](#4-atrybuty-encji-i-relacje)
   - [Atrybuty encji](#atrybuty-encji)
-    - [użytkownik](#użytkownik)
-    - [dane użytkownika](#dane-użytkownika)
-    - [opis użytkownika](#opis-użytkownika)
-    - [modlitwa](#modlitwa)
-    - [adres](#adres)
-    - [rodzina](#rodzina)
-    - [pokrewieństwo](#pokrewieństwo)
-    - [proboszcz](#proboszcz)
-    - [parafia](#parafia)
-    - [tablica ogłoszeniowa](#tablica-ogłoszeniowa)
-    - [ogłoszenie](#ogłoszenie)
-    - [obrazek](#obrazek)
-    - [uprawnienie](#uprawnienie)
-    - [tablica ogłoszeniowa użytkownik](#tablica-ogłoszeniowa-użytkownik)
+    - [Użytkownik](#użytkownik)
+    - [Dane użytkownika](#dane-użytkownika)
+    - [Opis użytkownika](#opis-użytkownika)
+    - [Modlitwa](#modlitwa)
+    - [Adres](#adres)
+    - [Rodzina](#rodzina)
+    - [Pokrewieństwo](#pokrewieństwo)
+    - [Proboszcz](#proboszcz)
+    - [Parafia](#parafia)
+    - [Tablica ogłoszeniowa](#tablica-ogłoszeniowa)
+    - [Ogłoszenie](#ogłoszenie)
+    - [Obrazek](#obrazek)
+    - [Uprawnienie](#uprawnienie)
+    - [Tablica ogłoszeniowa użytkownik](#tablica-ogłoszeniowa-użytkownik)
   - [Relacje](#relacje)
 - [5. Diagram ERD](#5-diagram-erd)
 - [6. Generacja danych syntetycznych](#6-generacja-danych-syntetycznych)
   - [Generacja pliku SQL do importu](#generacja-pliku-sql-do-importu)
   - [Pisanie własnych schematów](#pisanie-własnych-schematów)
-- [7. Zróznicowane zapytania sql](#7-zróznicowane-zapytania-sql)
+- [7. Zróznicowane zapytania SQL](#7-zróznicowane-zapytania-sql)
   - [Tablice ogłoszeń](#tablice-ogłoszeń)
   - [Profil użytkownika](#profil-użytkownika)
   - [Rodzina użytkownika](#rodzina-użytkownika)
   - [Procentowy podzial na płci](#procentowy-podzial-na-płci)
   - [Użytkownicy z rejonu Rury](#użytkownicy-z-rejonu-rury)
 - [8. Opracownie i prezentacja zapytań modyfikujacych dane w bazie](#8-opracownie-i-prezentacja-zapytań-modyfikujacych-dane-w-bazie)
-  - [Stworzenie zmory](#stworzenie-zmory)
-  - [Rozwód](#rozwód)
-  - [Ślub](#ślub)
-  - [Degradacja nieaktywnych kreatorów postów](#degradacja-nieaktywnych-kreatorów-postów)
+    - [Stworzenie zmory](#stworzenie-zmory)
+    - [Rozwód](#rozwód)
+    - [Ślub](#ślub)
+    - [Nieaktywni kreatorzy postów](#nieaktywni-kreatorzy-postów)
 - [9. Opracowanie i prezentacja widoków](#9-opracowanie-i-prezentacja-widoków)
   - [Statystyki](#statystyki)
-    - [płodność kreatorów postow](#płodność-kreatorów-postow)
-    - [płodność tablicy](#płodność-tablicy)
-    - [płodność parafii](#płodność-parafii)
+    - [Płodność kreatorów postow](#płodność-kreatorów-postow)
+    - [Płodność tablicy](#płodność-tablicy)
+    - [Płodność parafii](#płodność-parafii)
     - [Pozycja modlitwy](#pozycja-modlitwy)
     - [Pozycja rodziny](#pozycja-rodziny)
     - [Matuzal](#matuzal-1)
@@ -75,24 +75,25 @@
   - [Dane zależne](#dane-zależne)
     - [Sygnatura](#sygnatura)
     - [Wiek](#wiek)
-    - [Rodzina wrzeniona](#rodzina-wrzeniona)
-    - [url obrazka](#url-obrazka)
+    - [Rodzina wzeniona](#rodzina-wzeniona)
+    - [URL obrazka](#url-obrazka)
     - [Kod pocztowy](#kod-pocztowy)
-- [10.Opracowanie i prezentacja wyzwalaczy (triggerów)](#10opracowanie-i-prezentacja-wyzwalaczy-triggerów)
-  - [Sprzatanie kiedy usuwamy uzytkownika](#sprzatanie-kiedy-usuwamy-uzytkownika)
-    - [Przed usunieciem uzytkownika z bazy danych:](#przed-usunieciem-uzytkownika-z-bazy-danych)
+- [10. Opracowanie i prezentacja wyzwalaczy (triggerów)](#10-opracowanie-i-prezentacja-wyzwalaczy-triggerów)
+  - [Domyślne operacje w związku z nowo dodanym użytkownikiem](#domyślne-operacje-w-związku-z-nowo-dodanym-użytkownikiem)
+  - [Sprzątanie po usuniętym użytkowniku](#sprzątanie-po-usuniętym-użytkowniku)
+    - [Przed usunięciem użytkownika z bazy danych](#przed-usunięciem-użytkownika-z-bazy-danych)
+    - [Po usunięciu użytkownika z bazy danych](#po-usunięciu-użytkownika-z-bazy-danych)
     - [Przyklady działania:](#przyklady-działania)
-      - [Dodawanie uzytkownika](#dodawanie-uzytkownika)
-    - [Usuwanie Uzytkownika](#usuwanie-uzytkownika)
-      - [Stan przed usunieciem:](#stan-przed-usunieciem)
-- [11.Opracowanie i prezentacja procedur składowanych](#11opracowanie-i-prezentacja-procedur-składowanych)
+      - [Dodawanie użytkownika](#dodawanie-użytkownika)
+      - [Usuwanie Uzytkownika](#usuwanie-uzytkownika)
+- [11. Opracowanie i prezentacja procedur składowanych](#11-opracowanie-i-prezentacja-procedur-składowanych)
   - [Opis procedury](#opis-procedury)
     - [Przykladowe uzycie](#przykladowe-uzycie)
-- [12.Prezenatcja zarządzania uzytkownikami](#12prezenatcja-zarządzania-uzytkownikami)
+- [12. Prezentacja zarządzania użytkownikami](#12-prezentacja-zarządzania-użytkownikami)
   - [Logowanie i przykładowe zapytania](#logowanie-i-przykładowe-zapytania)
 - [13.Prezentacja tworzenia kopii zapasowej, importu i eksportu bazy danych](#13prezentacja-tworzenia-kopii-zapasowej-importu-i-eksportu-bazy-danych)
   - [Początkowa konfiguracja z poziomu admina serwera](#początkowa-konfiguracja-z-poziomu-admina-serwera)
-    - [Zawartosc skryptu:](#zawartosc-skryptu)
+      - [Zawartosc skryptu:](#zawartosc-skryptu)
   - [Jednorazowy Eksport bazy danych w graficzym panelu xampp](#jednorazowy-eksport-bazy-danych-w-graficzym-panelu-xampp)
     - [1. Na górnym panelu klikamy w zakladke Eksport i wybieramy opcje szybko](#1-na-górnym-panelu-klikamy-w-zakladke-eksport-i-wybieramy-opcje-szybko)
     - [2.Klikamy Export i wybieramy gdzie chcemy zapisac nasza baze danych](#2klikamy-export-i-wybieramy-gdzie-chcemy-zapisac-nasza-baze-danych)
@@ -103,7 +104,7 @@
     - [3. Okno po poprawnym imporcie](#3-okno-po-poprawnym-imporcie)
     - [Proces budowy bazy danych podczas testów](#proces-budowy-bazy-danych-podczas-testów)
       - [1. Eksport projektu bazy danych z workbencha:](#1-eksport-projektu-bazy-danych-z-workbencha)
-    - [2. Generowanie plików sql do importu](#2-generowanie-plików-sql-do-importu)
+    - [2. Generowanie plików SQL do importu](#2-generowanie-plików-sql-do-importu)
       - [3. Import bazy danych w panelu administracyjnym xampa](#3-import-bazy-danych-w-panelu-administracyjnym-xampa)
 
 </div>
@@ -211,7 +212,7 @@ Jeżeli nie zostało napisane inaczej, to domyślne wartości dla każdego atryb
 
 Wszystkie id mają unique. Wszystkie id są autoinkrementowane. Boolowski typ danych jest reprezentowany przez tinyint(1).
 
-#### użytkownik
+#### Użytkownik
 
 > Hasła powinny byc szyfrowane ale to zagadnienie wykracza poza naszą obecną wiedze.
 > Użytkownik o id 1 to użytkownik usunięty.
@@ -228,7 +229,7 @@ Wszystkie id mają unique. Wszystkie id są autoinkrementowane. Boolowski typ da
 
 <div style="page-break-after: always;"></div>
 
-#### dane użytkownika
+#### Dane użytkownika
 
 
 | Atrybut        | Typ         | Ograniczenia / opis       |
@@ -247,7 +248,7 @@ Wszystkie id mają unique. Wszystkie id są autoinkrementowane. Boolowski typ da
 
 <div style="page-break-after: always;"></div>
 
-#### opis użytkownika
+#### Opis użytkownika
 
 
 | Atrybut              | Typ           | Ograniczenia / opis       |
@@ -266,7 +267,7 @@ Wszystkie id mają unique. Wszystkie id są autoinkrementowane. Boolowski typ da
 
 <div style="page-break-after: always;"></div>
 
-#### modlitwa
+#### Modlitwa
 
 
 | Atrybut | Typ           | Ograniczenia / opis |
@@ -278,7 +279,7 @@ Wszystkie id mają unique. Wszystkie id są autoinkrementowane. Boolowski typ da
 
 ![](assets/20260114_094125_modlitwa.png)
 
-#### adres
+#### Adres
 
 > W kodzie pocztowym nie trzymamy "20-" z przodu tylko same liczby ponieważ zakładamy, że wszyscy użytkownicy są z Lublina. Kod pocztowy w formacie "20-XXX" znajduje się w widoku "kod_pocztowy".
 
@@ -296,7 +297,7 @@ Wszystkie id mają unique. Wszystkie id są autoinkrementowane. Boolowski typ da
 
 <div style="page-break-after: always;"></div>
 
-#### rodzina
+#### Rodzina
 
 > Rodzina o id 0 to rodzina "Nieznana".
 
@@ -311,7 +312,7 @@ Wszystkie id mają unique. Wszystkie id są autoinkrementowane. Boolowski typ da
 
 <div style="page-break-after: always;"></div>
 
-#### pokrewieństwo
+#### Pokrewieństwo
 
 > Użytkownik zgłasza swoją relacje z innym użytkownikiem, relacje nie są symetryczne ponieważ drugi użytkownik nie musi ją uznawać, co nie jest problemem gdyż są one czysto informacyjne.
 
@@ -329,7 +330,7 @@ Wszystkie id mają unique. Wszystkie id są autoinkrementowane. Boolowski typ da
 
 <div style="page-break-after: always;"></div>
 
-#### proboszcz
+#### Proboszcz
 
 
 | Atrybut  | Typ          | Ograniczenia / opis |
@@ -340,7 +341,7 @@ Wszystkie id mają unique. Wszystkie id są autoinkrementowane. Boolowski typ da
 
 ![](assets/20260114_094218_proboszcz.png)
 
-#### parafia
+#### Parafia
 
 
 | Atrybut      | Typ           | Ograniczenia / opis |
@@ -351,7 +352,7 @@ Wszystkie id mają unique. Wszystkie id są autoinkrementowane. Boolowski typ da
 
 ![](assets/20260114_094230_parafia.png)
 
-#### tablica ogłoszeniowa
+#### Tablica ogłoszeniowa
 
 > Tablica ogłoszeniowa o id 1 to tablica główna, każdy użytkownik jest tam automatycznie dodawany za pomocą triggera.
 
@@ -366,7 +367,7 @@ Wszystkie id mają unique. Wszystkie id są autoinkrementowane. Boolowski typ da
 
 <div style="page-break-after: always;"></div>
 
-#### ogłoszenie
+#### Ogłoszenie
 
 
 | Atrybut                 | Typ          | Ograniczenia / opis       |
@@ -382,7 +383,7 @@ Wszystkie id mają unique. Wszystkie id są autoinkrementowane. Boolowski typ da
 
 ![](assets/20260117_000458_ogloszenie_encje.png)
 
-#### obrazek
+#### Obrazek
 
 > Obrazek o id 1 to domyślne zdjęcie profilowe użytkownika.
 
@@ -396,7 +397,7 @@ Wszystkie id mają unique. Wszystkie id są autoinkrementowane. Boolowski typ da
 
 <div style="page-break-after: always;"></div>
 
-#### uprawnienie
+#### Uprawnienie
 
 
 | Atrybut                 | Typ                                                                                                 | Ograniczenia / opis |
@@ -408,7 +409,7 @@ Wszystkie id mają unique. Wszystkie id są autoinkrementowane. Boolowski typ da
 
 ![](assets/20260114_094326_uprawnienie.png)
 
-#### tablica ogłoszeniowa użytkownik
+#### Tablica ogłoszeniowa użytkownik
 
 
 | Atrybut                 | Typ | Ograniczenia / opis |
@@ -447,7 +448,9 @@ Wszystkie id mają unique. Wszystkie id są autoinkrementowane. Boolowski typ da
 | obrazek                         | 1:<sub>(NI)</sub>1 | opis_uzytkownika                | zdjecie_profilowe_id      |
 | obrazek                         | 1:<sub>(NI)</sub>1 | ogloszenie                      |                           |
 
-<img src="assets/20260114_125414_relacje.png" style="width: 90%"/>
+<img src="assets/20260114_125414_relacje.png" style="width: 94%"/>
+
+<div style="page-break-after: always;"></div>
 
 ## 5. Diagram ERD
 
@@ -525,7 +528,7 @@ case "nazwa_tablicy1":
         # Kod do generacji 
         return "Wygenerowana wartość"
 
-    # Wysyłanie wygenerowanych tabel
+    # Wysyłanie funkcji generujących (lub wygenerowane dane w przypadku column_to_replace)
     row_data_to_return = generate_table_row_data(
         generation_config.nazwa_tablicy1.number_of_rows,
         nazwa_kolumny1, # Indeks 0
@@ -533,7 +536,9 @@ case "nazwa_tablicy1":
         column_to_replace, # Indeks 1
         nazwa_kolumny3 # Indeks 2
     )
+```
 
+```py
     # Generowanie kolumn których dane są zależne od siebie
     def generate_nazwa_kolumny2_po_angielsku():
         nazwa_tego_co_generujemy_po_angielsku_w_liczbie_mnogiej = []
@@ -542,28 +547,43 @@ case "nazwa_tablicy1":
             current_nazwa_tego_co_generujemy_po_angielsku = None
             # operacje na current_nazwa_tego_co_generujemy_po_angielsku
 
-            nazwa_tego_co_generujemy_po_angielsku_w_liczbie_mnogiej.append(current_nazwa_tego_co_generujemy_po_angielsku)
+            nazwa_tego_co_generujemy_po_angielsku_w_liczbie_mnogiej.append(
+                current_nazwa_tego_co_generujemy_po_angielsku
+            )
 
+        # Nadpisywanie column_to_replace o danym indeksie
         update_row_with_column_data(
             1, # Indeks kolumny który wysyłamy do tabel
             nazwa_tego_co_generujemy_po_angielsku_w_liczbie_mnogiej
         )
+```
 
-    # Generowanie kolumn dla później tabeli, gdy to co generujemy w aktualnej tabeli wpływa na tą generowaną później
-
+```py
+    # Generowanie kolumn dla późniejszej tabeli, gdy to co generujemy w aktualnej tabeli wpływa na tą generowaną później
     nazwa_tego_co_generujemy_do_pozniej_generowanej_tabeli_po_angielsku_w_liczbie_mnogiej = []
     for row_index in range(generation_config.nazwa_kolumny_do_ktorej_przekazemy_te_dane.number_of_rows):
+        current_nazwa_tego_co_generujemy_po_angielsku = None
+        # operacje na current_nazwa_tego_co_generujemy_po_angielsku
 
-    def generate_nazwa_kolumny_pozniej_generowanej_tabeli_po_angielsku(permissions):
-        generate_data_for_later_table(
-            'nazwa_pozniej_generowanej_tabeli',
-            0, # Indeks kolumny
-            nazwa_tego_co_generujemy_do_pozniej_generowanej_tabeli_po_angielsku_w_liczbie_mnogiej
+        nazwa_tego_co_generujemy_do_pozniej_generowanej_tabeli_po_angielsku_w_liczbie_mnogiej(
+            current_nazwa_tego_co_generujemy_po_angielsku
         )
+
+    def generate_nazwa_kolumny_pozniej_generowanej_tabeli_po_angielsku(
+        nazwa_tego_co_generujemy_do_pozniej_generowanej_tabeli_po_angielsku_w_liczbie_mnogiej
+    ):
+
+    generate_data_for_later_table(
+        'nazwa_pozniej_generowanej_tabeli',
+        0, # Indeks kolumny
+        nazwa_tego_co_generujemy_do_pozniej_generowanej_tabeli_po_angielsku_w_liczbie_mnogiej
+    )
   
     generate_nazwa_kolumny2_po_angielsku()
     generate_nazwa_kolumny_pozniej_generowanej_tabeli_po_angielsku()
+```
 
+```py
 case "nazwa_tabeli2":
     row_data_to_return = generate_table_row_data(
         # get_already_generated_table(nazwa_tabeli)[indeks_kolumny] oczywiście można używać w bardziej zaawansowany sposób od tego
@@ -582,11 +602,11 @@ case "nazwa_tabeli2":
 
 <div style="page-break-after: always;"></div>
 
-## 7. Zróznicowane zapytania sql
+## 7. Zróznicowane zapytania SQL
 
 ### Tablice ogłoszeń
 
-> Wyświetlanie tablic ogłoszeń do których należy użytkownik o loginie "adam_tester"
+Wyświetlanie tablic ogłoszeń do których należy użytkownik o loginie "adam_tester".
 
 ```sql
 SELECT tablica_ogloszeniowa.id, tablica_ogloszeniowa.nazwa
@@ -598,7 +618,9 @@ WHERE uzytkownik.login = "adam_tester";
 
 ![](assets/20260117_041639_lista_tablic.png)
 
-> Wyświetlanie tytułu i opisu tablicy od id 12 do której należy użytkownik o loginie "adam_tester" (trzeba sprawdzać login bo id tablicy przechowywane jest w url)
+<div style="page-break-after: always;"></div>
+
+Wyświetlanie tytułu i opisu tablicy od id 12 do której należy użytkownik o loginie "adam_tester" (trzeba sprawdzać login bo id tablicy przechowywane jest w url).
 
 ```sql
 SELECT tablica_ogloszeniowa.nazwa, tablica_ogloszeniowa.opis 
@@ -607,7 +629,7 @@ JOIN tablica_ogloszeniowa_uzytkownik ON tablica_ogloszeniowa_uzytkownik.tablica_
 WHERE tablica_ogloszeniowa_id = "12" and uzytkownik.login = "adam_tester";
 ```
 
-> Wyświetlanie tytulu, opisu i pseudonimu autora ogłoszeń z tablicy od id 12 do której należy użytkownik o loginie "adam_tester"
+Wyświetlanie tytułu, opisu, pseudonimu autora i datę wstawienia ogłoszeń z tablicy od id 12 do której należy użytkownik o loginie "adam_tester".
 
 ```sql
 SELECT ogloszenie.id, ogloszenie.tytul, opis_uzytkownika.pseudonim
@@ -618,11 +640,13 @@ JOIN opis_uzytkownika ON opis_uzytkownika.uzytkownik_id = ogloszenie.autor_id
 WHERE ogloszenie.tablica_ogloszeniowa_id = 12 and uzytkownik.login = "adam_tester" GROUP BY ogloszenie.id;
 ```
 
-![](assets/20260117_045435_ogloszenia_tablicy.png)
+<img src="assets/20260117_045435_ogloszenia_tablicy.png" style="width: 46%"/>
+
+<div style="page-break-after: always;"></div>
 
 ### Profil użytkownika
 
-> Dane użytkownika o loginie "adam_tester"
+Dane użytkownika o loginie "adam_tester".
 
 ```sql
 SELECT 
@@ -645,11 +669,13 @@ LEFT JOIN adres ON adres.id = dane_uzytkownika.adres_id
 WHERE uzytkownik.login = "adam_tester";
 ```
 
-![](assets/20260117_050348_profil_uztkownika.png)
+<img src="assets/20260117_050348_profil_uztkownika.png" style="width: 65%"/>
+
+<div style="page-break-after: always;"></div>
 
 ### Rodzina użytkownika
 
-> Relacje rodzinne użytkownika o loginie "adam_tester"
+Relacje rodzinne użytkownika o loginie "adam_tester".
 
 ```sql
 SELECT 
@@ -665,6 +691,8 @@ WHERE uzytkownik.login = "adam_tester";
 ```
 
 ![](assets/20260117_054348_rodzina_uzytkownika.png)
+
+<div style="page-break-after: always;"></div>
 
 ### Procentowy podzial na płci
 
@@ -693,7 +721,7 @@ WHERE a.rejon = 'Rury'
 
 ## 8. Opracownie i prezentacja zapytań modyfikujacych dane w bazie
 
-> Nie mozemy edytowac struktury bazy danych.
+> Nie możemy edytować stuktury tabel, gdyż ich nienaruszalna struktura jest wymagana do poprawnego działania systemu SMIPEGS.
 
 #### Stworzenie zmory
 
@@ -708,7 +736,7 @@ WHERE tablica_ogloszeniowa_id = 1 AND uzytkownik_id = "dowolne id";
 
 #### Rozwód
 
-> Rozwązanie ziwązku małżeńskiego zawartego między 2 uzytkownikami.
+Rozwązanie związku małżeńskiego zawartego między 2 uzytkownikami.
 
 ```sql
 DELETE p
@@ -729,7 +757,7 @@ Po rozwodzie:
 
 #### Ślub
 
-> Ustawianie małżenstwa dla 2 uzytkowników.
+Ustawianie małżenstwa dla 2 użytkowników.
 
 ```sql
 INSERT INTO pokrewienstwo (typ_relacji, spokrewniony_uzytkownik_id, uzytkownik_id)
@@ -750,9 +778,12 @@ Wywołanie zapytania:
 
 ![](assets/20260117_200225_po_slubie.png)
 
+<div style="page-break-after: always;"></div>
+
 #### Nieaktywni kreatorzy postów
 
-> Polecenie wypisuje wszyskich nieaktywnych postów i pozwala administratorowi zadecydowac nad ich losem.
+Polecenie wypisuje wszystkich nieaktywnych kreatorów postów i dane związane z ich produktywnością aby administrator mógł zadecydować nad ich losem.
+
 
 ```sql
 SELECT u.id AS uzytkownik_id, s.imie_pseudonim_nazwisko, COUNT(o.id) AS liczba_postow,
@@ -768,14 +799,15 @@ HAVING MAX(o.data_wstawienia) < DATE_SUB(CURDATE(), INTERVAL 5
 
 
 ![](assets/20260117_200851_uzytkownicy_do_eksterminacji.png)
+<div style="page-break-after: always;"></div>
 
 ## 9. Opracowanie i prezentacja widoków
 
 ### Statystyki
 
-#### płodność kreatorów postow
+#### Płodność kreatorów postow
 
-> wyświetla ile postów dodał dany użytkownik
+Wyświetla ile postów dodał dany użytkownik.
 
 ```sql
 DROP VIEW IF EXISTS plodnosc_kreatorow_postow;
@@ -792,9 +824,9 @@ ORDER BY liczba_postow DESC;
 
 <div style="page-break-after: always;"></div>
 
-#### płodność tablicy
+#### Płodność tablicy
 
-> Wyświetla ile postów znajduje się na danej tablicy.
+Wyświetla ile postów znajduje się na danej tablicy.
 
 ```sql
 DROP VIEW IF EXISTS plodnosc_tablicy;
@@ -813,9 +845,9 @@ ORDER BY liczba_postow DESC;
 
 <div style="page-break-after: always;"></div>
 
-#### płodność parafii
+#### Płodność parafii
 
-> Wyświetla ilu uzytkowników jest w danej parafii.
+Wyświetla ilu użytkowników jest w danej parafii.
 
 ```sql
 DROP VIEW IF EXISTS plodnosc_parafii;
@@ -828,9 +860,11 @@ GROUP BY p.id, p.nazwa;
 
 ![](assets/20260115_102513_plodnoscParafii.png)
 
+<div style="page-break-after: always;"></div>
+
 #### Pozycja modlitwy
 
-> Wyświetla które modlitwy najczesciej znajduja sie w opisach uzytkowników.
+Wyświetla które modlitwy najczęściej znajdują się w opisach użytkowników.
 
 ```sql
 DROP VIEW IF EXISTS pozycja_modlitwy;
@@ -843,9 +877,11 @@ GROUP BY m.id, m.nazwa;
 
 ![](assets/20260115_102527_pozycjaModlitwy.png)
 
+<div style="page-break-after: always;"></div>
+
 #### Pozycja rodziny
 
-> Wyświetla które rodziny maja najwiecej członków.
+Wyświetla które rodziny maja najwięcej członków.
 
 ```sql
 DROP VIEW IF EXISTS pozycja_rodziny;
@@ -862,7 +898,7 @@ GROUP BY r.id, r.nazwa;
 
 #### Matuzal
 
-> Wyświetla uzytkownikow mających co namniej 90 lat.
+Wyświetla uzytkownikow mających co najmniej 90 lat.
 
 ```sql
 DROP VIEW IF EXISTS matuzal;
@@ -882,7 +918,7 @@ ORDER BY w.wiek DESC;
 
 #### Zmora
 
-> Uzytkownicy usunieci z tablicy głównej
+Użytkownicy usunięci z tablicy głównej.
 
 ```sql
 DROP VIEW IF EXISTS zmora;
@@ -904,7 +940,7 @@ WHERE NOT EXISTS (
 
 #### Zmarły użytkownik
 
-> uzytkownicy którzy nie żyja
+Użytkownicy którzy nie żyją.
 
 ```sql
 DROP VIEW IF EXISTS zmarly_uzytkownik;
@@ -924,7 +960,7 @@ WHERE du.data_smierci IS NOT NULL;
 
 #### Sygnatura
 
-> wyświetla imie, pseudonim i nazwisko w jednej komórce
+Wyświetla imię, pseudonim i nazwisko w jednej komórce.
 
 ```sql
 DROP VIEW IF EXISTS sygnatura;
@@ -941,7 +977,7 @@ LEFT JOIN dane_uzytkownika du ON du.uzytkownik_id = u.id;
 
 #### Wiek
 
-> wyświetla ile lat ma kazdy użytkownik
+Wyświetla ile lat ma każdy użytkownik.
 
 ```sql
 DROP VIEW IF EXISTS wiek;
@@ -958,9 +994,9 @@ FROM dane_uzytkownika;
 
 <div style="page-break-after: always;"></div>
 
-#### Rodzina wrzeniona
+#### Rodzina wzeniona
 
-> wyświetla rodzina małzonka
+Wyświetla rodzinę małżonka.
 
 ```sql
 DROP VIEW IF EXISTS rodzina_wzeniona;
@@ -977,9 +1013,9 @@ WHERE p.typ_relacji IN ('mąż', 'żona');
 
 <div style="page-break-after: always;"></div>
 
-#### url obrazka
+#### URL obrazka
 
-> wyświetla url obrazka
+Wyświetla url obrazka.
 
 ```sql
 DROP VIEW IF EXISTS url_obrazka;
@@ -994,7 +1030,7 @@ FROM obrazek o;
 
 #### Kod pocztowy
 
-> wyświetla kod pocztowy uzytkownika
+Wyświetla kod pocztowy użytkownika.
 
 ```sql
 DROP VIEW IF EXISTS kod_pocztowy;
@@ -1007,9 +1043,11 @@ FROM adres a;
 
 <div style="page-break-after: always;"></div>
 
-## 10.Opracowanie i prezentacja wyzwalaczy (triggerów)
+## 10. Opracowanie i prezentacja wyzwalaczy (triggerów)
 
-> Dodaje uzytkownika do tablicy głównej przy dodaniu użytkownika
+### Domyślne operacje w związku z nowo dodanym użytkownikiem
+
+Dodaje użytkownika do tablicy głównej przy dodaniu użytkownika.
 
 ```sql
 CREATE TRIGGER po_wstawieniu_do_uzytkownik
@@ -1019,7 +1057,7 @@ INSERT INTO tablica_ogloszeniowa_uzytkownik (uzytkownik_id, tablica_ogloszeniowa
 VALUES (NEW.id, 1);
 ```
 
-> Ustawia uzytkownikowi role obserwatora postów przy dodaniu do nowej tablicy
+Ustawia użytkownikowi rolę obserwatora postów przy dodaniu do nowej tablicy.
 
 ```sql
 CREATE TRIGGER po_wstawieniu_do_tablica_ogloszeniowa_uzytkownik
@@ -1029,11 +1067,11 @@ INSERT INTO uprawnienie (rola,tablica_ogloszeniowa_id,uzytkownik_id)
 VALUES ('obserwator postow',NEW.tablica_ogloszeniowa_id,NEW.uzytkownik_id);
 ```
 
-### Sprzatanie kiedy usuwamy uzytkownika
+### Sprzątanie po usuniętym użytkowniku
 
-##### Przed usunieciem uzytkownika z bazy danych:
+#### Przed usunięciem użytkownika z bazy danych
 
-> Zabieramy mu uprawnienia
+Zabieramy mu uprawnienia.
 
 ```sql
 CREATE TRIGGER po_usunieciu_z_tablica_ogloszeniowa_usun_uprwanienie
@@ -1043,7 +1081,9 @@ DELETE FROM uprawnienie
 WHERE uzytkownik_id = OLD.uzytkownik_id;
 ```
 
-> Usuwamy go z tablic
+#### Po usunięciu użytkownika z bazy danych
+
+Usuwamy go z tablic ogłoszeniowych.
 
 ```sql
 CREATE TRIGGER przed_usunieciem_uzytkownik_usun_z_tablice
@@ -1055,7 +1095,7 @@ WHERE uzytkownik_id = OLD.id;
 
 <div style="page-break-after: always;"></div>
 
-> Usuwamy ustawiony przez niego opis
+Usuwamy ustawiony przez niego opis.
 
 ```sql
 CREATE TRIGGER przed_usunieciem_uzytkownik_usun_opis
@@ -1065,7 +1105,7 @@ DELETE FROM opis_uzytkownika
 WHERE uzytkownik_id = OLD.id;
 ```
 
-> Usuwamy wypełnione przez niego dane osobowe
+Usuwamy wypełnione przez niego dane osobowe.
 
 ```sql
 CREATE TRIGGER przed_usunieciem_uzytkownik_usun_dane
@@ -1075,7 +1115,7 @@ DELETE FROM dane_uzytkownika
 WHERE uzytkownik_id = OLD.id;
 ```
 
-> Usuwamy mu powiazania z innymi uzytkownikami
+Usuwamy jego relacje rodzinne z innymi użytkownikami.
 
 ```sql
 CREATE TRIGGER przed_usunieciem_uzytkownik_usun_pokrewienstwo
@@ -1085,7 +1125,7 @@ DELETE FROM pokrewienstwo
 WHERE uzytkownik_id = OLD.id OR spokrewniony_uzytkownik_id = OLD.id;
 ```
 
-> Posty które stworzył sa przypisaywane autorowi o id = 1 'usuniety użytkownik'
+Ogłoszenia które stworzył sa przypisaywane autorowi o id = 1 'usuniety użytkownik'
 
 ```sql
 CREATE TRIGGER przed_usunieciem_uzytkownika_usun_posty
@@ -1111,7 +1151,7 @@ FOR EACH ROW
 
 #### Przyklady działania:
 
-##### Dodawanie uzytkownika
+##### Dodawanie użytkownika
 
 > Nasze wyzwalacze działaja wspólnie ze soba, gdy dodajemy uzytkownika:
 
@@ -1129,9 +1169,9 @@ FOR EACH ROW
 
 <div style="page-break-after: always;"></div>
 
-#### Usuwanie Uzytkownika
+##### Usuwanie Uzytkownika
 
-##### Stan przed usunieciem:
+Stan przed usunięciem:
 
 ![](assets/20260115_234444_Adam_Uprawniania.png)
 
@@ -1169,7 +1209,7 @@ FOR EACH ROW
 
 <div style="page-break-after: always;"></div>
 
-## 11.Opracowanie i prezentacja procedur składowanych
+## 11. Opracowanie i prezentacja procedur składowanych
 
 Nasz system SMIPEGS potrzebuje aby jednej procedury, gdyż inne czynności są dosyć łatwe w napisaniu zwykłym zapytaniem SQL.
 
@@ -1236,7 +1276,7 @@ DELIMITER ;
 
 <div style="page-break-after: always;"></div>
 
-## 12.Prezenatcja zarządzania uzytkownikami
+## 12. Prezentacja zarządzania użytkownikami
 
 Tworzenie uzytkowników i nadawanie im uprawnień znajduje się w pliku:
 do_importu\3_uzytkownicy.sql
@@ -1470,7 +1510,7 @@ W ostatnim panelu wybieramy opcje "Save to Other File" i nadpiujemy plik w tej l
 
 <div style="page-break-after: always;"></div>
 
-#### 2. Generowanie plików sql do importu
+#### 2. Generowanie plików SQL do importu
 
 Uruchamiany program z tej lokalizacji:
 do_importu\konwersja_workbench_xampp\smipegs_mysql_to_mariadb_translator.py
