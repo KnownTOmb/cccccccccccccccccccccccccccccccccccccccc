@@ -96,17 +96,17 @@
   - [Początkowa konfiguracja z poziomu admina serwera](#początkowa-konfiguracja-z-poziomu-admina-serwera)
       - [Zawartość skryptu:](#zawartość-skryptu)
   - [Jednorazowy Eksport bazy danych w graficzym panelu xampp](#jednorazowy-eksport-bazy-danych-w-graficzym-panelu-xampp)
-    - [1. Na górnym panelu klikamy w zakladke Eksport i wybieramy opcje szybko](#1-na-górnym-panelu-klikamy-w-zakladke-eksport-i-wybieramy-opcje-szybko)
-    - [2.Klikamy Export i wybieramy gdzie chcemy zapisac nasza baze danych](#2klikamy-export-i-wybieramy-gdzie-chcemy-zapisac-nasza-baze-danych)
+    - [1. Na górnym panelu klikamy w zakładkę Eksport i wybieramy opcje szybko](#1-na-górnym-panelu-klikamy-w-zakładkę-eksport-i-wybieramy-opcje-szybko)
+    - [2.Klikamy Export i wybieramy gdzie chcemy zapisać naszą bazę danych](#2klikamy-export-i-wybieramy-gdzie-chcemy-zapisać-naszą-bazę-danych)
   - [Import bazy danych w graficznym panelu xampp](#import-bazy-danych-w-graficznym-panelu-xampp)
     - [Szybki import pliku bazy danych](#szybki-import-pliku-bazy-danych)
-      - [1. Tworzymy pusta baze danych o nazwie smipegs\_lublin](#1-tworzymy-pusta-baze-danych-o-nazwie-smipegs_lublin)
-    - [2. Wchodzimy w zakładke import i wybieramy plik backupy\\smipegs-lublin(backup).sql, odznaczamy opcje foregin key checks i klikamy import](#2-wchodzimy-w-zakładke-import-i-wybieramy-plik-backupysmipegs-lublinbackupsql-odznaczamy-opcje-foregin-key-checks-i-klikamy-import)
+      - [1. Tworzymy pustą bazę danych o nazwie smipegs\_lublin](#1-tworzymy-pustą-bazę-danych-o-nazwie-smipegs_lublin)
+    - [2. Wchodzimy w zakładkę import i wybieramy plik backup\\smipegs-lublin(backup).sql, odznaczamy opcję foregin key checks i klikamy przycisk import](#2-wchodzimy-w-zakładkę-import-i-wybieramy-plik-backupsmipegs-lublinbackupsql-odznaczamy-opcję-foregin-key-checks-i-klikamy-przycisk-import)
     - [3. Okno po poprawnym imporcie](#3-okno-po-poprawnym-imporcie)
   - [Proces budowy bazy danych podczas testów](#proces-budowy-bazy-danych-podczas-testów)
     - [1. Eksport projektu bazy danych z workbencha:](#1-eksport-projektu-bazy-danych-z-workbencha)
     - [2. Generowanie plików SQL do importu](#2-generowanie-plików-sql-do-importu)
-      - [3. Import bazy danych w panelu administracyjnym xampa](#3-import-bazy-danych-w-panelu-administracyjnym-xampa)
+      - [3. Import bazy danych w panelu administracyjnym xamppa](#3-import-bazy-danych-w-panelu-administracyjnym-xamppa)
 
 </div>
 
@@ -1497,11 +1497,11 @@ Wewnątrz dodajemy linie:
 
 ### Jednorazowy Eksport bazy danych w graficzym panelu xampp
 
-#### 1. Na górnym panelu klikamy w zakladke Eksport i wybieramy opcje szybko
+#### 1. Na górnym panelu klikamy w zakładkę Eksport i wybieramy opcje szybko
 
 ![](assets/20260112_211932_zakladka_eksport.png)
 
-#### 2.Klikamy Export i wybieramy gdzie chcemy zapisac nasza baze danych
+#### 2.Klikamy Export i wybieramy gdzie chcemy zapisać naszą bazę danych
 
 ![](assets/20260112_212626_zakladka_eksport_cz2.png)
 
@@ -1511,11 +1511,11 @@ Wewnątrz dodajemy linie:
 
 #### Szybki import pliku bazy danych
 
-##### 1. Tworzymy pusta baze danych o nazwie smipegs_lublin
+##### 1. Tworzymy pustą bazę danych o nazwie smipegs_lublin
 
 ![](assets/20260117_190853_tworzenie_pusta_baza.png)
 
-#### 2. Wchodzimy w zakładke import i wybieramy plik backupy\smipegs-lublin(backup).sql, odznaczamy opcje foregin key checks i klikamy import
+#### 2. Wchodzimy w zakładkę import i wybieramy plik backup\smipegs-lublin(backup).sql, odznaczamy opcję foregin key checks i klikamy przycisk import
 
 <img src="assets/20260117_191135_import_bakup.png" style="width:90%"/>
 
@@ -1527,35 +1527,35 @@ Wewnątrz dodajemy linie:
 
 ### Proces budowy bazy danych podczas testów
 
-> nie musimy wybierac nowej pustej bazy danych, skrypt sam utworzy baze o nazwie smipegs_lublin
+> nie musimy wybierac nowej pustej bazy danych, skrypt sam utworzy bazę o nazwie smipegs_lublin.
 
 #### 1. Eksport projektu bazy danych z workbencha:
 
-Otwieramy projekt zawierajacy baze danych lokalizacja pliku: do_importu\projekt_bazy_babaa_kabaaba.mwb
+Otwieramy projekt zawierajacy bazę danych. Lokalizacja pliku: do_importu\projekt_bazy_babaa_kabaaba.mwb.
 
 ![](assets/20260117_015959_workbench_otwierazie.png)
 
 ![](assets/20260117_013253_workbench_inport_overwiew.png)
 
-W górnym rogu klikamy w File i wybieramy opcje Export --> Forward Engineer SQL Script
+W górnym rogu klikamy w File i wybieramy opcję Export --> Forward Engineer SQL Script.
 
 ![](assets/20260117_013754_workbench_forward_engeneer.png)
 
 <div style="page-break-after: always;"></div>
 
-W panelu wybieramy opcje ukazane na zrzucie ekranu i klikamy przycisk Next
+W panelu wybieramy opcje ukazane na zrzucie ekranu i klikamy przycisk Next.
 
 ![](assets/20260117_013948_workbench_inport1.png)
 
 <div style="page-break-after: always;"></div>
 
-W kolejnym panelu odznaczamy importowanie widoków (Views) i klikamy przycisk Next
+W kolejnym panelu odznaczamy eksportowanie widoków (Views) i klikamy przycisk Next.
 
 ![](assets/20260117_014238__12077D34-F2C7-4479-9CFA-85CEAB1A9AFD}.png)
 
 <div style="page-break-after: always;"></div>
 
-W ostatnim panelu wybieramy opcje "Save to Other File" i nadpiujemy plik w tej lokalizacji do_importu\konwersja_workbench_xampp\pusta_baza_mysql.sql
+W ostatnim panelu wybieramy opcje "Save to Other File" i nadpisujemy plik w tej lokalizacji do_importu\konwersja_workbench_xampp\pusta_baza_mysql.sql.
 
 ![](assets/20260117_015002_workbench_import3.png)
 
@@ -1566,25 +1566,28 @@ W ostatnim panelu wybieramy opcje "Save to Other File" i nadpiujemy plik w tej l
 #### 2. Generowanie plików SQL do importu
 
 Uruchamiany program z tej lokalizacji:
-do_importu\konwersja_workbench_xampp\smipegs_mysql_to_mariadb_translator.py
+
+> do_importu\konwersja_workbench_xampp\smipegs_mysql_to_mariadb_translator.py
 
 ![](assets/20260117_021933_tworzenie_pliku_sql.png)
 
-Nastepnie uruchamiamy kolejny proram z tej lokalizacji: do_importu\sztuczne_dane\smipegs_fake_data_generator.py
+Nastepnie uruchamiamy kolejny proram z tej lokalizacji:
+
+> do_importu\sztuczne_dane\smipegs_fake_data_generator.py
 
 ![](assets/20260117_022343_tworzenie-pliku_sql2.png)
 
 <div style="page-break-after: always;"></div>
 
-##### 3. Import bazy danych w panelu administracyjnym xampa
+##### 3. Import bazy danych w panelu administracyjnym xamppa
 
-Na górnym panelu klikamy w zakladke import wybieramy plik do_importu/1_pusta_baza_z_triggerami.sql, odznaczamy foregin key checks a reszte opcji pozostawiamy ustawionych domyslnie.
+Na górnym panelu klikamy w zakladkę import wybieramy plik do_importu/1_pusta_baza_z_triggerami.sql, odznaczamy opcję foregin key checks a reszte opcji pozostawiamy ustawionych domyślnie.
 
 ![](assets/20260113_202828_import1.png)
 
 <div style="page-break-after: always;"></div>
 
-Nastepnie klikamy w nowo utworzona baze danych smipegs_lublin, wchodzimy w zakładke import i importujemy plik do_importu/2_initial_data_with_generated_data.sql wczesniej odznaczajac foregin key checks.
+Następnie klikamy w nowo utworzoną bazę danych smipegs_lublin, wchodzimy w zakładkę import i importujemy plik do_importu/2_initial_data_with_generated_data.sql wcześniej odznaczajac opcję foregin key checks.
 
 ![](assets/20260116_183244_nonwy_import.png)
 
@@ -1596,28 +1599,28 @@ Na Koniec importujemy w tej samej zakładce plik do_importu\3_uzytkownicy.sql z 
 
 <div style="page-break-after: always;"></div>
 
-> poprawna struktura danych po imporcie
+> Poprawna struktura bazy danych po imporcie
 
 ![](assets/20260117_010146_poprawna_struktura_po_import.png)
 
 ![](assets/20260116_233211_nowetriggery.png)
 
-uprawnienia widoków: matuzal, plodnosc_kreatorow_postow, plodnosc_parafii, plodnosc_tablicy, pozycja_modlitwy, pozycja_rodziny, zmora, zmarly_uzytkownik
+Uprawnienia widoków: matuzal, plodnosc_kreatorow_postow, plodnosc_parafii, plodnosc_tablicy, pozycja_modlitwy, pozycja_rodziny, zmora, zmarly_uzytkownik
 
 ![](assets/20260117_022953_uprawnienia_widokow.png)
 
-uprawnienia bazy danych
+Uprawnienia bazy danych
 
 ![](assets/20260117_023026_uprawnienia_bazy_danych.png)
 
-uprawnienia tablicy: ogłoszenie
+Uprawnienia tablicy: ogłoszenie
 
 ![](assets/20260117_023057_uprawnienia_tablicy_ogloszenie_.png)
 
-uprawnienia tablicy: tablica_ogloszeniowa_uzytkownik, uprawnienie
+Uprawnienia tablicy: tablica_ogloszeniowa_uzytkownik, uprawnienie
 
 ![](assets/20260117_023121_unrawnienia_tablicy_tablica_ogloszeniowa_uzytkownik_uprawnienie.png)
 
-uprawnienia wszystkich innych tabel i widoków
+Uprawnienia wszystkich innych tabel i widoków
 
 ![](assets/20260117_023142_uprawnienia_innych_tabel_i_widok_w.png)
