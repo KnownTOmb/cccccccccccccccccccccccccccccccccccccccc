@@ -548,11 +548,17 @@ case "nazwa_tabeli2":
 
 ## 7. Zróznicowane zapytania sql
 
-> Wyświetlanie tablicy głownej
+> Wyświetlanie tablic ogłoszeń do których należy użytkownik o loginie "adam_tester"
 
 ```sql
-SELECT * FROM `ogloszenie` WHERE tablica_ogloszeniowa_id = 1;
+SELECT tablica_ogloszeniowa.id, tablica_ogloszeniowa.nazwa
+FROM tablica_ogloszeniowa
+JOIN tablica_ogloszeniowa_uzytkownik ON tablica_ogloszeniowa_uzytkownik.tablica_ogloszeniowa_id = tablica_ogloszeniowa.id
+JOIN uzytkownik ON uzytkownik.id = tablica_ogloszeniowa_uzytkownik.uzytkownik_id
+WHERE uzytkownik.login = "adam_tester";
 ```
+
+
 
 Profil główny użytkownika
 

@@ -1,16 +1,31 @@
 import os
+import shutil
 
-site_path = "../../smpiges_site"
+site_path = "../smipegs_site"
 
 class Deployer:
     def __init__(self):
         self.site_path = site_path
 
     def copy_to_xampp(self, xamp_path):
+        # Pobieramy nazwę głównego folderu
+        folder_name = os.path.basename(self.site_path.rstrip('/\\'))
+        docelowa_sciezka = os.path.join(xamp_path, folder_name)
+        
+        # Jeśli folder docelowy istnieje, usuń go (sync)
+        if os.path.exists(docelowa_sciezka):
+            shutil.rmtree(docelowa_sciezka)
+            print(f"Usunięto stary folder: {docelowa_sciezka}")
+        
         for root, dirs, files in os.walk(self.site_path):
             # ścieżka względna względem folderu źródłowego
             sciezka_wzgledna = os.path.relpath(root, self.site_path)
-            aktualny_folder_docelowy = os.path.join(xamp_path, sciezka_wzgledna)
+            
+            # jeśli to główny folder, nie dodajemy do ścieżki
+            if sciezka_wzgledna == ".":
+                aktualny_folder_docelowy = docelowa_sciezka
+            else:
+                aktualny_folder_docelowy = os.path.join(docelowa_sciezka, sciezka_wzgledna)
 
             # tworzymy folder docelowy, jeśli nie istnieje
             os.makedirs(aktualny_folder_docelowy, exist_ok=True)

@@ -11,7 +11,7 @@ $message = "";
 $logged = isset($_SESSION['login']);
 if ($logged) {
     $login = $_SESSION['login'];
-    $sql = "SELECT opis_uzytkownika.pseudonim, opis_uzytkownika.plec, opis_uzytkownika.opis FROM opis_uzytkownika JOIN uzytkownik ON uzytkownik.opis_uzytkownika_id = opis_uzytkownika.id WHERE uzytkownik.login = \"$login\"";
+    $sql = "SELECT opis_uzytkownika.pseudonim, opis_uzytkownika.plec, opis_uzytkownika.opis FROM opis_uzytkownika JOIN uzytkownik ON uzytkownik.id = opis_uzytkownika.uzytkownik_id WHERE uzytkownik.login = \"$login\"";
     $result = $conn->query($sql);
     $row = $result->fetch_assoc();
 }

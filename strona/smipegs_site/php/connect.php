@@ -4,8 +4,8 @@
     }
 
     $servername = "localhost";
-    $username = "user";
-    $password = "user";
+    $username = "uzytkownik";
+    $password = "Od}s\$CFP]6W_k5#Es2Z-`VQW";
     $dbname = "smipegs_lublin";
 
     // Create connection
