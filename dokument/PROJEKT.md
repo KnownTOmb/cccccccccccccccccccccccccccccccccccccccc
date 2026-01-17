@@ -99,6 +99,9 @@
     - [2.Klikamy Export i wybieramy gdzie chcemy zapisac nasza baze danych](#2klikamy-export-i-wybieramy-gdzie-chcemy-zapisac-nasza-baze-danych)
   - [Import bazy danych w graficznym panelu xampp](#import-bazy-danych-w-graficznym-panelu-xampp)
     - [Szybki import pliku bazy danych](#szybki-import-pliku-bazy-danych)
+      - [1. Tworzymy pusta baze danych o nazwie smipegs\_lublin](#1-tworzymy-pusta-baze-danych-o-nazwie-smipegs_lublin)
+    - [2. Wchodzimy w zakładke import i wybieramy plik backupy\\smipegs-lublin(backup).sql, odznaczamy opcje foregin key checks i klikamy import](#2-wchodzimy-w-zakładke-import-i-wybieramy-plik-backupysmipegs-lublinbackupsql-odznaczamy-opcje-foregin-key-checks-i-klikamy-import)
+    - [3. Okno po poprawnym imporcie](#3-okno-po-poprawnym-imporcie)
     - [Proces budowy bazy danych podczas testów](#proces-budowy-bazy-danych-podczas-testów)
       - [1. Eksport projektu bazy danych z workbencha:](#1-eksport-projektu-bazy-danych-z-workbencha)
     - [2. Generowanie plików SQL do importu](#2-generowanie-plików-sql-do-importu)
@@ -215,9 +218,10 @@ Wszystkie id mają unique. Wszystkie id są autoinkrementowane. Boolowski typ da
 > Użytkownik o id 1 to użytkownik usunięty.
 > Wartosc NULL jest nam potrzebna aby nikt nie mógł sie zalogowac na usunietego użytkowika.
 
-| Atrybut | Typ          | Ograniczenia / opis                        |
-| ------- | ------------ | ------------------------------------------ |
-| id      | int          | klucz główny                               |
+
+| Atrybut | Typ          | Ograniczenia / opis                         |
+| --------- | -------------- | --------------------------------------------- |
+| id      | int          | klucz główny                              |
 | login   | varchar(128) | unique, mozliwy NULL, DEFAULT 'użytkownik' |
 | haslo   | varchar(64)  | mozliwy NULL, DEFAULT 'użytkownik'         |
 
@@ -227,17 +231,18 @@ Wszystkie id mają unique. Wszystkie id są autoinkrementowane. Boolowski typ da
 
 #### Dane użytkownika
 
-| Atrybut        | Typ         | Ograniczenia / opis      |
-| -------------- | ----------- | ------------------------ |
-| id             | int         | klucz główny             |
-| uzytkownik_id  |             | klucz obcy               |
-| imie           | varchar(64) |                          |
-| nazwisko       | varchar(64) |                          |
+
+| Atrybut        | Typ         | Ograniczenia / opis       |
+| ---------------- | ------------- | --------------------------- |
+| id             | int         | klucz główny            |
+| uzytkownik_id  |             | klucz obcy                |
+| imie           | varchar(64) |                           |
+| nazwisko       | varchar(64) |                           |
 | numer_telefonu | varchar(16) | możliwy NULL             |
-| data_urodzenia | date        |                          |
+| data_urodzenia | date        |                           |
 | data_smierci   | date        | możliwy NULL             |
 | adres_id       |             | klucz obcy, możliwy NULL |
-| uzytkownik_id  |             | klucz obcy               |
+| uzytkownik_id  |             | klucz obcy                |
 
 ![](assets/20260117_003050_dane_uzytkownika_encje.png)
 
@@ -245,16 +250,17 @@ Wszystkie id mają unique. Wszystkie id są autoinkrementowane. Boolowski typ da
 
 #### Opis użytkownika
 
-| Atrybut              | Typ           | Ograniczenia / opis      |
-| -------------------- | ------------- | ------------------------ |
-| id                   | int           | klucz główny             |
-| uzytkownik_id        |               | klucz obcy               |
+
+| Atrybut              | Typ           | Ograniczenia / opis       |
+| ---------------------- | --------------- | --------------------------- |
+| id                   | int           | klucz główny            |
+| uzytkownik_id        |               | klucz obcy                |
 | plec                 | char(1)       | możliwy NULL             |
 | pseudonim            | varchar(64)   | możliwy NULL             |
 | opis                 | varchar(1024) | możliwy NULL             |
 | parafia_id           |               | klucz obcy, możliwy NULL |
-| rodzina_id           |               | klucz obcy, DEFAULT '1'  |
-| zdjecie_profilowe_id |               | klucz obcy, DEFAULT '1'  |
+| rodzina_id           |               | klucz obcy, DEFAULT '1'   |
+| zdjecie_profilowe_id |               | klucz obcy, DEFAULT '1'   |
 | ulubiona_modlitwa_id |               | klucz obcy, możliwy NULL |
 
 ![](assets/20260117_001843_opis_uzytkownika_encje.png)
@@ -263,12 +269,13 @@ Wszystkie id mają unique. Wszystkie id są autoinkrementowane. Boolowski typ da
 
 #### Modlitwa
 
+
 | Atrybut | Typ           | Ograniczenia / opis |
-| ------- | ------------- | ------------------- |
-| id      | smallint(255) | klucz główny        |
-| nazwa   | varchar(128)  | możliwy NULL        |
+| --------- | --------------- | --------------------- |
+| id      | smallint(255) | klucz główny      |
+| nazwa   | varchar(128)  | możliwy NULL       |
 | tresc   | varchar(2048) |                     |
-| efekt   | varchar(128)  | możliwy NULL        |
+| efekt   | varchar(128)  | możliwy NULL       |
 
 ![](assets/20260114_094125_modlitwa.png)
 
@@ -276,14 +283,15 @@ Wszystkie id mają unique. Wszystkie id są autoinkrementowane. Boolowski typ da
 
 > W kodzie pocztowym nie trzymamy "20-" z przodu tylko same liczby ponieważ zakładamy, że wszyscy użytkownicy są z Lublina. Kod pocztowy w formacie "20-XXX" znajduje się w widoku "kod_pocztowy".
 
+
 | Atrybut          | Typ            | Ograniczenia / opis |
-| ---------------- | -------------- | ------------------- |
-| id               | int            | klucz główny        |
+| ------------------ | ---------------- | --------------------- |
+| id               | int            | klucz główny      |
 | rejon            | varchar(64)    |                     |
 | kod_pocztowy     | smallint(3)    | zerofill            |
 | ulica            | varchar(64)    |                     |
 | numer_budynku    | small int(255) |                     |
-| numer_mieszkania | small int(255) | możliwy NULL        |
+| numer_mieszkania | small int(255) | możliwy NULL       |
 
 ![](assets/20260114_094136_adres.png)
 
@@ -293,11 +301,12 @@ Wszystkie id mają unique. Wszystkie id są autoinkrementowane. Boolowski typ da
 
 > Rodzina o id 0 to rodzina "Nieznana".
 
+
 | Atrybut | Typ           | Ograniczenia / opis |
-| ------- | ------------- | ------------------- |
-| id      | int           | klucz główny        |
+| --------- | --------------- | --------------------- |
+| id      | int           | klucz główny      |
 | nazwa   | varchar(128)  |                     |
-| opis    | varchar(1024) | możliwy NULL        |
+| opis    | varchar(1024) | możliwy NULL       |
 
 ![](assets/20260114_094149_rodzina.png)
 
@@ -307,14 +316,15 @@ Wszystkie id mają unique. Wszystkie id są autoinkrementowane. Boolowski typ da
 
 > Użytkownik zgłasza swoją relacje z innym użytkownikiem, relacje nie są symetryczne ponieważ drugi użytkownik nie musi ją uznawać, co nie jest problemem gdyż są one czysto informacyjne.
 
-| Atrybut                    | Typ                                                                                                                                                                                                                                                                                                                              | Ograniczenia / opis |
-| -------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------- |
-| id                         | int                                                                                                                                                                                                                                                                                                                              | klucz główny        |
-| typ_relacji                | enum(*'mama', 'ojciec', 'córka', 'syn', 'siostra', 'brat', 'ciotka', 'wujek', 'siostrzenica', 'bratanica', 'siostrzeniec', 'bratanek', 'kuzyn', 'kuzynka', 'babcia', 'dziadek', 'wnuczka', 'wnuk', 'ojczym', 'macocha', 'pasierb', 'pasierbica', 'szwagier', 'szwagierka', 'teść', 'teściowa', 'zięć', 'synowa', 'mąż', 'żona'*) |                     |
-| widzi_dane_osobowe         | bool                                                                                                                                                                                                                                                                                                                             |                     |
-| uzytkownik_id              |                                                                                                                                                                                                                                                                                                                                  | klucz obcy          |
-| spokrewniony_uzytkownik_id |                                                                                                                                                                                                                                                                                                                                  | klucz obcy          |
-![](assets/20260117_001635_pokrewienstwo_encje.png)
+
+| Atrybut                                             | Typ                                                                                                                                                                                                                                                                                                                                       | Ograniczenia / opis |
+| ----------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------- |
+| id                                                  | int                                                                                                                                                                                                                                                                                                                                       | klucz główny      |
+| typ_relacji                                         | enum(*'mama', 'ojciec', 'córka', 'syn', 'siostra', 'brat', 'ciotka', 'wujek', 'siostrzenica', 'bratanica', 'siostrzeniec', 'bratanek', 'kuzyn', 'kuzynka', 'babcia', 'dziadek', 'wnuczka', 'wnuk', 'ojczym', 'macocha', 'pasierb', 'pasierbica', 'szwagier', 'szwagierka', 'teść', 'teściowa', 'zięć', 'synowa', 'mąż', 'żona'*) |                     |
+| widzi_dane_osobowe                                  | bool                                                                                                                                                                                                                                                                                                                                      |                     |
+| uzytkownik_id                                       |                                                                                                                                                                                                                                                                                                                                           | klucz obcy          |
+| spokrewniony_uzytkownik_id                          |                                                                                                                                                                                                                                                                                                                                           | klucz obcy          |
+| ![](assets/20260117_001635_pokrewienstwo_encje.png) |                                                                                                                                                                                                                                                                                                                                           |                     |
 
 <img src="assets/20260114_134039_mapa_pokrewienstw.png" style="width: 85%"/>
 
@@ -322,9 +332,10 @@ Wszystkie id mają unique. Wszystkie id są autoinkrementowane. Boolowski typ da
 
 #### Proboszcz
 
+
 | Atrybut  | Typ          | Ograniczenia / opis |
-| -------- | ------------ | ------------------- |
-| id       | tinyint(255) | klucz główny        |
+| ---------- | -------------- | --------------------- |
+| id       | tinyint(255) | klucz główny      |
 | imie     | varchar(64)  |                     |
 | nazwisko | varchar(64)  |                     |
 
@@ -332,9 +343,10 @@ Wszystkie id mają unique. Wszystkie id są autoinkrementowane. Boolowski typ da
 
 #### Parafia
 
+
 | Atrybut      | Typ           | Ograniczenia / opis |
-| ------------ | ------------- | ------------------- |
-| id           | smallint(255) | klucz główny        |
+| -------------- | --------------- | --------------------- |
+| id           | smallint(255) | klucz główny      |
 | nazwa        | varchar(256)  | unique              |
 | proboszcz_id |               | klucz obcy          |
 
@@ -344,11 +356,12 @@ Wszystkie id mają unique. Wszystkie id są autoinkrementowane. Boolowski typ da
 
 > Tablica ogłoszeniowa o id 1 to tablica główna, każdy użytkownik jest tam automatycznie dodawany za pomocą triggera.
 
+
 | Atrybut | Typ           | Ograniczenia / opis |
-| ------- | ------------- | ------------------- |
-| id      | smallint(255) | klucz główny        |
+| --------- | --------------- | --------------------- |
+| id      | smallint(255) | klucz główny      |
 | nazwa   | varchar(256)  |                     |
-| opis    | varchar(2048) | możliwy NULL        |
+| opis    | varchar(2048) | możliwy NULL       |
 
 ![](assets/20260114_094243_tablica_ogloszeniowa.png)
 
@@ -356,16 +369,17 @@ Wszystkie id mają unique. Wszystkie id są autoinkrementowane. Boolowski typ da
 
 #### Ogłoszenie
 
-| Atrybut                 | Typ          | Ograniczenia / opis      |
-| ----------------------- | ------------ | ------------------------ |
-| id                      | int          | klucz główny             |
-| tytul                   | varchar(128) |                          |
-| data_wstawienia         | date         |                          |
-| tresc                   | varchar(512) |                          |
-| autor_id (emeryt_id)    |              | klucz obcy               |
-| tablica_ogloszeniowa_id |              | klucz obcy               |
+
+| Atrybut                 | Typ          | Ograniczenia / opis       |
+| ------------------------- | -------------- | --------------------------- |
+| id                      | int          | klucz główny            |
+| tytul                   | varchar(128) |                           |
+| data_wstawienia         | date         |                           |
+| tresc                   | varchar(512) |                           |
+| autor_id (emeryt_id)    |              | klucz obcy                |
+| tablica_ogloszeniowa_id |              | klucz obcy                |
 | obrazek_id              |              | klucz obcy, możliwy NULL |
-| archiwalny              | bool         |                          |
+| archiwalny              | bool         |                           |
 
 ![](assets/20260117_000458_ogloszenie_encje.png)
 
@@ -373,10 +387,11 @@ Wszystkie id mają unique. Wszystkie id są autoinkrementowane. Boolowski typ da
 
 > Obrazek o id 1 to domyślne zdjęcie profilowe użytkownika.
 
+
 | Atrybut            | Typ          | Ograniczenia / opis |
-| ------------------ | ------------ | ------------------- |
-| id                 | int          | klucz glówny        |
-| tekst_alternatywny | varchar(128) | możliwy NULL        |
+| -------------------- | -------------- | --------------------- |
+| id                 | int          | klucz glówny       |
+| tekst_alternatywny | varchar(128) | możliwy NULL       |
 
 ![](assets/20260114_094310_obrazek.png)
 
@@ -384,20 +399,22 @@ Wszystkie id mają unique. Wszystkie id są autoinkrementowane. Boolowski typ da
 
 #### Uprawnienie
 
-| Atrybut                 | Typ                                                                                            | Ograniczenia / opis |
-| ----------------------- | ---------------------------------------------------------------------------------------------- | ------------------- |
-| id                      | int                                                                                            | klucz glówny        |
+
+| Atrybut                 | Typ                                                                                                 | Ograniczenia / opis |
+| ------------------------- | ----------------------------------------------------------------------------------------------------- | --------------------- |
+| id                      | int                                                                                                 | klucz glówny       |
 | rola                    | enum(*'zarządzanie użytkownikami', 'kreator postów', 'moderator postów', 'obserwator postów'*) |                     |
-| tablica_ogloszeniowa_id |                                                                                                | klucz obcy          |
-| uzytkownik_id           |                                                                                                | klucz obcy          |
+| tablica_ogloszeniowa_id |                                                                                                     | klucz obcy          |
+| uzytkownik_id           |                                                                                                     | klucz obcy          |
 
 ![](assets/20260114_094326_uprawnienie.png)
 
 #### Tablica ogłoszeniowa użytkownik
 
+
 | Atrybut                 | Typ | Ograniczenia / opis |
-| ----------------------- | --- | ------------------- |
-| id                      | int | klucz glówny        |
+| ------------------------- | ----- | --------------------- |
+| id                      | int | klucz glówny       |
 | uzytkownik_id           |     | klucz obcy          |
 | tablica_ogloszeniowa_id |     | klucz obcy          |
 
@@ -410,23 +427,24 @@ Wszystkie id mają unique. Wszystkie id są autoinkrementowane. Boolowski typ da
 **(I)** – Relacja identyfikująca,
 **(NI)** – Relacja nie-identyfikująca
 
-| Encja A                         |      Relacja       | Encja B                         | Opis                      |
-| ------------------------------- | :----------------: | ------------------------------- | ------------------------- |
-| uzytkownik                      | 1:<sub>(I)</sub>1  | dane_uzytkownika                |                           |
-| opis_uzytkownika                | 1:<sub>(I)</sub>1  | uzytkownik                      |                           |
+
+| Encja A                         |      Relacja      | Encja B                         | Opis                      |
+| --------------------------------- | :------------------: | --------------------------------- | --------------------------- |
+| uzytkownik                      | 1:<sub>(I)</sub>1 | dane_uzytkownika                |                           |
+| opis_uzytkownika                | 1:<sub>(I)</sub>1 | uzytkownik                      |                           |
 | modlitwa                        | 1:<sub>(NI)</sub>N | opis_uzytkownika                | ulubiona_modlitwa_id      |
 | parafia                         | 1:<sub>(NI)</sub>N | opis_uzytkownika                |                           |
-| parafia                         | 1:<sub>(I)</sub>1  | proboszcz                       |                           |
+| parafia                         | 1:<sub>(I)</sub>1 | proboszcz                       |                           |
 | adres                           | 1:<sub>(NI)</sub>1 | dane_uzytkownika                |                           |
-| rodzina                         | 1:<sub>(I)</sub>N  | opis_uzytkownika                |                           |
-| uzytkownik                      | 1:<sub>(I)</sub>N  | pokrewienstwo                   |                           |
-| pokrewienstwo                   | N:<sub>(I)</sub>1  | uzytkownik                      | spokrewiony_uzytkownik_id |
-| tablica_ogloszeniowa            | 1:<sub>(I)</sub>N  | tablica_ogloszeniowa_uzytkownik |                           |
-| tablica_ogloszeniowa_uzytkownik | N:<sub>(I)</sub>1  | uzytkownik                      |                           |
-| ogloszenie                      | N:<sub>(I)</sub>1  | tablica_ogloszeniowa            |                           |
-| ogloszenie                      | N:<sub>(I)</sub>1  | uzytkownik                      | autor_id                  |
-| tablica_ogloszeniowa            | 1:<sub>(I)</sub>N  | uprawnienie                     |                           |
-| uprawnienie                     | N:<sub>(I)</sub>1  | uzytkownik                      |                           |
+| rodzina                         | 1:<sub>(I)</sub>N | opis_uzytkownika                |                           |
+| uzytkownik                      | 1:<sub>(I)</sub>N | pokrewienstwo                   |                           |
+| pokrewienstwo                   | N:<sub>(I)</sub>1 | uzytkownik                      | spokrewiony_uzytkownik_id |
+| tablica_ogloszeniowa            | 1:<sub>(I)</sub>N | tablica_ogloszeniowa_uzytkownik |                           |
+| tablica_ogloszeniowa_uzytkownik | N:<sub>(I)</sub>1 | uzytkownik                      |                           |
+| ogloszenie                      | N:<sub>(I)</sub>1 | tablica_ogloszeniowa            |                           |
+| ogloszenie                      | N:<sub>(I)</sub>1 | uzytkownik                      | autor_id                  |
+| tablica_ogloszeniowa            | 1:<sub>(I)</sub>N | uprawnienie                     |                           |
+| uprawnienie                     | N:<sub>(I)</sub>1 | uzytkownik                      |                           |
 | obrazek                         | 1:<sub>(NI)</sub>1 | opis_uzytkownika                | zdjecie_profilowe_id      |
 | obrazek                         | 1:<sub>(NI)</sub>1 | ogloszenie                      |                           |
 
@@ -1419,9 +1437,21 @@ crontab -e
 
 #### Szybki import pliku bazy danych
 
-> nie musimy wybierac nowej pustej bazy danych, skrypt sam utworzy baze o nazwie smipegs_lublin
+##### 1. Tworzymy pusta baze danych o nazwie smipegs_lublin
+
+![](assets/20260117_190853_tworzenie_pusta_baza.png)
+
+#### 2. Wchodzimy w zakładke import i wybieramy plik backupy\smipegs-lublin(backup).sql, odznaczamy opcje foregin key checks i klikamy import
+
+![](assets/20260117_191135_import_bakup.png)
+
+#### 3. Okno po poprawnym imporcie
+
+![](assets/20260117_191455_import_sukces.png)
 
 #### Proces budowy bazy danych podczas testów
+
+> nie musimy wybierac nowej pustej bazy danych, skrypt sam utworzy baze o nazwie smipegs_lublin
 
 ##### 1. Eksport projektu bazy danych z workbencha:
 
