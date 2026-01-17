@@ -58,10 +58,10 @@
   - [Procentowy podzial na płci](#procentowy-podzial-na-płci)
   - [Użytkownicy z rejonu Rury](#użytkownicy-z-rejonu-rury)
 - [8. Opracownie i prezentacja zapytań modyfikujacych dane w bazie](#8-opracownie-i-prezentacja-zapytań-modyfikujacych-dane-w-bazie)
-    - [Stworzenie zmory](#stworzenie-zmory)
-    - [Rozwód](#rozwód)
-    - [Ślub](#ślub)
-    - [Degradacja nieaktywnych kreatorów postów](#degradacja-nieaktywnych-kreatorów-postów)
+  - [Stworzenie zmory](#stworzenie-zmory)
+  - [Rozwód](#rozwód)
+  - [Ślub](#ślub)
+  - [Degradacja nieaktywnych kreatorów postów](#degradacja-nieaktywnych-kreatorów-postów)
 - [9. Opracowanie i prezentacja widoków](#9-opracowanie-i-prezentacja-widoków)
   - [Statystyki](#statystyki)
     - [płodność kreatorów postow](#płodność-kreatorów-postow)
@@ -80,7 +80,7 @@
     - [Kod pocztowy](#kod-pocztowy)
 - [10.Opracowanie i prezentacja wyzwalaczy (triggerów)](#10opracowanie-i-prezentacja-wyzwalaczy-triggerów)
   - [Sprzatanie kiedy usuwamy uzytkownika](#sprzatanie-kiedy-usuwamy-uzytkownika)
-      - [Przed usunieciem uzytkownika z bazy danych:](#przed-usunieciem-uzytkownika-z-bazy-danych)
+    - [Przed usunieciem uzytkownika z bazy danych:](#przed-usunieciem-uzytkownika-z-bazy-danych)
     - [Przyklady działania:](#przyklady-działania)
       - [Dodawanie uzytkownika](#dodawanie-uzytkownika)
     - [Usuwanie Uzytkownika](#usuwanie-uzytkownika)
@@ -92,7 +92,7 @@
   - [Logowanie i przykładowe zapytania](#logowanie-i-przykładowe-zapytania)
 - [13.Prezentacja tworzenia kopii zapasowej, importu i eksportu bazy danych](#13prezentacja-tworzenia-kopii-zapasowej-importu-i-eksportu-bazy-danych)
   - [Początkowa konfiguracja z poziomu admina serwera](#początkowa-konfiguracja-z-poziomu-admina-serwera)
-      - [Zawartosc skryptu:](#zawartosc-skryptu)
+    - [Zawartosc skryptu:](#zawartosc-skryptu)
   - [Jednorazowy Eksport bazy danych w graficzym panelu xampp](#jednorazowy-eksport-bazy-danych-w-graficzym-panelu-xampp)
     - [1. Na górnym panelu klikamy w zakladke Eksport i wybieramy opcje szybko](#1-na-górnym-panelu-klikamy-w-zakladke-eksport-i-wybieramy-opcje-szybko)
     - [2.Klikamy Export i wybieramy gdzie chcemy zapisac nasza baze danych](#2klikamy-export-i-wybieramy-gdzie-chcemy-zapisac-nasza-baze-danych)
@@ -674,6 +674,8 @@ FROM opis_uzytkownika ou
 GROUP BY ou.plec;
 ```
 
+![](assets/20260117_192530_segregacja.png)
+
 ### Użytkownicy z rejonu Rury
 
 ```sql
@@ -685,11 +687,13 @@ JOIN adres a ON a.id = du.adres_id
 WHERE a.rejon = 'Rury'
 ```
 
+![](assets/20260117_192358_strzelam_z_rury.png)
+
 <div style="page-break-after: always;"></div>
 
 ## 8. Opracownie i prezentacja zapytań modyfikujacych dane w bazie
 
-> Nie mozemy edytowac struktury bazy danych
+> Nie mozemy edytowac struktury bazy danych.
 
 #### Stworzenie zmory
 
@@ -698,9 +702,13 @@ DELETE FROM tablica_ogloszeniowa_uzytkownik
 WHERE tablica_ogloszeniowa_id = 1 AND uzytkownik_id = "dowolne id";
 ```
 
+![](assets/20260117_193135_tworzenie_zmory.png)
+
+![](assets/20260117_193145_zmora_jest.png)
+
 #### Rozwód
 
-> rozwązanie ziwązku małżeńskiego zawartego między 2 uzytkownikami
+> Rozwązanie ziwązku małżeńskiego zawartego między 2 uzytkownikami.
 
 ```sql
 DELETE p
@@ -711,9 +719,17 @@ WHERE ou.pseudonim = 'smutnyMarian'
   AND p.typ_relacji IN ('mąż', 'żona');
 ```
 
+Przed rozwodem:
+
+![](assets/20260117_194519_przed_rozwodem.png)
+
+Po rozwodzie:
+
+![](assets/20260117_194935_po_rozwodzie.png)
+
 #### Ślub
 
-> ustawianie małżenstwa dla 2 uzytkowników
+> Ustawianie małżenstwa dla 2 uzytkowników.
 
 ```sql
 INSERT INTO pokrewienstwo (typ_relacji, spokrewniony_uzytkownik_id, uzytkownik_id)
@@ -728,9 +744,15 @@ FROM
 (SELECT uzytkownik_id FROM opis_uzytkownika WHERE pseudonim = 'mariolkaRolka') c2;
 ```
 
-#### Degradacja nieaktywnych kreatorów postów
+Wywołanie zapytania:
 
-> polecenie wypisuje wszyskich nieaktywnych postów i pozwala administratorowi zadecydowac nad ich losem.
+![](assets/20260117_200216_mloda_para.png)
+
+![](assets/20260117_200225_po_slubie.png)
+
+#### Nieaktywni kreatorzy postów
+
+> Polecenie wypisuje wszyskich nieaktywnych postów i pozwala administratorowi zadecydowac nad ich losem.
 
 ```sql
 SELECT u.id AS uzytkownik_id, s.imie_pseudonim_nazwisko, COUNT(o.id) AS liczba_postow,
@@ -741,8 +763,11 @@ JOIN sygnatura s ON s.uzytkownik_id = u.id
 LEFT JOIN ogloszenie o ON o.autor_id = u.id
 WHERE up.rola = 'kreator postów'
 GROUP BY u.id, s.imie_pseudonim_nazwisko
-HAVING MAX(o.data_wstawienia) < DATE_SUB(CURDATE(), INTERVAL 2 YEAR);
+HAVING MAX(o.data_wstawienia) < DATE_SUB(CURDATE(), INTERVAL 5
 ```
+
+
+![](assets/20260117_200851_uzytkownicy_do_eksterminacji.png)
 
 ## 9. Opracowanie i prezentacja widoków
 
@@ -769,7 +794,7 @@ ORDER BY liczba_postow DESC;
 
 #### płodność tablicy
 
-> wyświetla ile postów znajduje się na danej tablicy
+> Wyświetla ile postów znajduje się na danej tablicy.
 
 ```sql
 DROP VIEW IF EXISTS plodnosc_tablicy;
@@ -790,7 +815,7 @@ ORDER BY liczba_postow DESC;
 
 #### płodność parafii
 
-> wyświetla ilu uzytkowników jest w danej parafii
+> Wyświetla ilu uzytkowników jest w danej parafii.
 
 ```sql
 DROP VIEW IF EXISTS plodnosc_parafii;
@@ -805,7 +830,7 @@ GROUP BY p.id, p.nazwa;
 
 #### Pozycja modlitwy
 
-> wyświetla które modlitwy najczesciej znajduja sie w opisach uzytkowników
+> Wyświetla które modlitwy najczesciej znajduja sie w opisach uzytkowników.
 
 ```sql
 DROP VIEW IF EXISTS pozycja_modlitwy;
@@ -820,7 +845,7 @@ GROUP BY m.id, m.nazwa;
 
 #### Pozycja rodziny
 
-> wyświetla które rodziny maja najwiecej członków
+> Wyświetla które rodziny maja najwiecej członków.
 
 ```sql
 DROP VIEW IF EXISTS pozycja_rodziny;
@@ -837,7 +862,7 @@ GROUP BY r.id, r.nazwa;
 
 #### Matuzal
 
-> wyświetla uzytkownikow mających co namniej 90 lat
+> Wyświetla uzytkownikow mających co namniej 90 lat.
 
 ```sql
 DROP VIEW IF EXISTS matuzal;
@@ -857,7 +882,7 @@ ORDER BY w.wiek DESC;
 
 #### Zmora
 
-> uzytkownicy usunieci z tablicy głównej
+> Uzytkownicy usunieci z tablicy głównej
 
 ```sql
 DROP VIEW IF EXISTS zmora;
