@@ -1,4 +1,4 @@
-<img src="logo.png" style="width: 80%; margin:10%"/>
+<img src="logo.png" style="width: 80%; margin:10%" class="no_border"/>
 
 <div style="display: flex; justify-content: center">
 <div style="text-align: center; font-size:20pt; line-height:25pt; width: 70%">Cyberbezpieczeństwo Grupa Laboratoryjna 7 - Projekt Bazy Danych Semestr 1</div>
@@ -64,7 +64,7 @@
     - [Nieaktywni kreatorzy postów](#nieaktywni-kreatorzy-postów)
 - [9. Opracowanie i prezentacja widoków](#9-opracowanie-i-prezentacja-widoków)
   - [Statystyki](#statystyki)
-    - [Płodność kreatorów postow](#płodność-kreatorów-postow)
+    - [Płodność kreatorów postów](#płodność-kreatorów-postów)
     - [Płodność tablicy](#płodność-tablicy)
     - [Płodność parafii](#płodność-parafii)
     - [Pozycja modlitwy](#pozycja-modlitwy)
@@ -88,12 +88,13 @@
       - [Usuwanie Uzytkownika](#usuwanie-uzytkownika)
 - [11. Opracowanie i prezentacja procedur składowanych](#11-opracowanie-i-prezentacja-procedur-składowanych)
   - [Opis procedury](#opis-procedury)
-    - [Przykladowe uzycie](#przykladowe-uzycie)
+    - [Przykladowe użycie](#przykladowe-użycie)
 - [12. Prezentacja zarządzania użytkownikami](#12-prezentacja-zarządzania-użytkownikami)
+  - [Opis kont](#opis-kont)
   - [Logowanie i przykładowe zapytania](#logowanie-i-przykładowe-zapytania)
 - [13.Prezentacja tworzenia kopii zapasowej, importu i eksportu bazy danych](#13prezentacja-tworzenia-kopii-zapasowej-importu-i-eksportu-bazy-danych)
   - [Początkowa konfiguracja z poziomu admina serwera](#początkowa-konfiguracja-z-poziomu-admina-serwera)
-      - [Zawartosc skryptu:](#zawartosc-skryptu)
+      - [Zawartość skryptu:](#zawartość-skryptu)
   - [Jednorazowy Eksport bazy danych w graficzym panelu xampp](#jednorazowy-eksport-bazy-danych-w-graficzym-panelu-xampp)
     - [1. Na górnym panelu klikamy w zakladke Eksport i wybieramy opcje szybko](#1-na-górnym-panelu-klikamy-w-zakladke-eksport-i-wybieramy-opcje-szybko)
     - [2.Klikamy Export i wybieramy gdzie chcemy zapisac nasza baze danych](#2klikamy-export-i-wybieramy-gdzie-chcemy-zapisac-nasza-baze-danych)
@@ -102,8 +103,8 @@
       - [1. Tworzymy pusta baze danych o nazwie smipegs\_lublin](#1-tworzymy-pusta-baze-danych-o-nazwie-smipegs_lublin)
     - [2. Wchodzimy w zakładke import i wybieramy plik backupy\\smipegs-lublin(backup).sql, odznaczamy opcje foregin key checks i klikamy import](#2-wchodzimy-w-zakładke-import-i-wybieramy-plik-backupysmipegs-lublinbackupsql-odznaczamy-opcje-foregin-key-checks-i-klikamy-import)
     - [3. Okno po poprawnym imporcie](#3-okno-po-poprawnym-imporcie)
-    - [Proces budowy bazy danych podczas testów](#proces-budowy-bazy-danych-podczas-testów)
-      - [1. Eksport projektu bazy danych z workbencha:](#1-eksport-projektu-bazy-danych-z-workbencha)
+  - [Proces budowy bazy danych podczas testów](#proces-budowy-bazy-danych-podczas-testów)
+    - [1. Eksport projektu bazy danych z workbencha:](#1-eksport-projektu-bazy-danych-z-workbencha)
     - [2. Generowanie plików SQL do importu](#2-generowanie-plików-sql-do-importu)
       - [3. Import bazy danych w panelu administracyjnym xampa](#3-import-bazy-danych-w-panelu-administracyjnym-xampa)
 
@@ -150,7 +151,7 @@ Portal społecznościowy dla emerytów wiary chrześcijańskiej, z którego rów
 
 #### Admin kreator
 
-Admin do którego użytkownicy o uprawnieniu "kreator postów" wysyłają swoje posty, aby mógł je wstawić do odpowiedniej tablicy.
+Admin do którego użytkownicy o uprawnieniu "kreator postów" wysyłają swoje ogłoszenia, aby mógł je wstawić do odpowiedniej tablicy.
 
 #### Admin moderator
 
@@ -454,7 +455,7 @@ Wszystkie id mają unique. Wszystkie id są autoinkrementowane. Boolowski typ da
 | obrazek                         | 1:<sub>(NI)</sub>1 | opis_uzytkownika                | zdjecie_profilowe_id      |
 | obrazek                         | 1:<sub>(NI)</sub>1 | ogloszenie                      |                           |
 
-<img src="assets/20260114_125414_relacje.png" style="width: 94%"/>
+<img src="assets/20260114_125414_relacje.png" style="width: 94%" class="no_border"/>
 
 <div style="page-break-after: always;"></div>
 
@@ -463,9 +464,6 @@ Wszystkie id mają unique. Wszystkie id są autoinkrementowane. Boolowski typ da
 ![](assets/20260117_202439_diagram_erd_z_logo.png)
 
 <div style="page-break-after: always;"></div>
-
-
-![](assets/20260117_202439_diagram_erd_z_logo.png)
 
 ## 6. Generacja danych syntetycznych
 
@@ -743,6 +741,8 @@ WHERE tablica_ogloszeniowa_id = 1 AND uzytkownik_id = "dowolne id";
 
 ![](assets/20260117_193145_zmora_jest.png)
 
+<div style="page-break-after: always;"></div>
+
 #### Rozwód
 
 Rozwązanie związku małżeńskiego zawartego między 2 uzytkownikami.
@@ -763,6 +763,8 @@ Przed rozwodem:
 Po rozwodzie:
 
 ![](assets/20260117_194935_po_rozwodzie.png)
+
+<div style="page-break-after: always;"></div>
 
 #### Ślub
 
@@ -813,9 +815,9 @@ HAVING MAX(o.data_wstawienia) < DATE_SUB(CURDATE(), INTERVAL 5
 
 ### Statystyki
 
-#### Płodność kreatorów postow
+#### Płodność kreatorów postów
 
-Wyświetla ile postów dodał dany użytkownik.
+Wyświetla ile ogłoszeń dodał dany użytkownik.
 
 ```sql
 DROP VIEW IF EXISTS plodnosc_kreatorow_postow;
@@ -834,7 +836,7 @@ ORDER BY liczba_postow DESC;
 
 #### Płodność tablicy
 
-Wyświetla ile postów znajduje się na danej tablicy.
+Wyświetla ile ogłoszęń znajduje się na danej tablicy.
 
 ```sql
 DROP VIEW IF EXISTS plodnosc_tablicy;
@@ -1163,11 +1165,9 @@ FOR EACH ROW
 
 Nasze wyzwalacze działaja wspólnie ze soba, gdy dodajemy uzytkownika:
 
-> Dodanie użytkownika 'TesterAdam'.
-
 ![](assets/20260115_104543_dodanie_uzytkownika.png)
 
-> 'TesterAdam' w użytkownikach.
+<hr>
 
 ![](assets/20260115_104820_testerAdam.png)
 
@@ -1185,7 +1185,7 @@ Oraz zostanie mu przypisana rola 'obserwator postów'.
 
 ##### Usuwanie Uzytkownika
 
-Stan przed usunięciem 'adam_tester:
+Stan przed usunięciem 'adam_tester':
 
 > Tablice ogłoszeniowe użytkownika:
 
@@ -1199,17 +1199,23 @@ Stan przed usunięciem 'adam_tester:
 
 ![](assets/20260115_234522_adam_Zyje_dane.png)
 
+<div style="page-break-after: always;"></div>
+
 > Rodzina użytkownika:
 
 ![](assets/20260115_234530_adam_ma_Rodzine.png)
 
+> Ogłoszenia użytkownika:
+
 ![](assets/20260115_234538_adam_Kreator.png)
 
-> Gdy postanowimy usunac uzytkownika
+<hr>
+
+Gdy postanowimy usunąć uzytkownika
 
 ![](assets/20260115_114142_adamGONE.png)
 
-> To system posprzata i usunie wszystkie dane powiazane z uzytkownikiem
+To system posprzata i usunie wszystkie dane powiązane z użytkownikiem.
 
 ![](assets/20260115_114347_nieMaAdama.png)
 
@@ -1221,11 +1227,13 @@ Stan przed usunięciem 'adam_tester:
 
 ![](assets/20260115_235126_adam_stracil_rodzine.png)
 
-> Posty uzytkownika zostały przypisane autorowi o id = 1
+<div style="page-break-after: always;"></div>
+
+Ogłoszenia uzytkownika zostały przypisane autorowi o id równym 1.
 
 ![](assets/20260116_193715_metamorfoza_Adama.png)
 
-> Pozostał jedynie adres uzytkownika ponieważ w bazie znajdował sie inny użytkownik który mieszkal pod tym samym adresem
+Pozostał jedynie adres uzytkownika ponieważ w bazie znajdował sie inny użytkownik który mieszkal pod tym samym adresem
 
 ![](assets/20260115_235624_adam_umar_ale_dom_stoi.png)
 
@@ -1237,7 +1245,7 @@ Nasz system SMIPEGS potrzebuje aby jednej procedury, gdyż inne czynności są d
 
 ### Opis procedury
 
-> Pozwala admistratorowi podejrzeć przedawnione posty na podstawie daty wstawienia z pominieciem postów oznaczonych jako 'do  archiwizacji'. Procedura pozwala na wyszukanie postów starszych niz x lat lub postów stworzonych do konkretnej daty. Można tez podejrzeć kolumny do usuniecia jesli nie ustawimy parametru usunac na 'true'.
+Pozwala admistratorowi podejrzeć przedawnione ogłoszenia na podstawie daty wstawienia z pominięciem ogłoszeń oznaczonych jako 'do  archiwizacji'. Procedura pozwala na wyszukanie ogłoszeń starszych niz x lat lub ogłoszeń stworzonych do konkretnej daty. Można też podejrzeć kolumny do usunięcia jeśli nie ustawimy parametru usunąć na 'true'.
 
 ```sql
 DROP PROCEDURE IF EXISTS usun_stare_ogloszenia;
@@ -1249,6 +1257,7 @@ CREATE PROCEDURE usun_stare_ogloszenia(
     IN do_kiedy DATE,
     IN usunac BOOLEAN
 )
+
 BEGIN
     DECLARE data_graniczna DATE;
     IF usunac IS NULL THEN
@@ -1275,6 +1284,9 @@ BEGIN
     FROM ogloszenie
     WHERE data_wstawienia < data_graniczna
         AND (archiwalny IS NULL OR archiwalny = 0);
+```
+
+```sql
 	IF (usunac) THEN
     DELETE
     FROM ogloszenie
@@ -1286,13 +1298,13 @@ END$$
 DELIMITER ;
 ```
 
-#### Przykladowe uzycie
+#### Przykladowe użycie
 
-> Wyszukujemy procedure w pasku bocznym, klikamy przycisk execute, w parametrach podajemy tylko wartosc parametru 'starsze_niz' = 1 nastepnie naciskamy przycisk Go.
+Wyszukujemy procedurę w pasku bocznym, klikamy przycisk execute, w parametrach podajemy tylko wartość parametru 'starsze_niz' = 1 następnie naciskamy przycisk Go.
 
 ![](assets/20260115_103531_execute_routine.png)
 
-> Procedura pokarze ogłoszenia starsze niz 1 rok, nie usunie ich ponieważ nie zmieniamy wartosci paramatru 'usunac'.
+Procedura pokarze ogłoszenia starsze niz 1 rok, ale ich nie usunie ponieważ nie zmieniamy wartosci paramatru 'usunac'.
 
 ![](assets/20260115_104018_procedure_wynik.png)
 
@@ -1303,7 +1315,7 @@ DELIMITER ;
 Tworzenie uzytkowników i nadawanie im uprawnień znajduje się w pliku:
 do_importu\3_uzytkownicy.sql
 
-> tworzenie uzytkowników
+Tworzenie użytkowników.
 
 ```sql
 CREATE USER 'admin'@'localhost' IDENTIFIED BY '`\\-_PI[Q[`j#qU5)4zbW1Zw';
@@ -1334,7 +1346,9 @@ MAX_CONNECTIONS_PER_HOUR 500
 MAX_USER_CONNECTIONS 500;
 ```
 
-> nadawanie uprawnień
+<div style="page-break-after: always;"></div>
+
+Nadawanie uprawnień.
 
 ```sql
 -- Uprawnienia admin
@@ -1384,20 +1398,25 @@ GRANT SELECT ON smipegs_lublin.wiek TO 'uzytkownik'@'localhost';
 GRANT SELECT ON smipegs_lublin.sygnatura TO 'uzytkownik'@'localhost';
 ```
 
-Opis kont:
-W naszej bazie danych znajduje się 6 uzytkowników kazde konto ma inne prawa do wyswietania wstawiania i usuwania danych.
+<div style="page-break-after: always;"></div>
 
-Admin - konto z najwyższymi uprawnienimi pozwalajacymi na dowolne modyfikowanie wyświetlania i usuwanie danych, modyfikowanie struktóry bazy danych wywoływanie procedur oraz zażądzanie innymi uzytkownikami.
+### Opis kont
 
-Admin_kierownik - konto pozwalajace na dodawanie i usuwanie uzytkowników z tablic ogłoszeniowych oraz przyznawanie uprawnień do tworzenia i usuwania postów na tablicach
+W naszej bazie danych znajduje się 6 uzytkowników każde konto ma inne prawa do wyświetlania, wstawiania i usuwania danych.
 
-Admin_moderator - konto pozwalajace na usuwanie i zmiane tresci ogłoszen na tablicach
+**Admin -** Konto z najwyższymi uprawnieniami pozwalającymi na dowolne modyfikowanie wyświetlania i usuwanie danych, modyfikowanie struktury bazy danych wywoływanie procedur oraz zarządzanie innymi użytkownikami.
 
-Admin_kreator - konto pozwalajace na tworzenie postow na tablicach ogłoszeniowych
+**Admin_kierownik -** Konto pozwalające na dodawanie i usuwanie użytkowników z tablic ogłoszeniowych oraz przyznawanie uprawnień do tworzenia i usuwania ogłoszeń na tablicach ogłoszeniowych.
 
-Analityk - konto przeznaczone dla analityków, pozwala na wyświetlanie wszystkich widoków zwiazanych ze statystykami.
+**Admin_moderator -** Konto pozwalające na usuwanie i zmianę treści ogłoszeń na tablicach ogłoszeniowych.
 
-Użytkownik - bazowe konto potrzebne do prawidłowego działania strony internetowej, pozwala tylko na wyświetlanie rekordów z tablic.
+**Admin_kreator -** Konto pozwalające na tworzenie ogłoszeń na tablicach ogłoszeniowych.
+
+**Analityk -** Konto przeznaczone dla analityków, pozwala na wyświetlanie wszystkich widoków zwiazanych ze statystykami.
+
+**Użytkownik -** Bazowe konto potrzebne do prawidłowego działania strony internetowej, pozwala tylko na wyświetlanie rekordów z tablic.
+
+<div style="page-break-after: always;"></div>
 
 ### Logowanie i przykładowe zapytania
 
@@ -1405,9 +1424,13 @@ Użytkownik - bazowe konto potrzebne do prawidłowego działania strony internet
 
 ![](assets/20260117_122916_polecenia_z_uzytkownika.png)
 
+<div style="page-break-after: always;"></div>
+
 **Analityk:**
 
 ![](assets/20260117_123347_polecenia_z_analityka.png)
+
+<div style="page-break-after: always;"></div>
 
 **Admin Kreator:**
 
@@ -1421,9 +1444,13 @@ Użytkownik - bazowe konto potrzebne do prawidłowego działania strony internet
 
 ![](assets/20260117_131905_polecenia_admin_kierownik.png)
 
+<div style="page-break-after: always;"></div>
+
 **Admin:**
 
 ![](assets/20260117_134151_polecenia_amin.png)
+
+<div style="page-break-after: always;"></div>
 
 ## 13.Prezentacja tworzenia kopii zapasowej, importu i eksportu bazy danych
 
@@ -1431,7 +1458,7 @@ Użytkownik - bazowe konto potrzebne do prawidłowego działania strony internet
 
 ### Początkowa konfiguracja z poziomu admina serwera
 
-##### Zawartosc skryptu:
+##### Zawartość skryptu:
 
 ```sh
 ##!/bin/bash
@@ -1453,14 +1480,14 @@ mysqldump -u $USER -p $PASSWORD $DATABASE > $BACKUP_PATH/$DATABASE-$DATE.sql
 echo "$DATE: Wykonanie kopii zapasowej." >> "$LOG_FILE"
 ```
 
-> nadajemy prawo do wykonywania i dodajemy wpis do crona aby automatycznie sie wykonywal
+Nadajemy prawo do wykonywania i dodajemy wpis do crona aby automatycznie sie wykonywał.
 
 ```sh
 sudo chmod +x skrypt_do_automatycznej_kopii.sh
 crontab -e
 ```
 
-> wewnątrz dodajemy linie:
+Wewnątrz dodajemy linie:
 
 ```sh
 30 2 * * * /home/server/scripts/skrypt_do_automatycznej_kopii.sh
@@ -1490,17 +1517,19 @@ crontab -e
 
 #### 2. Wchodzimy w zakładke import i wybieramy plik backupy\smipegs-lublin(backup).sql, odznaczamy opcje foregin key checks i klikamy import
 
-![](assets/20260117_191135_import_bakup.png)
+<img src="assets/20260117_191135_import_bakup.png" style="width:90%"/>
 
 #### 3. Okno po poprawnym imporcie
 
 ![](assets/20260117_191455_import_sukces.png)
 
-#### Proces budowy bazy danych podczas testów
+<div style="page-break-after: always;"></div>
+
+### Proces budowy bazy danych podczas testów
 
 > nie musimy wybierac nowej pustej bazy danych, skrypt sam utworzy baze o nazwie smipegs_lublin
 
-##### 1. Eksport projektu bazy danych z workbencha:
+#### 1. Eksport projektu bazy danych z workbencha:
 
 Otwieramy projekt zawierajacy baze danych lokalizacja pliku: do_importu\projekt_bazy_babaa_kabaaba.mwb
 
@@ -1511,6 +1540,8 @@ Otwieramy projekt zawierajacy baze danych lokalizacja pliku: do_importu\projekt_
 W górnym rogu klikamy w File i wybieramy opcje Export --> Forward Engineer SQL Script
 
 ![](assets/20260117_013754_workbench_forward_engeneer.png)
+
+<div style="page-break-after: always;"></div>
 
 W panelu wybieramy opcje ukazane na zrzucie ekranu i klikamy przycisk Next
 

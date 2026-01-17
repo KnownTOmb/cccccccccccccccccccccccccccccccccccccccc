@@ -169,6 +169,11 @@ img {
   display: block;
   margin-left: auto;
   margin-right: auto;
+  box-shadow: 5px 10px 12px -3px rgba(0,0,0,0.75);
+}
+
+.no_border {
+  box-shadow: none;
 }
 
 /* Horizontal rule */
