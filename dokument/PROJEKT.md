@@ -1,7 +1,7 @@
 <img src="logo.png" style="width: 80%; margin:10%"/>
 
 <div style="display: flex; justify-content: center">
-<div style="text-align: center; font-size:20pt; line-height:25pt; width: 70%">Cyberbiezpieczeństwo Grupa Labolatoryjna 7 - Projekt Bazy Danych Semestr 1</div>
+<div style="text-align: center; font-size:20pt; line-height:25pt; width: 70%">Cyberbezpieczeństwo Grupa Laboratoryjna 7 - Projekt Bazy Danych Semestr 1</div>
 </div>
 <br>
 <div style="text-align: center; font-size:15pt">Autorzy:</div>
@@ -18,7 +18,7 @@
     - [Dlaczego warto to zrealizować i co ma rozwiązać](#dlaczego-warto-to-zrealizować-i-co-ma-rozwiązać)
   - [2. Opis słowny](#2-opis-słowny)
   - [2,5. Założenia projektu](#25-założenia-projektu)
-    - [Adminokracja](#adminokracja)
+    - [Administracja](#administracja)
       - [Admin kreator](#admin-kreator)
       - [Admin moderator](#admin-moderator)
       - [Admin kierownik](#admin-kierownik)
@@ -86,6 +86,7 @@
   - [11.Opracowanie i prezentacja procedur składowanych](#11opracowanie-i-prezentacja-procedur-składowanych)
     - [Opis procedury](#opis-procedury)
       - [Przykladowe uzycie](#przykladowe-uzycie)
+  - [12.Prezenatcja zażądzania uzytkownikami](#12prezenatcja-zażądzania-uzytkownikami)
   - [13.Prezentacja tworzenia kopii zapasowej, importu i eksportu bazy danych](#13prezentacja-tworzenia-kopii-zapasowej-importu-i-eksportu-bazy-danych)
     - [Początkowa konfiguracja z poziomu admina serwera](#początkowa-konfiguracja-z-poziomu-admina-serwera)
         - [Zawartosc skryptu:](#zawartosc-skryptu)
@@ -113,7 +114,7 @@ Emeryci mogą mieć problem w dowiadywaniu się o zmianach w ich najbliższym ot
 
 ### Dlaczego warto to zrealizować i co ma rozwiązać
 
-Wierzymy, iż nasz SMIPEGS Lublin pomoże w bycie na bierząco z najbliższym środowiskiem co jest trudniejsze z wiekiem. Każdy z nas się kiedyś znajdzie, więc już dziś myślmy o naszej niedalekiej przyszłości, bo kiedyś my sami staniemy się emerytami. Memento mori.
+Wierzymy, iż nasz SMIPEGS Lublin pomoże w bycie na bieżąco z najbliższym środowiskiem co jest trudniejsze z wiekiem. Każdy z nas się kiedyś znajdzie, więc już dziś myślmy o naszej niedalekiej przyszłości, bo kiedyś my sami staniemy się emerytami. Memento mori.
 
 ## 2. Opis słowny
 
@@ -129,12 +130,12 @@ Portal społecznościowy dla emerytów wiary chrześcijańskiej, z którego rów
 
 ## 2,5. Założenia projektu
 
-### Adminokracja
+### Administracja
 
 1. Użytkownicy nie mają możliwości wpływania na zawartość bazy danych, jedynie mogą przeglądać jej zawartość.
 2. Nad zawartością bazy czuwają admini, nad tablicami użytkownicy o odpowiednich uprawnieniach, którzy nadal nie mają siły sprawczej.
 3. Ich zwierzchnikami są odpowiedni admini z którymi mają możliwość bezpośredniej komunikacji.
-4. Wyżej w hierachi uprzywilejowanych użytkowników są ci, którzy mają wyższe uprawnienia na tablicy głównej.
+4. Wyżej w hierarchii uprzywilejowanych użytkowników są ci, którzy mają wyższe uprawnienia na tablicy głównej.
 5. Admini zawsze mają prawo odmówić uprzywilejowanym użytkownikom.
 6. Wśród adminów panuje czteropodział władzy.
 
@@ -144,7 +145,7 @@ Admin do którego użytkownicy o uprawnieniu "kreator postów" wysyłają swoje 
 
 #### Admin moderator
 
-Użytkownicy o uprawnieniu "moderator postów" zgłaszają do niego zażalenia jeżeli dane ogłoszenie ujmuje ludzkiej godności lub jest niezgodne z porządkiem pubicznym.
+Użytkownicy o uprawnieniu "moderator postów" zgłaszają do niego zażalenia jeżeli dane ogłoszenie ujmuje ludzkiej godności lub jest niezgodne z porządkiem publicznym.
 
 #### Admin kierownik
 
@@ -156,7 +157,7 @@ Admin mający całkowitą władzę nad bazą danych.
 
 ### Serwer
 
-Nasza baza danych stoi na serwerze z systemem operacyjnym Debian. System do tworzenia kopii zapasowej jedynie działa na systeach z rodziny GNU/Linux.
+Nasza baza danych stoi na serwerze z systemem operacyjnym Debian. System do tworzenia kopii zapasowej jedynie działa na systemach z rodziny GNU/Linux.
 
 ### Terminologia
 
@@ -445,9 +446,9 @@ Boolowski typ danych jest reprezentowany przez tinyint(1).
 
 ## 6. Generacja danych syntetycznych
 
-Tabele w naszej bazie danych są większości ściśle ze sobą powiązane, co wymagało od nasstworzenia wyspecjalizowanego frameworku do generacji danych w celach testowaia poprawności działania bazy danych. Poniżej opiszemy jak z niego korzystać.
+Tabele w naszej bazie danych są większości ściśle ze sobą powiązane, co wymagało od nas stworzenia wyspecjalizowanego frameworku do generacji danych w celach testowaia poprawności działania bazy danych. Poniżej opiszemy jak z niego korzystać.
 
-Framework jest napisany w języku Python. Do wygenrowania domyślnego schematu wymagana jest biblioteka "faker". Aby ją zainstalować należy wpisać w konsoli:
+Framework jest napisany w języku Python. Do wygenerowania domyślnego schematu wymagana jest biblioteka "faker". Aby ją zainstalować należy wpisać w konsoli:
 
 ```sh
 pip install faker
@@ -463,7 +464,7 @@ python smipegs_fake_data_generator.py
 
 ### Pisanie własnych schematów
 
-Na początku trzeba zdefiniować wszystkie tabele w pliku scripts\tables_internal_data.py i ich kolejność generacji która odpowiada kolejności w której je definiujem.
+Na początku trzeba zdefiniować wszystkie tabele w pliku scripts\tables_internal_data.py i ich kolejność generacji która odpowiada kolejności w której je definiujemy.
 
 ```py
 tables = {
@@ -487,7 +488,7 @@ tables = {
 
 <div style="page-break-after: always;"></div>
 
-W pliku konfiguracyjnym config.py możemy zdefiniować paramtry generacji schematu aby później móc je łatwo zmienić.
+W pliku konfiguracyjnym config.py możemy zdefiniować parametry generacji schematu aby później móc je łatwo zmienić.
 
 ```py
 class config:
@@ -589,7 +590,10 @@ WHERE uzytkownik.login = "adam_tester";
 > Wyświetlanie tytułu i opisu tablicy od id 12 do której należy użytkownik o loginie "adam_tester" (trzeba sprawdzać login bo id tablicy przechowywane jest w url)
 
 ```sql
-SELECT tablica_ogloszeniowa.nazwa, tablica_ogloszeniowa.opis FROM tablica_ogloszeniowa JOIN tablica_ogloszeniowa_uzytkownik ON tablica_ogloszeniowa_uzytkownik.tablica_ogloszeniowa_id = tablica_ogloszeniowa.id JOIN uzytkownik ON uzytkownik.id = tablica_ogloszeniowa_uzytkownik.uzytkownik_id WHERE tablica_ogloszeniowa_id = "12" and uzytkownik.login = "adam_tester";
+SELECT tablica_ogloszeniowa.nazwa, tablica_ogloszeniowa.opis 
+FROM tablica_ogloszeniowa 
+JOIN tablica_ogloszeniowa_uzytkownik ON tablica_ogloszeniowa_uzytkownik.tablica_ogloszeniowa_id = tablica_ogloszeniowa.id JOIN uzytkownik ON uzytkownik.id = tablica_ogloszeniowa_uzytkownik.uzytkownik_id 
+WHERE tablica_ogloszeniowa_id = "12" and uzytkownik.login = "adam_tester";
 ```
 
 > Wyświetlanie tytulu, opisu i pseudonimu autora ogłoszeń z tablicy od id 12 do której należy użytkownik o loginie "adam_tester"
@@ -624,10 +628,10 @@ adres.ulica,
 adres.numer_budynku,
 adres.numer_mieszkania
 FROM opis_uzytkownika 
-JOIN uzytkownik ON uzytkownik.id = opis_uzytkownika.uzytkownik_id
-LEFT JOIN dane_uzytkownika ON dane_uzytkownika.uzytkownik_id = uzytkownik.id
-LEFT JOIN adres ON adres.id = dane_uzytkownika.adres_id
-WHERE uzytkownik.login = "adam_tester"
+JOIN uzytkownik ON uzytkownik.id = opis_uzytkownika.uzytkownik_id 
+LEFT JOIN dane_uzytkownika ON dane_uzytkownika.uzytkownik_id = uzytkownik.id 
+LEFT JOIN adres ON adres.id = dane_uzytkownika.adres_id 
+WHERE uzytkownik.login = "adam_tester";
 ```
 
 ![](assets/20260117_050348_profil_uztkownika.png)
@@ -641,12 +645,12 @@ SELECT
 pokrewienstwo.typ_relacji,
 sygnatura.imie_pseudonim_nazwisko,
 wiek.wiek
-FROM pokrewienstwo
-JOIN uzytkownik ON uzytkownik.id = pokrewienstwo.uzytkownik_id
-JOIN sygnatura ON sygnatura.uzytkownik_id = pokrewienstwo.spokrewniony_uzytkownik_id
-JOIN dane_uzytkownika ON dane_uzytkownika.uzytkownik_id = pokrewienstwo.spokrewniony_uzytkownik_id
-JOIN wiek ON wiek.dane_uzytkownika_id = dane_uzytkownika.id
-WHERE uzytkownik.login = "adam_tester"
+FROM pokrewienstwo 
+JOIN uzytkownik ON uzytkownik.id = pokrewienstwo.uzytkownik_id 
+JOIN sygnatura ON sygnatura.uzytkownik_id = pokrewienstwo.spokrewniony_uzytkownik_id 
+JOIN dane_uzytkownika ON dane_uzytkownika.uzytkownik_id = pokrewienstwo.spokrewniony_uzytkownik_id 
+JOIN wiek ON wiek.dane_uzytkownika_id = dane_uzytkownika.id 
+WHERE uzytkownik.login = "adam_tester";
 ```
 
 ![](assets/20260117_054348_rodzina_uzytkownika.png)
@@ -680,7 +684,7 @@ WHERE a.rejon = 'Rury'
 
 ```sql
 DELETE FROM tablica_ogloszeniowa_uzytkownik 
-WHERE tablica_ogloszeniowa_id = 1 AND uzytkownik_id = "dowolne id"
+WHERE tablica_ogloszeniowa_id = 1 AND uzytkownik_id = "dowolne id";
 ```
 
 #### Rozwód
@@ -718,15 +722,14 @@ FROM
 > polecenie wypisuje wszyskich nieaktywnych postów i pozwala administratorowi zadecydowac nad ich losem.
 
 ```sql
-SELECT u.id AS uzytkownik_id, ou.pseudonim, pk.liczba_postow,
+SELECT u.id AS uzytkownik_id, s.imie_pseudonim_nazwisko, COUNT(o.id) AS liczba_postow,
 MAX(o.data_wstawienia) AS ostatni_post
 FROM uprawnienie up
 JOIN uzytkownik u ON u.id = up.uzytkownik_id
-JOIN opis_uzytkownika ou ON ou.uzytkownik_id = u.id
-JOIN plodnosc_kreatorow_postow pk ON pk.pseudonim = ou.pseudonim
+JOIN sygnatura s ON s.uzytkownik_id = u.id
 LEFT JOIN ogloszenie o ON o.autor_id = u.id
 WHERE up.rola = 'kreator postów'
-GROUP BY u.id, ou.pseudonim, pk.liczba_postow
+GROUP BY u.id, s.imie_pseudonim_nazwisko
 HAVING MAX(o.data_wstawienia) < DATE_SUB(CURDATE(), INTERVAL 2 YEAR);
 ```
 
@@ -1196,6 +1199,133 @@ DELIMITER ;
 ![](assets/20260115_104018_procedure_wynik.png)
 
 <div style="page-break-after: always;"></div>
+
+## 12.Prezenatcja zażądzania uzytkownikami
+
+Tworzenie uzytkowników i nadawanie im uprawnien znajduje sie w pliku:
+do_importu\3_uzytkownicy.sql
+
+> tworzenie uzytkowników
+
+```sql
+CREATE USER 'admin'@'localhost' IDENTIFIED BY '`\\-_PI[Q[`j#qU5)4zbW1Zw';
+CREATE USER 'admin_kreator'@'localhost' IDENTIFIED BY 'Z^2p_$}[C\8R-D`WS5[kYyJe'
+WITH MAX_QUERIES_PER_HOUR 50
+MAX_UPDATES_PER_HOUR 25
+MAX_CONNECTIONS_PER_HOUR 10
+MAX_USER_CONNECTIONS 1;
+CREATE USER 'admin_moderator'@'localhost' IDENTIFIED BY 'pz)-46C2d5x)Y`Z%naDOIcF_'
+WITH MAX_QUERIES_PER_HOUR 50
+MAX_UPDATES_PER_HOUR 25
+MAX_CONNECTIONS_PER_HOUR 10
+MAX_USER_CONNECTIONS 1;
+CREATE USER 'admin_kierownik'@'localhost' IDENTIFIED BY 'Ej_]lwYG)@#0{%F%-;\q+Kqr'
+WITH MAX_QUERIES_PER_HOUR 50
+MAX_UPDATES_PER_HOUR 25
+MAX_CONNECTIONS_PER_HOUR 10
+MAX_USER_CONNECTIONS 1;
+CREATE USER 'analityk'@'localhost' IDENTIFIED BY 'V*KFV/_3?B94@7H-cM}zgif'
+WITH MAX_QUERIES_PER_HOUR 100
+MAX_UPDATES_PER_HOUR 0
+MAX_CONNECTIONS_PER_HOUR 10
+MAX_USER_CONNECTIONS 1;
+CREATE USER 'uzytkownik'@'localhost' IDENTIFIED BY 'Od}s$CFP]6W_k5#Es2Z-`VQW'
+WITH MAX_QUERIES_PER_HOUR 5000
+MAX_UPDATES_PER_HOUR 0
+MAX_CONNECTIONS_PER_HOUR 500
+MAX_USER_CONNECTIONS 500;
+```
+
+> nadawanie uprawnien
+
+```sql
+-- Uprawnienia admin
+GRANT ALL PRIVILEGES ON *.*
+TO 'admin'@'localhost';
+
+-- Uprawnienia analityk
+GRANT SELECT ON smipegs_lublin.matuzal TO 'analityk'@'localhost';
+GRANT SELECT ON smipegs_lublin.plodnosc_kreatorow_postow TO 'analityk'@'localhost';
+GRANT SELECT ON smipegs_lublin.plodnosc_parafii TO 'analityk'@'localhost';
+GRANT SELECT ON smipegs_lublin.plodnosc_tablicy TO 'analityk'@'localhost';
+GRANT SELECT ON smipegs_lublin.pozycja_modlitwy TO 'analityk'@'localhost';
+GRANT SELECT ON smipegs_lublin.pozycja_rodziny TO 'analityk'@'localhost';
+GRANT SELECT ON smipegs_lublin.zmora TO 'analityk'@'localhost';
+GRANT SELECT ON smipegs_lublin.zmarly_uzytkownik TO 'analityk'@'localhost';
+
+-- Uprawnienia admin_kreator
+GRANT INSERT, SELECT ON smipegs_lublin.ogloszenie TO 'admin_kreator'@'localhost';
+
+-- Uprawnienia admin_moderator
+GRANT DELETE, UPDATE, SELECT ON smipegs_lublin.ogloszenie TO 'admin_moderator'@'localhost';
+
+-- Uprawnienia admin_kierownik
+GRANT SELECT ON smipegs_lublin.tablica_ogloszeniowa TO 'admin_kierownik'@'localhost';
+GRANT INSERT, UPDATE, DELETE, SELECT ON smipegs_lublin.tablica_ogloszeniowa_uzytkownik TO 'admin_kierownik'@'localhost';
+GRANT INSERT, UPDATE, DELETE, SELECT ON smipegs_lublin.uprawnienie TO 'admin_kierownik'@'localhost';
+
+-- Uprawnienia uzytkownik
+GRANT SELECT ON smipegs_lublin.adres TO 'uzytkownik'@'localhost';
+GRANT SELECT ON smipegs_lublin.dane_uzytkownika TO 'uzytkownik'@'localhost';
+GRANT SELECT ON smipegs_lublin.kod_pocztowy TO 'uzytkownik'@'localhost';
+GRANT SELECT ON smipegs_lublin.modlitwa TO 'uzytkownik'@'localhost';
+GRANT SELECT ON smipegs_lublin.obrazek TO 'uzytkownik'@'localhost';
+GRANT SELECT ON smipegs_lublin.ogloszenie TO 'uzytkownik'@'localhost';
+GRANT SELECT ON smipegs_lublin.opis_uzytkownika TO 'uzytkownik'@'localhost';
+GRANT SELECT ON smipegs_lublin.parafia TO 'uzytkownik'@'localhost';
+GRANT SELECT ON smipegs_lublin.pokrewienstwo TO 'uzytkownik'@'localhost';
+GRANT SELECT ON smipegs_lublin.proboszcz TO 'uzytkownik'@'localhost';
+GRANT SELECT ON smipegs_lublin.rodzina TO 'uzytkownik'@'localhost';
+GRANT SELECT ON smipegs_lublin.rodzina_wzeniona TO 'uzytkownik'@'localhost';
+GRANT SELECT ON smipegs_lublin.tablica_ogloszeniowa TO 'uzytkownik'@'localhost';
+GRANT SELECT ON smipegs_lublin.tablica_ogloszeniowa_uzytkownik TO 'uzytkownik'@'localhost';
+GRANT SELECT ON smipegs_lublin.uprawnienie TO 'uzytkownik'@'localhost';
+GRANT SELECT ON smipegs_lublin.url_obrazka TO 'uzytkownik'@'localhost';
+GRANT SELECT ON smipegs_lublin.uzytkownik TO 'uzytkownik'@'localhost';
+GRANT SELECT ON smipegs_lublin.wiek TO 'uzytkownik'@'localhost';
+GRANT SELECT ON smipegs_lublin.sygnatura TO 'uzytkownik'@'localhost';
+```
+
+Opis kont:
+W naszej bazie danych znajduje sie 6 uzytkowników kazde konto ma inne prawa do wyswietania wstawiania i usuwania danych.
+
+Admin - konto z najwyższymi uprawnienimi pozwalajacymi na dowolne modyfikowanie wyswietlania i usuwanie danych, modyfikowanie struktóry bazy danych wywoływanie procedur oraz zażądzanie innymi uzytkownikami.
+
+Admin_kierownik - konto pozwalajace na dodawanie i usuwanie uzytkowników z tablic ogłoszeniowych oraz przyznawanie uprawnien do tworzenia i usuwania postów na tablicach
+
+Admin_moderator - konto pozwalajace na usuwanie i zmiane tresci ogłoszen na tablicach
+
+Admin_kreator - konto pozwalajace na tworzenie postow na tablicach ogłoszeniowych
+
+Analityk - konto przeznaczone dla analityków, pozwala na wyswietlanie wszystkich widoków zwiazanych ze statystykami.
+
+Użytkownik - bazowe konto potrzebne do prawidłowego działania strony internetowej, pozwala tylko na wyswietlanie rekordów z tablic.
+
+Logowanie i przyładowe zapytania sql w obrębie danego konta:
+
+Uzytkownik:
+
+![](assets/20260117_122916_polecenia_z_uzytkownika.png)
+
+Analityk:
+
+![](assets/20260117_123347_polecenia_z_analityka.png)
+
+Admin_kreator:
+
+![](assets/20260117_124251_polecenia_admin_kreator.png)
+
+Admin_moderator:
+
+![](assets/20260117_124825_polecenia_admin_moderator.png)
+
+Admin_kierownik:
+
+![](assets/20260117_131905_polecenia_admin_kierownik.png)
+
+Admin:
+
+![](assets/20260117_134151_polecenia_amin.png)
 
 ## 13.Prezentacja tworzenia kopii zapasowej, importu i eksportu bazy danych
 
