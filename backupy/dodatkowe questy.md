@@ -38,12 +38,12 @@
 * [X] opis dla usuniętego użytkownika, w opisie ma należeć do nieznanej rodziny też dopisać do pdfa
 * [X] posortuj po liczbie użytkowników w płodności tablic
 * [ ] na końcu screeny zweryfikować i typy danych
-* [ ] administracje
+* [X] administracje
 * [X] widok opis imie nazwisko na końcu jak czas
 * [X] dodac nowe triggery do trigerow
 * [X] zapytania napisac z 8 podpunktu
-* [ ] uzupełnic podpunkt nr 6 generacja losowych danych
-* [ ] zmien screeny do widoków
+* [X] uzupełnic podpunkt nr 6 generacja losowych danych
+* [X] zmien screeny do widoków
 * [ ] zabić projekt
 
 sekcja pdf:
@@ -59,8 +59,8 @@ sekcja pdf:
 * [X] screen widok - zmora
 * [X] screen widok - zmarly uzytkownik
 * [X] screen wszystkie wyzwalacze
-* [ ] zad 12 zrobic  
-* [ ] wziasc uzytkownika z administracji i ustawic pod niego kopie zapasową
+* [X] zad 12 zrobic  
+* [X] wziasc uzytkownika z administracji i ustawic pod niego kopie zapasową
 
 
 
