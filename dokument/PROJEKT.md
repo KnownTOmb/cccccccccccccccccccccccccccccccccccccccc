@@ -58,10 +58,10 @@
   - [Procentowy podzial na płci](#procentowy-podzial-na-płci)
   - [Użytkownicy z rejonu Rury](#użytkownicy-z-rejonu-rury)
 - [8. Opracownie i prezentacja zapytań modyfikujacych dane w bazie](#8-opracownie-i-prezentacja-zapytań-modyfikujacych-dane-w-bazie)
-    - [Stworzenie zmory](#stworzenie-zmory)
-    - [Rozwód](#rozwód)
-    - [Ślub](#ślub)
-    - [Nieaktywni kreatorzy postów](#nieaktywni-kreatorzy-postów)
+  - [Stworzenie zmory](#stworzenie-zmory)
+  - [Rozwód](#rozwód)
+  - [Ślub](#ślub)
+  - [Nieaktywni kreatorzy postów](#nieaktywni-kreatorzy-postów)
 - [9. Opracowanie i prezentacja widoków](#9-opracowanie-i-prezentacja-widoków)
   - [Statystyki](#statystyki)
     - [Płodność kreatorów postow](#płodność-kreatorów-postow)
@@ -93,7 +93,7 @@
   - [Logowanie i przykładowe zapytania](#logowanie-i-przykładowe-zapytania)
 - [13.Prezentacja tworzenia kopii zapasowej, importu i eksportu bazy danych](#13prezentacja-tworzenia-kopii-zapasowej-importu-i-eksportu-bazy-danych)
   - [Początkowa konfiguracja z poziomu admina serwera](#początkowa-konfiguracja-z-poziomu-admina-serwera)
-      - [Zawartosc skryptu:](#zawartosc-skryptu)
+    - [Zawartosc skryptu:](#zawartosc-skryptu)
   - [Jednorazowy Eksport bazy danych w graficzym panelu xampp](#jednorazowy-eksport-bazy-danych-w-graficzym-panelu-xampp)
     - [1. Na górnym panelu klikamy w zakladke Eksport i wybieramy opcje szybko](#1-na-górnym-panelu-klikamy-w-zakladke-eksport-i-wybieramy-opcje-szybko)
     - [2.Klikamy Export i wybieramy gdzie chcemy zapisac nasza baze danych](#2klikamy-export-i-wybieramy-gdzie-chcemy-zapisac-nasza-baze-danych)
@@ -332,6 +332,8 @@ Wszystkie id mają unique. Wszystkie id są autoinkrementowane. Boolowski typ da
 
 <div style="page-break-after: always;"></div>
 
+
+
 #### Proboszcz
 
 
@@ -460,6 +462,9 @@ Wszystkie id mają unique. Wszystkie id są autoinkrementowane. Boolowski typ da
 
 
 <div style="page-break-after: always;"></div>
+
+
+![](assets/20260117_202439_diagram_erd_z_logo.png)
 
 ## 6. Generacja danych syntetycznych
 
