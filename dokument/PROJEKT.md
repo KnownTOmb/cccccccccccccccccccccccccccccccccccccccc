@@ -61,7 +61,7 @@
     - [Stworzenie zmory](#stworzenie-zmory)
     - [Rozwód](#rozwód)
     - [Ślub](#ślub)
-    - [Degradacja nieaktywnych kreatorów postów](#degradacja-nieaktywnych-kreatorów-postów)
+    - [Nieaktywni kreatorzy postów](#nieaktywni-kreatorzy-postów)
 - [9. Opracowanie i prezentacja widoków](#9-opracowanie-i-prezentacja-widoków)
   - [Statystyki](#statystyki)
     - [Płodność kreatorów postow](#płodność-kreatorów-postow)
@@ -704,6 +704,8 @@ FROM opis_uzytkownika ou
 GROUP BY ou.plec;
 ```
 
+![](assets/20260117_192530_segregacja.png)
+
 ### Użytkownicy z rejonu Rury
 
 ```sql
@@ -714,6 +716,8 @@ JOIN dane_uzytkownika du ON du.uzytkownik_id = u.id
 JOIN adres a ON a.id = du.adres_id
 WHERE a.rejon = 'Rury'
 ```
+
+![](assets/20260117_192358_strzelam_z_rury.png)
 
 <div style="page-break-after: always;"></div>
 
@@ -728,6 +732,10 @@ DELETE FROM tablica_ogloszeniowa_uzytkownik
 WHERE tablica_ogloszeniowa_id = 1 AND uzytkownik_id = "dowolne id";
 ```
 
+![](assets/20260117_193135_tworzenie_zmory.png)
+
+![](assets/20260117_193145_zmora_jest.png)
+
 #### Rozwód
 
 Rozwązanie związku małżeńskiego zawartego między 2 uzytkownikami.
@@ -740,6 +748,14 @@ JOIN opis_uzytkownika ou
 WHERE ou.pseudonim = 'smutnyMarian'
   AND p.typ_relacji IN ('mąż', 'żona');
 ```
+
+Przed rozwodem:
+
+![](assets/20260117_194519_przed_rozwodem.png)
+
+Po rozwodzie:
+
+![](assets/20260117_194935_po_rozwodzie.png)
 
 #### Ślub
 
@@ -758,11 +774,18 @@ FROM
 (SELECT uzytkownik_id FROM opis_uzytkownika WHERE pseudonim = 'mariolkaRolka') c2;
 ```
 
+Wywołanie zapytania:
+
+![](assets/20260117_200216_mloda_para.png)
+
+![](assets/20260117_200225_po_slubie.png)
+
 <div style="page-break-after: always;"></div>
 
-#### Degradacja nieaktywnych kreatorów postów
+#### Nieaktywni kreatorzy postów
 
 Polecenie wypisuje wszystkich nieaktywnych kreatorów postów i dane związane z ich produktywnością aby administrator mógł zadecydować nad ich losem.
+
 
 ```sql
 SELECT u.id AS uzytkownik_id, s.imie_pseudonim_nazwisko, COUNT(o.id) AS liczba_postow,
@@ -773,9 +796,11 @@ JOIN sygnatura s ON s.uzytkownik_id = u.id
 LEFT JOIN ogloszenie o ON o.autor_id = u.id
 WHERE up.rola = 'kreator postów'
 GROUP BY u.id, s.imie_pseudonim_nazwisko
-HAVING MAX(o.data_wstawienia) < DATE_SUB(CURDATE(), INTERVAL 2 YEAR);
+HAVING MAX(o.data_wstawienia) < DATE_SUB(CURDATE(), INTERVAL 5
 ```
 
+
+![](assets/20260117_200851_uzytkownicy_do_eksterminacji.png)
 <div style="page-break-after: always;"></div>
 
 ## 9. Opracowanie i prezentacja widoków
