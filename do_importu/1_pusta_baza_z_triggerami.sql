@@ -1,4 +1,4 @@
--- Sat Jan 17 00:49:17 2026
+-- Sat Jan 17 22:17:21 2026
 
 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0;
 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0;
@@ -50,7 +50,7 @@ CREATE TABLE IF NOT EXISTS `smipegs_lublin`.`dane_uzytkownika` (
   `data_smierci` DATE NULL,
   `adres_id` INT UNSIGNED NULL,
   `uzytkownik_id` INT UNSIGNED NOT NULL,
-  PRIMARY KEY (`id`),
+  PRIMARY KEY (`id`, `uzytkownik_id`),
   UNIQUE INDEX `id_UNIQUE` (`id`),
   INDEX `fk_dane_uzytkownika_adres1_idx` (`adres_id`),
   INDEX `fk_dane_uzytkownika_uzytkownik1_idx` (`uzytkownik_id`),
@@ -134,7 +134,7 @@ CREATE TABLE IF NOT EXISTS `smipegs_lublin`.`opis_uzytkownika` (
   `zdjecie_profilowe_id` INT UNSIGNED NOT NULL DEFAULT 1,
   `ulubiona_modlitwa_id` SMALLINT(255) UNSIGNED NULL DEFAULT NULL,
   `parafia_id` SMALLINT(255) UNSIGNED NULL DEFAULT NULL,
-  PRIMARY KEY (`id`, `rodzina_id`),
+  PRIMARY KEY (`id`, `uzytkownik_id`, `rodzina_id`),
   UNIQUE INDEX `id_UNIQUE` (`id`),
   INDEX `fk_opis_uzytkownika_rodzina1_idx` (`rodzina_id`),
   INDEX `fk_opis_uzytkownika_obrazek1_idx` (`zdjecie_profilowe_id`),
