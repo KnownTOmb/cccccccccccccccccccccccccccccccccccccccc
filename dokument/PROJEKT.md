@@ -429,7 +429,7 @@ Wszystkie id mają unique. Wszystkie id są autoinkrementowane. Boolowski typ da
 | obrazek                         | 1:<sub>(NI)</sub>1 | opis_uzytkownika                | zdjecie_profilowe_id      |
 | obrazek                         | 1:<sub>(NI)</sub>1 | ogloszenie                      |                           |
 
-![](assets/20260114_125414_relacje.png)
+<img src="assets/20260114_125414_relacje.png" style="width: 90%"/>
 
 ## 5. Diagram ERD
 
