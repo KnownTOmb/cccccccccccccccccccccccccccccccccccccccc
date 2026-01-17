@@ -1,0 +1,22 @@
+{
+  "[markdown]": {
+    "editor.formatOnSave": false,
+    "editor.wordWrap": "on"
+  },
+  "markdown-pdf.type": "pdf",
+  "markdown-pdf.format": "A4",
+  "markdown-pdf.orientation": "portrait",
+  "markdown-pdf.margin.top": "20mm",
+  "markdown-pdf.margin.bottom": "20mm",
+  "markdown-pdf.margin.right": "15mm",
+  "markdown-pdf.margin.left": "15mm",
+  "markdown-pdf.scale": 1.2,
+  "markdown-pdf.displayHeaderFooter": true,
+  "markdown-pdf.headerTemplate": "<div style=\"font-size: 9pt; width: 100%; text-align: center; color: #666;\"><span class=\"title\"></span></div>",
+  "markdown-pdf.footerTemplate": "<div style=\"font-size: 8pt; width: 100%; text-align: center; color: #999; border-top: 1px solid #ddd; padding-top: 5mm; margin-top: 10mm;\"><span class=\"pageNumber\"></span> / <span class=\"totalPages\"></span></div>",
+  "markdown-pdf.printBackground": true,
+  "markdown-pdf.markdown.breaks": true,
+  "markdown-pdf.styles": [
+    ".vscode/markdown.css"
+  ]
+}

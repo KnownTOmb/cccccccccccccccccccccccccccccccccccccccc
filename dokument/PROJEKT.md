@@ -11,6 +11,8 @@
 
 # Spis treści
 
+<div style="font-size: 10pt; line-height: 1.4">
+
 - [Spis treści](#spis-treści)
   - [0. Nazwa Projektu](#0-nazwa-projektu)
   - [1. Motywacja](#1-motywacja)
@@ -98,6 +100,8 @@
         - [1. Eksport projektu bazy danych z workbencha:](#1-eksport-projektu-bazy-danych-z-workbencha)
       - [2. Generowanie plików sql do importu](#2-generowanie-plików-sql-do-importu)
         - [3. Import bazy danych w panelu administracyjnym xampa](#3-import-bazy-danych-w-panelu-administracyjnym-xampa)
+
+</div>
 
 <div style="page-break-after: always;"></div>
 
