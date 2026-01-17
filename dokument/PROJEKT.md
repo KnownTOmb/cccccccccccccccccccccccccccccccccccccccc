@@ -160,6 +160,8 @@ Nasza baza danych stoi na serwerze z systemem operacyjnym Debian. System do twor
 
 Matuzal, syn Henocha, był człowiekiem któremu Bóg dał 969 lat życia i zaszczyt bycia jednym z przodków wszystkich ludzi po potopie. Tym mianem w naszej społeczności nazywamy użytkowników którzy dożyli 90 godnych lat. Są chlubą naszego systemu SMIPEGS Lublin.
 
+<div style="page-break-after: always;"></div>
+
 #### Zmora
 
 W dawnych wierzeniach słowiańskim była demonem narodzonym z duszy grzesznika, a jeżeli ktoś był kierowany w życiu złością, to mógł się nią stać i za życia. Tak nazywamy w naszej społeczności użytkowników usuniętych z tablicy głównej z powodu ich udręczających zachowań w obrębach naszego systemu SMIPEGS.
@@ -195,6 +197,8 @@ Wszystkie id mają unique.
 Wszystkie id są autoinkrementowane.
 
 Boolowski typ danych jest reprezentowany przez tinyint(1).
+
+<div style="page-break-after: always;"></div>
 
 #### uzytkownik
 
@@ -259,6 +263,8 @@ Boolowski typ danych jest reprezentowany przez tinyint(1).
 
 ![](assets/20260114_094125_modlitwa.png)
 
+<div style="page-break-after: always;"></div>
+
 #### adres
 
 
@@ -287,6 +293,8 @@ Boolowski typ danych jest reprezentowany przez tinyint(1).
 > id == 0 to rodzina "Nieznana"
 
 ![](assets/20260114_094149_rodzina.png)
+
+<div style="page-break-after: always;"></div>
 
 #### pokrewienstwo
 
@@ -327,6 +335,8 @@ Boolowski typ danych jest reprezentowany przez tinyint(1).
 
 ![](assets/20260114_094230_parafia.png)
 
+<div style="page-break-after: always;"></div>
+
 #### tablica_ogloszeniowa (board)
 
 > id == 1 to tablica glowna, kazdy uzytkownik jest tam automatycznie dodawany przez trigger
@@ -355,6 +365,8 @@ Boolowski typ danych jest reprezentowany przez tinyint(1).
 | archiwalny              | bool         |                           |
 
 ![](assets/20260117_000458_ogloszenie_encje.png)
+
+<div style="page-break-after: always;"></div>
 
 #### obrazek
 
@@ -391,6 +403,8 @@ Boolowski typ danych jest reprezentowany przez tinyint(1).
 
 ![](assets/20260114_094341_tablica_ogloszeniowa_uzytkownik.png)
 
+<div style="page-break-after: always;"></div>
+
 ### Relacje
 
 **(I)** – relacja identyfikująca
@@ -422,6 +436,8 @@ Boolowski typ danych jest reprezentowany przez tinyint(1).
 ## 5. Diagram ERD                             ඞ
 
 ![](assets/20260116_211000_diagram_erd_z_logo.png)
+
+<div style="page-break-after: always;"></div>
 
 ## 6. Generacja danych syntetycznych
 
@@ -464,6 +480,9 @@ tables = {
     },
 }
 ```
+
+<div style="page-break-after: always;"></div>
+
 
 W pliku konfiguracyjnym config.py możemy zdefiniować paramtry generacji schematu aby później móc je łatwo zmienić.
 
@@ -546,6 +565,9 @@ case "nazwa_tabeli2":
     nazwa_kolumny1()
 ```
 
+<div style="page-break-after: always;"></div>
+
+
 ## 7. Zróznicowane zapytania sql
 
 > Wyświetlanie tablic ogłoszeń do których należy użytkownik o loginie "adam_tester"
@@ -593,6 +615,8 @@ WHERE a.rejon = 'Rury'
 DELETE FROM tablica_ogloszeniowa_uzytkownik 
 WHERE tablica_ogloszeniowa_id = 1 AND uzytkownik_id = "dowolne id"
 ```
+
+<div style="page-break-after: always;"></div>
 
 #### Rozwód
 
@@ -663,6 +687,8 @@ ORDER BY liczba_postow DESC;
 
 ![](assets/20260116_234914_plodnosc_kreatorow_postow.png)
 
+<div style="page-break-after: always;"></div>
+
 #### Plodnosc tablicy
 
 > wyswietla ile postów znajduje sie na danej tablicy
@@ -681,6 +707,8 @@ ORDER BY liczba_postow DESC;
 ```
 
 ![](assets/20260116_234713_plodnosc_tablicy_widok.png)
+
+<div style="page-break-after: always;"></div>
 
 #### Plodnosc parafii
 
@@ -727,6 +755,8 @@ GROUP BY r.id, r.nazwa;
 
 ![](assets/20260115_102541_pozycjaRodziny.png)
 
+<div style="page-break-after: always;"></div>
+
 #### Matuzal
 
 > wyswietla uzytkownikow mających co namniej 90 lat
@@ -744,6 +774,8 @@ ORDER BY w.wiek DESC;
 ```
 
 ![](assets/20260116_234314_matuzal_widok.png)
+
+<div style="page-break-after: always;"></div>
 
 #### Zmora
 
@@ -765,6 +797,9 @@ WHERE NOT EXISTS (
 
 ![](assets/20260116_234058_zmora_widok.png)
 
+<div style="page-break-after: always;"></div>
+
+
 #### Zmarły uzytkownik
 
 > uzytkownicy którzy nie żyja
@@ -780,6 +815,9 @@ WHERE du.data_smierci IS NOT NULL;
 ```
 
 ![](assets/20260116_233701_zmarly_uzytkownik.png)
+
+<div style="page-break-after: always;"></div>
+
 
 ### Dane zależne
 
@@ -798,6 +836,9 @@ LEFT JOIN dane_uzytkownika du ON du.uzytkownik_id = u.id;
 
 ![](assets/20260116_205604_imie_nazwisko_pseudonim.png)
 
+<div style="page-break-after: always;"></div>
+
+
 #### Wiek
 
 > wyswietla ile lat ma kazdy uzytkownik
@@ -814,6 +855,9 @@ FROM dane_uzytkownika;
 ```
 
 ![](assets/20260115_102736_wiek.png)
+
+<div style="page-break-after: always;"></div>
+
 
 #### Rodzina wrzeniona
 
@@ -832,6 +876,8 @@ WHERE p.typ_relacji IN ('mąż', 'żona');
 
 ![](assets/20260115_102806_rodzinaWzeniona.png)
 
+<div style="page-break-after: always;"></div>
+
 #### url obrazka
 
 > wyswietla url obrazka
@@ -845,6 +891,9 @@ FROM obrazek o;
 
 ![](assets/20260115_102855_urlObrazka.png)
 
+<div style="page-break-after: always;"></div>
+
+
 #### Kod pocztowy
 
 > wyswietla kod pocztowy uzytkownika
@@ -857,6 +906,9 @@ FROM adres a;
 ```
 
 ![](assets/20260115_103123_adres_pocztowy.png)
+
+<div style="page-break-after: always;"></div>
+
 
 ## 10.Opracowanie i prezentacja wyzwalaczy (triggerów)
 
@@ -882,7 +934,7 @@ VALUES ('obserwator postow',NEW.tablica_ogloszeniowa_id,NEW.uzytkownik_id);
 
 ### Sprzatanie kiedy usuwamy uzytkownika
 
-###### Przed usunieciem uzytkownika z bazy danych:
+##### Przed usunieciem uzytkownika z bazy danych:
 
 > Zabieramy mu uprawnienia
 
@@ -903,6 +955,9 @@ FOR EACH ROW
 DELETE FROM tablica_ogloszeniowa_uzytkownik
 WHERE uzytkownik_id = OLD.id;
 ```
+
+<div style="page-break-after: always;"></div>
+
 
 > Usuwamy ustawiony przez niego opis
 
@@ -960,7 +1015,7 @@ FOR EACH ROW
 
 #### Przyklady działania:
 
-###### Dodawanie uzytkownika
+##### Dodawanie uzytkownika
 
 > Nasze wyzwalacze działaja wspólnie ze soba, gdy dodajemy uzytkownika:
 
@@ -976,9 +1031,11 @@ FOR EACH ROW
 
 ![](assets/20260115_234444_Adam_Uprawniania.png)
 
-###### Usuwanie Uzytkownika
+<div style="page-break-after: always;"></div>
 
-####### Stan przed usunieciem:
+#### Usuwanie Uzytkownika
+
+##### Stan przed usunieciem:
 
 ![](assets/20260115_234444_Adam_Uprawniania.png)
 
@@ -1013,6 +1070,8 @@ FOR EACH ROW
 > Pozostał jedynie adres uzytkownika ponieważ w bazie znajdowal sie inny uzytkownik który mieszkal pod tym samym adresem
 
 ![](assets/20260115_235624_adam_umar_ale_dom_stoi.png)
+
+<div style="page-break-after: always;"></div>
 
 ## 11.Opracowanie i prezentacja procedur składowanych
 
@@ -1079,6 +1138,8 @@ DELIMITER ;
 
 ![](assets/20260115_104018_procedure_wynik.png)
 
+<div style="page-break-after: always;"></div>
+
 ## 13.Prezentacja tworzenia kopii zapasowej, importu i eksportu bazy danych
 
 > Kopia zapasowa jest tworzona automatycznie o godzinie 2:30
@@ -1120,15 +1181,19 @@ crontab -e
 30 2 * * * /home/server/scripts/skrypt_do_automatycznej_kopii.sh
 ```
 
+<div style="page-break-after: always;"></div>
+
 ### Jednorazowy Eksport bazy danych w graficzym panelu xampp
 
-##### 1. Na górnym panelu klikamy w zakladke Eksport i wybieramy opcje szybko
+#### 1. Na górnym panelu klikamy w zakladke Eksport i wybieramy opcje szybko
 
 ![](assets/20260112_211932_zakladka_eksport.png)
 
-##### 2.Klikamy Export i wybieramy gdzie chcemy zapisac nasza baze danych
+#### 2.Klikamy Export i wybieramy gdzie chcemy zapisac nasza baze danych
 
 ![](assets/20260112_212626_zakladka_eksport_cz2.png)
+
+<div style="page-break-after: always;"></div>
 
 ### Import bazy danych w graficznym panelu xampp
 
@@ -1154,9 +1219,13 @@ W panelu wybieramy opcje ukazane na zrzucie ekranu i klikamy przycisk Next
 
 ![](assets/20260117_013948_workbench_inport1.png)
 
+<div style="page-break-after: always;"></div>
+
 W kolejnym panelu odznaczamy importowanie widoków (Views) i klikamy przycisk Next
 
 ![](assets/20260117_014238__12077D34-F2C7-4479-9CFA-85CEAB1A9AFD}.png)
+
+<div style="page-break-after: always;"></div>
 
 W ostatnim panelu wybieramy opcje "Save to Other File" i nadpiujemy plik w tej lokalizacji do_importu\konwersja_workbench_xampp\pusta_baza_mysql.sql
 
@@ -1164,7 +1233,9 @@ W ostatnim panelu wybieramy opcje "Save to Other File" i nadpiujemy plik w tej l
 
 ![](assets/20260117_020441_workbench_nadpisaniepliku.png)
 
-##### 2. Generowanie plików sql do importu
+<div style="page-break-after: always;"></div>
+
+#### 2. Generowanie plików sql do importu
 
 Uruchamiany program z tej lokalizacji:
 do_importu\konwersja_workbench_xampp\smipegs_mysql_to_mariadb_translator.py
@@ -1175,19 +1246,27 @@ Nastepnie uruchamiamy kolejny proram z tej lokalizacji: do_importu\sztuczne_dane
 
 ![](assets/20260117_022343_tworzenie-pliku_sql2.png)
 
+<div style="page-break-after: always;"></div>
+
 ##### 3. Import bazy danych w panelu administracyjnym xampa
 
 Na górnym panelu klikamy w zakladke import wybieramy plik do_importu/1_pusta_baza_z_triggerami.sql, odznaczamy foregin key checks a reszte opcji pozostawiamy ustawionych domyslnie.
 
 ![](assets/20260113_202828_import1.png)
 
+<div style="page-break-after: always;"></div>
+
 Nastepnie klikamy w nowo utworzona baze danych smipegs_lublin, wchodzimy w zakładke import i importujemy plik do_importu/2_initial_data_with_generated_data.sql wczesniej odznaczajac foregin key checks.
 
 ![](assets/20260116_183244_nonwy_import.png)
 
+<div style="page-break-after: always;"></div>
+
 Na Koniec importujemy w tej samej zakładce plik do_importu\3_uzytkownicy.sql z zachowaniem domyślych ustawień.
 
 ![](assets/20260117_011519_import_3.png)
+
+<div style="page-break-after: always;"></div>
 
 > poprawna struktura danych po imporcie
 
