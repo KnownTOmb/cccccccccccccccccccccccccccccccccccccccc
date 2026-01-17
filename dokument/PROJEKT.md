@@ -31,21 +31,21 @@
   - [4. Atrybuty encji i relacje](#4-atrybuty-encji-i-relacje)
     - [Atrybuty encji](#atrybuty-encji)
       - [uzytkownik](#uzytkownik)
-      - [dane\_uzytkownika](#dane_uzytkownika)
-      - [opis\_użytkownika](#opis_użytkownika)
+      - [dane uzytkownika](#dane-uzytkownika)
+      - [opis użytkownika](#opis-użytkownika)
       - [modlitwa](#modlitwa)
       - [adres](#adres)
       - [rodzina](#rodzina)
       - [pokrewienstwo](#pokrewienstwo)
       - [proboszcz](#proboszcz)
       - [parafia](#parafia)
-      - [tablica\_ogloszeniowa (board)](#tablica_ogloszeniowa-board)
+      - [tablica ogloszeniowa (board)](#tablica-ogloszeniowa-board)
       - [ogloszenie](#ogloszenie)
       - [obrazek](#obrazek)
       - [uprawnienie](#uprawnienie)
-      - [tablica\_ogloszeniowa\_uzytkownik](#tablica_ogloszeniowa_uzytkownik)
+      - [tablica ogloszeniowa uzytkownik](#tablica-ogloszeniowa-uzytkownik)
     - [Relacje](#relacje)
-  - [5. Diagram ERD                             ඞ](#5-diagram-erd-----------------------------ඞ)
+  - [5. Diagram ERD](#5-diagram-erd)
   - [6. Generacja danych syntetycznych](#6-generacja-danych-syntetycznych)
     - [Generacja pliku SQL do importu](#generacja-pliku-sql-do-importu)
     - [Pisanie własnych schematów](#pisanie-własnych-schematów)
@@ -62,7 +62,7 @@
       - [Degradacja nieaktywnych kreatorów postów](#degradacja-nieaktywnych-kreatorów-postów)
   - [9. Opracowanie i prezentacja widoków](#9-opracowanie-i-prezentacja-widoków)
     - [Statystyki](#statystyki)
-      - [Plodnosc\_kreatorow\_postow](#plodnosc_kreatorow_postow)
+      - [Plodnosc kreatorow postow](#plodnosc-kreatorow-postow)
       - [Plodnosc tablicy](#plodnosc-tablicy)
       - [Plodnosc parafii](#plodnosc-parafii)
       - [Pozycja modlitwy](#pozycja-modlitwy)
@@ -181,12 +181,12 @@ W dawnych wierzeniach słowiańskim była demonem narodzonym z duszy grzesznika,
 * rodzina
 * pokrewienstwo
 * proboszcz
-* opis\_uzytkownika
-* tablica\_ogloszeniowa
+* opis użytkownika
+* tablica_ogloszeniowa
 * ogłoszenie
 * uprawnienie
 * obraz
-* tablica\_ogloszeniowa\_uzytkownik
+* tablica_ogloszeniowa_uzytkownik
 
 ## 4. Atrybuty encji i relacje
 
@@ -209,9 +209,8 @@ Boolowski typ danych jest reprezentowany przez tinyint(1).
 
 > hasła powinny byc szyfrowane ale to zagadnienie wykracza poza naszą obecną wiedze.
 
-
 | Atrybut | Typ          | Ograniczenia / opis                        |
-| --------- | -------------- | -------------------------------------------- |
+| ------- | ------------ | ------------------------------------------ |
 | id      | int          | klucz główny                             |
 | login   | varchar(128) | unique, mozliwy NULL, DEFAULT 'uzytkownik' |
 | haslo   | varchar(64)  | mozliwy NULL, DEFAULT 'uzytkownik'         |
@@ -222,11 +221,10 @@ Boolowski typ danych jest reprezentowany przez tinyint(1).
 
 > Wartosc NULL jest nam potrzebna aby nikt nie mógł sie zalogowac na usunietego użytkowika.
 
-#### dane_uzytkownika
-
+#### dane uzytkownika
 
 | Atrybut        | Typ         | Ograniczenia / opis       |
-| ---------------- | ------------- | --------------------------- |
+| -------------- | ----------- | ------------------------- |
 | id             | int         | klucz główny            |
 | uzytkownik id  |             | klucz obcy                |
 | imie           | varchar(64) |                           |
@@ -239,11 +237,10 @@ Boolowski typ danych jest reprezentowany przez tinyint(1).
 
 ![](assets/20260117_003050_dane_uzytkownika_encje.png)
 
-#### opis_użytkownika
-
+#### opis użytkownika
 
 | Atrybut              | Typ           | Ograniczenia / opis       |
-| ---------------------- | --------------- | --------------------------- |
+| -------------------- | ------------- | ------------------------- |
 | id                   | int           | klucz główny            |
 | uzytkownik_id        |               | klucz obcy                |
 | plec                 | char(1)       | możliwy NULL             |
@@ -258,9 +255,8 @@ Boolowski typ danych jest reprezentowany przez tinyint(1).
 
 #### modlitwa
 
-
 | Atrybut | Typ           | Ograniczenia / opis |
-| --------- | --------------- | --------------------- |
+| ------- | ------------- | ------------------- |
 | id      | smallint(255) | klucz główny      |
 | nazwa   | varchar(128)  | możliwy NULL       |
 | tresc   | varchar(2048) |                     |
@@ -272,9 +268,8 @@ Boolowski typ danych jest reprezentowany przez tinyint(1).
 
 #### adres
 
-
 | Atrybut          | Typ            | Ograniczenia / opis |
-| ------------------ | ---------------- | --------------------- |
+| ---------------- | -------------- | ------------------- |
 | id               | int            | klucz główny      |
 | rejon            | varchar(64)    |                     |
 | kod_pocztowy     | smallint(3)    | zerofill            |
@@ -288,9 +283,8 @@ Boolowski typ danych jest reprezentowany przez tinyint(1).
 
 #### rodzina
 
-
 | Atrybut | Typ           | Ograniczenia / opis |
-| --------- | --------------- | --------------------- |
+| ------- | ------------- | ------------------- |
 | id      | int           | klucz główny      |
 | nazwa   | varchar(128)  |                     |
 | opis    | varchar(1024) | możliwy NULL       |
@@ -305,9 +299,8 @@ Boolowski typ danych jest reprezentowany przez tinyint(1).
 
 > Użytkownik zgłasza swoją relacje z innym użytkownikiem, relacje nie są symetryczne ponieważ drugi użytkownik nie musi ją uznawać, co nie jest problemem gdyż są one czysto informacyjne.
 
-
 | Atrybut                    | Typ                                                                                                                                                                                                                                                                                                                                     | Ograniczenia / opis |
-| ---------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------- |
+| -------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------- |
 | id                         | int                                                                                                                                                                                                                                                                                                                                     | klucz główny      |
 | typ_relacji                | enum('mama', 'ojciec', 'córka', 'syn', 'siostra', 'brat', 'ciotka', 'wujek', 'siostrzenica', 'bratanica', 'siostrzeniec', 'bratanek', 'kuzyn', 'kuzynka', 'babcia', 'dziadek', 'wnuczka', 'wnuk', 'ojczym', 'macocha', 'pasierb', 'pasierbica', 'szwagier', 'szwagierka', 'teść', 'teściowa', 'zięć', 'synowa', 'mąż', 'żona') |                     |
 | widzi_dane_osobowe         | bool                                                                                                                                                                                                                                                                                                                                    |                     |
@@ -320,9 +313,8 @@ Boolowski typ danych jest reprezentowany przez tinyint(1).
 
 #### proboszcz
 
-
 | Atrybut  | Typ          | Ograniczenia / opis |
-| ---------- | -------------- | --------------------- |
+| -------- | ------------ | ------------------- |
 | id       | tinyint(255) | klucz główny      |
 | imie     | varchar(64)  |                     |
 | nazwisko | varchar(64)  |                     |
@@ -331,9 +323,8 @@ Boolowski typ danych jest reprezentowany przez tinyint(1).
 
 #### parafia
 
-
 | Atrybut      | Typ           | Ograniczenia / opis |
-| -------------- | --------------- | --------------------- |
+| ------------ | ------------- | ------------------- |
 | id           | smallint(255) | klucz główny      |
 | nazwa        | varchar(256)  | unique              |
 | proboszcz_id |               | klucz obcy          |
@@ -342,13 +333,12 @@ Boolowski typ danych jest reprezentowany przez tinyint(1).
 
 <div style="page-break-after: always;"></div>
 
-#### tablica_ogloszeniowa (board)
+#### tablica ogloszeniowa (board)
 
 > id == 1 to tablica glowna, kazdy uzytkownik jest tam automatycznie dodawany przez trigger
 
-
 | Atrybut | Typ           | Ograniczenia / opis |
-| --------- | --------------- | --------------------- |
+| ------- | ------------- | ------------------- |
 | id      | smallint(255) | klucz główny      |
 | nazwa   | varchar(256)  |                     |
 | opis    | varchar(2048) | możliwy NULL       |
@@ -357,9 +347,8 @@ Boolowski typ danych jest reprezentowany przez tinyint(1).
 
 #### ogloszenie
 
-
 | Atrybut                 | Typ          | Ograniczenia / opis       |
-| ------------------------- | -------------- | --------------------------- |
+| ----------------------- | ------------ | ------------------------- |
 | id                      | int          | klucz główny            |
 | tytul                   | varchar(128) |                           |
 | data_wstawienia         | date         |                           |
@@ -377,9 +366,8 @@ Boolowski typ danych jest reprezentowany przez tinyint(1).
 
 > obrazek o id 1 to domyślne zdjęcie profilowe użytkownika
 
-
 | Atrybut            | Typ          | Ograniczenia / opis |
-| -------------------- | -------------- | --------------------- |
+| ------------------ | ------------ | ------------------- |
 | id                 | int          | klucz glówny       |
 | tekst_alternatywny | varchar(128) | możliwy NULL       |
 
@@ -387,9 +375,8 @@ Boolowski typ danych jest reprezentowany przez tinyint(1).
 
 #### uprawnienie
 
-
 | Atrybut                 | Typ                                                                                               | Ograniczenia / opis |
-| ------------------------- | --------------------------------------------------------------------------------------------------- | --------------------- |
+| ----------------------- | ------------------------------------------------------------------------------------------------- | ------------------- |
 | id                      | int                                                                                               | klucz glówny       |
 | rola                    | ENUM('zarządzanie użytkownikami', 'kreator postów', 'moderator postów', 'obserwator postów') |                     |
 | tablica_ogloszeniowa_id |                                                                                                   | klucz obcy          |
@@ -397,11 +384,10 @@ Boolowski typ danych jest reprezentowany przez tinyint(1).
 
 ![](assets/20260114_094326_uprawnienie.png)
 
-#### tablica_ogloszeniowa_uzytkownik
-
+#### tablica ogloszeniowa uzytkownik
 
 | Atrybut                 | Typ | Ograniczenia / opis |
-| ------------------------- | ----- | --------------------- |
+| ----------------------- | --- | ------------------- |
 | id                      | int | klucz glówny       |
 | uzytkownik_id           |     | klucz obcy          |
 | tablica_ogloszeniowa_id |     | klucz obcy          |
@@ -415,9 +401,8 @@ Boolowski typ danych jest reprezentowany przez tinyint(1).
 **(I)** – relacja identyfikująca
 **(NI)** – relacja nie-identyfikująca
 
-
 | Encja A                         | Relacja | Encja B                         | Opis                      |
-| --------------------------------- | :--------: | --------------------------------- | --------------------------- |
+| ------------------------------- | :------: | ------------------------------- | ------------------------- |
 | uzytkownik                      | 1:1 (NI) | dane_uzytkownika                |                           |
 | opis_uzytkownika                | 1:1 (NI) | uzytkownik                      |                           |
 | modlitwa                        | 1:N (NI) | opis_uzytkownika                | ulubiona_modlitwa_id      |
@@ -438,7 +423,7 @@ Boolowski typ danych jest reprezentowany przez tinyint(1).
 
 ![](assets/20260114_125414_relacje.png)
 
-## 5. Diagram ERD                             ඞ
+## 5. Diagram ERD
 
 ![](assets/20260116_211000_diagram_erd_z_logo.png)
 
@@ -737,7 +722,7 @@ HAVING MAX(o.data_wstawienia) < DATE_SUB(CURDATE(), INTERVAL 2 YEAR);
 
 ### Statystyki
 
-#### Plodnosc_kreatorow_postow
+#### Plodnosc kreatorow postow
 
 > wyswietla ile postów dodał dany uzytkownik
 
@@ -1341,18 +1326,18 @@ Admin:
 mkdir -p "$BACKUP_PATH"
 
 ## Konfiguracja
-USER="root"
-PASSWORD=""   
+USER="admin"
+PASSWORD="[DANE WRAŻLIWE]"   
 DATABASE="smipegs_lublin"   
 BACKUP_PATH="/home/server/backups"
 LOG_FILE="/home/server/logi.log"
 DATE=$(date +%Y-%m-%d_%H%M%S)
 
 ## Wykonanie kopii
-mysqldump -root -p$PASSWORD $DATABASE > $BACKUP_PATH/$DATABASE-$DATE.sql
+mysqldump -u $USER -p $PASSWORD $DATABASE > $BACKUP_PATH/$DATABASE-$DATE.sql
 
 ## Logi
-echo "$DATE: Wykonanie kopii zapasowej." >> "LOG_FILE"
+echo "$DATE: Wykonanie kopii zapasowej." >> "$LOG_FILE"
 ```
 
 > nadajemy prawo do wykonywania i dodajemy wpis do crona aby automatycznie sie wykonywal
