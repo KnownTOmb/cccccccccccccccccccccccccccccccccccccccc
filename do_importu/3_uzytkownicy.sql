@@ -54,7 +54,9 @@ GRANT INSERT, SELECT ON smipegs_lublin.ogloszenie TO 'admin_kreator'@'localhost'
 
 GRANT DELETE, UPDATE, SELECT ON smipegs_lublin.ogloszenie TO 'admin_moderator'@'localhost';
 
-GRANT INSERT, DELETE, SELECT ON smipegs_lublin.tablica_ogloszeniowa_uzytkownik, smipegs_lublin.uprawnienie TO 'admin_kierownik'@'localhost';
+GRANT INSERT, DELETE, SELECT ON smipegs_lublin.tablica_ogloszeniowa_uzytkownik TO 'admin_kierownik'@'localhost';
+GRANT INSERT, DELETE, SELECT ON smipegs_lublin.uprawnienie TO 'admin_kierownik'@'localhost';
+
 
 GRANT SELECT ON smipegs_lublin.adres TO 'uzytkownik'@'localhost';
 GRANT SELECT ON smipegs_lublin.dane_uzytkownika TO 'uzytkownik'@'localhost';

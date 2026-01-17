@@ -59,6 +59,7 @@ sekcja pdf:
 * [X] screen widok - zmora
 * [X] screen widok - zmarly uzytkownik
 * [X] screen wszystkie wyzwalacze
+* [ ] zad 12 zrobic  
 * [ ] wziasc uzytkownika z administracji i ustawic pod niego kopie zapasową
 
 
