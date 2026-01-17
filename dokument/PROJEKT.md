@@ -1,7 +1,3 @@
-# -1. Załorzenia projektu cos? jesze?
-
-Zakładamy ze nasza baza danych stoi na serwerze dzialajacym na Linuxie, aby nasz skrypt tworzenia kopii zapasowej działał.
-
 # 0. Nazwa Projektu
 
 System Monitorowania Interakcji Pośród Emerytalnej Grupy Społecznej (SMIPEGS Lublin).
@@ -10,15 +6,62 @@ System Monitorowania Interakcji Pośród Emerytalnej Grupy Społecznej (SMIPEGS 
 
 ## Opis problematyki
 
-Emeryci są dosyć samotni, ponieważ członkowie ich rodziny opuszczają ich, smutne. Aby radzić sobie z samotnością, wchodzą w relacje o charakterze przyjacielskim, neutralnym lub wrogim z innymi emerytami.
+Emeryci mogą mieć problem w dowiadywaniu się o zmianach w ich najbliższym otoczeniu. Dzieje się tak ponieważ członkowie ich rodziny opuszczają swój dom rodzinny, a znajomi przebywają głównie w swoich domostwach, smutne. 
 
 ## Dlaczego warto to zrealizować i co ma rozwiązać
 
-Wierzymy, iż nasz SMIPEGS Lublin pomoże w nawigacji bo tym skomplikowanym środowisku w którym każdy z nas kiedyś się znajdzie. Już dziś myślimy o naszej bliskiej przyszłości, bo sami staniemy się emerytami, memento mori.
+Wierzymy, iż nasz SMIPEGS Lublin pomoże w bycie na bierząco z najbliższym środowiskiem co jest trudniejsze z wiekiem. Każdy z nas się kiedyś znajdzie, więc już dziś myślmy o naszej niedalekiej przyszłości, bo kiedyś my sami staniemy się emerytami. Memento mori.
 
 # 2. Opis słowny
 
-Portal społecznościowy dla emerytów wiary chrześcijańskiej, z którego również mogą korzystać użytkownicy nie podzielający tej wiary. Portal składa się z dwóch części: **Tablica** główna (o indeksie 0) i prywatne tablice na które **użytkownicy** o odpowiednich **uprawnieniach** mogą wstawiać **ogłoszenia** zawierające tekst i **obrazki**; Wyszukiwarka użytkowników w której można zobaczyć ich **opis** zawierający: ulubione **modlitwy**, **parafie** i ich **proboszcze**. Użytkownicy którzy są ze sobą w **rodzinie** mogą zobaczyć podstawowe **dane osobowe** (takie jak aktualny **adres**) osób z którymi są **spokrewnieni**.
+Portal społecznościowy dla emerytów wiary chrześcijańskiej, z którego również mogą korzystać użytkownicy nie podzielający tej wiary. Portal składa się z dwóch części:
+
+* Główna **Tablica ogłoszeniowa** (o indeksie 0) i prywatne **tablice ogłoszeniowe użytkowników** na które **użytkownicy** o odpowiednich **uprawnieniach** mogą wstawiać **ogłoszenia** zawierające tekst i **obrazki**. Znajduje się tam również lista członków danej tablicy z której można wejść na **opis** danego użytkownika zawierający:
+  * Ulubione **modlitwy**.
+  * **Parafie** i ich **proboszcza** na oddzielnej podstronie.
+* Zakładke "profil użytkownika" na której użytkownik może zobaczyć jak widzą go inni.
+* Zakładke **"rodzina"** na której użytkownicy którzy są ze sobą w **rodzinie** mogą zobaczyć podstawowe **dane osobowe** (takie jak aktualny **adres**) osób z którymi są **spokrewnieni**.
+
+# 2,5. Założenia projektu
+
+## Adminokracja
+
+1. Użytkownicy nie mają możliwości wpływania na zawartość bazy danych, jedynie mogą przeglądać jej zawartość.
+2. Nad zawartością bazy czuwają admini, nad tablicami użytkownicy o odpowiednich uprawnieniach, którzy nadal nie mają siły sprawczej.
+3. Ich zwierzchnikami są odpowiedni admini z którymi mają możliwość bezpośredniej komunikacji.
+4. Wyżej w hierachi uprzywilejowanych użytkowników są ci, którzy mają wyższe uprawnienia na tablicy głównej.
+5. Admini zawsze mają prawo odmówić uprzywilejowanym użytkownikom.
+6. Wśród adminów panuje czteropodział władzy.
+
+### Admin kreator
+
+Admin do którego użytkownicy o uprawnieniu "kreator postów" wysyłają swoje posty, aby mógł je wstawić do odpowiedniej tablicy.
+
+### Admin moderator
+
+Użytkownicy o uprawnieniu "moderator postów" zgłaszają do niego zażalenia jeżeli dane ogłoszenie ujmuje ludzkiej godności lub jest niezgodne z porządkiem pubicznym.
+
+### Admin kierownik
+
+Użytkownicy o uprawnieniu "zarządzanie użytkownikami" przekazują adminowi kierownik kogo trzeba dodać lub usunąć z danej tablicy oraz jakie uprawnienia powinien mieć użytkownik.
+
+### Admin
+
+Admin mający całkowitą władzę nad bazą danych.
+
+## Serwer
+
+Nasza baza danych stoi na serwerze z systemem operacyjnym Debian. System do tworzenia kopii zapasowej jedynie działa na systeach z rodziny GNU/Linux.
+
+## Terminologia
+
+### Matuzal
+
+Matuzal, syn Henocha, był człowiekiem któremu Bóg dał 969 lat życia i zaszczyt bycia jednym z przodków wszystkich ludzi po potopie. Tym mianem w naszej społeczności nazywamy użytkowników którzy dożyli 90 godnych lat. Są chlubą naszego systemu SMIPEGS Lublin.
+
+### Zmora
+
+W dawnych wierzeniach słowiańskim była demonem narodzonym z duszy grzesznika, a jeżeli ktoś był kierowany w życiu złością, to mógł się nią stać i za życia. Tak nazywamy w naszej społeczności użytkowników usuniętych z tablicy głównej z powodu ich udręczających zachowań w obrębach naszego systemu SMIPEGS.
 
 # 3. Tabele
 
@@ -281,7 +324,128 @@ Boolowski typ danych jest reprezentowany przez tinyint(1).
 
 ![](assets/20260116_211000_diagram_erd_z_logo.png)
 
-# 6. Generacja fałszywych danych
+# 6. Generacja danych syntetycznych
+
+Tabele w naszej bazie danych są większości ściśle ze sobą powiązane, co wymagało od nasstworzenia wyspecjalizowanego frameworku do generacji danych w celach testowaia poprawności działania bazy danych. Poniżej opiszemy jak z niego korzystać.
+
+Framework jest napisany w języku Python. Do wygenrowania domyślnego schematu wymagana jest biblioteka "faker". Aby ją zainstalować należy wpisać w konsoli:
+
+```sh
+pip install faker
+```
+
+## Generacja pliku SQL do importu
+
+Z konsoli należy wejść do folderu do_importu/sztuczne_dane/ i uruchomić komendę:
+
+```sh
+python smipegs_fake_data_generator.py
+```
+
+## Pisanie własnych schematów
+
+Na początku trzeba zdefiniować wszystkie tabele w pliku scripts\tables_internal_data.py i ich kolejność generacji która odpowiada kolejności w której je definiujem.
+
+```py
+tables = {
+    "nazwa_tablicy_ktora_wygeneruje_sie_jako_pierwsza": {
+        "column": [
+            "nazwa_kolumny_pierwszej",
+            "nazwa_kolumny_drugiej"
+        ],
+        "data": []
+    },
+    
+    "nazwa_tablicy_ktora_wygeneruje_sie_jako_druga": {
+        "column": [
+            "nazwa_kolumny_pierwszej",
+            "nazwa_kolumny_drugiej"
+        ],
+        "data": []
+    },
+}
+```
+
+W pliku konfiguracyjnym config.py możemy zdefiniować paramtry generacji schematu aby później móc je łatwo zmienić.
+
+```py
+class config:
+    class nazwa_tablicy1_definition:
+        parametr = "wartość parametru"
+        number_of_rows = 100
+    class nazwa_tablicy2_definition:
+        parametr = "wartość parametru"
+
+    nazwa_tablicy1 = nazwa_tablicy1_definition()
+    nazwa_tablicy2 = nazwa_tablicy2_definition()
+```
+
+Schemat generowania edytujemy w pliku generation_shema.py. Schemat dla danej tabeli umieszczamy w case.
+
+```py
+case "nazwa_tablicy1":
+    # Generowanie kolumn których dane są niezależne od siebie
+    def nazwa_kolumny1():
+        # Kod do generacji 
+        return "Wygenerowana wartość"
+    def nazwa_kolumny3():
+        # Kod do generacji 
+        return "Wygenerowana wartość"
+
+    # Wysyłanie wygenerowanych tabel
+    row_data_to_return = generate_table_row_data(
+        generation_config.nazwa_tablicy1.number_of_rows,
+        nazwa_kolumny1, # Indeks 0
+        # kolumna której dane generujemy w dalszej części
+        column_to_replace, # Indeks 1
+        nazwa_kolumny3 # Indeks 2
+    )
+
+    # Generowanie kolumn których dane są zależne od siebie
+    def generate_nazwa_kolumny2_po_angielsku():
+        nazwa_tego_co_generujemy_po_angielsku_w_liczbie_mnogiej = []
+        # np. logins = []
+        for i in range(generation_config.nazwa_tablicy2.number_of_rows):
+            current_nazwa_tego_co_generujemy_po_angielsku = None
+            # operacje na current_nazwa_tego_co_generujemy_po_angielsku
+
+            nazwa_tego_co_generujemy_po_angielsku_w_liczbie_mnogiej.append(current_nazwa_tego_co_generujemy_po_angielsku)
+
+        update_row_with_column_data(
+            1, # Indeks kolumny który wysyłamy do tabel
+            nazwa_tego_co_generujemy_po_angielsku_w_liczbie_mnogiej
+        )
+
+    # Generowanie kolumn dla później tabeli, gdy to co generujemy w aktualnej tabeli wpływa na tą generowaną później
+
+    nazwa_tego_co_generujemy_do_pozniej_generowanej_tabeli_po_angielsku_w_liczbie_mnogiej = []
+    for row_index in range(generation_config.nazwa_kolumny_do_ktorej_przekazemy_te_dane.number_of_rows):
+
+    def generate_nazwa_kolumny_pozniej_generowanej_tabeli_po_angielsku(permissions):
+        generate_data_for_later_table(
+            'nazwa_pozniej_generowanej_tabeli',
+            0, # Indeks kolumny
+            nazwa_tego_co_generujemy_do_pozniej_generowanej_tabeli_po_angielsku_w_liczbie_mnogiej
+        )
+    
+    generate_nazwa_kolumny2_po_angielsku()
+    generate_nazwa_kolumny_pozniej_generowanej_tabeli_po_angielsku()
+
+case "nazwa_tabeli2":
+    row_data_to_return = generate_table_row_data(
+        # get_already_generated_table(nazwa_tabeli)[indeks_kolumny] oczywiście można używać w bardziej zaawansowany sposób od tego
+        len(get_already_generated_table(nazwa_tabeli2)[0]),
+        column_to_replace,
+    )
+
+    def nazwa_kolumny1():
+        update_row_with_column_data(
+            0,
+            get_already_generated_column_data(nazwa_kolumny1, 0)
+        )
+
+    nazwa_kolumny1()
+```
 
 # 7. Zróznicowane zapytania sql
 

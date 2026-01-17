@@ -65,6 +65,8 @@ sekcja pdf:
 
 > Życie po śmiertne
 * [ ] oddzielna tabela do haseł i loginów 
+* [ ] tam gdzie możliwy null to ma czasami genrować null
+* [ ] w uprawnieniach pozamieniać post na ogłoszenie
 
 ```
 Adam i Maria siedzą na brzegu małego jeziora, gdzie woda lśni jak rozpuszczone srebro. Zachód słońca barwi niebo w odcieniach moreli i fiołku. Adam wyciąga z kieszeni małe, aksamitne pudełeczko. Maria patrzy na niego zdziwiona, serce bije jej szybciej.
