@@ -74,12 +74,13 @@ else {
             <div id="posts">
                 
                 <?php
-                $sql = "SELECT ogloszenie.id FROM ogloszenie JOIN tablica_ogloszeniowa ON ogloszenie.tablica_ogloszeniowa_id = tablica_ogloszeniowa.id JOIN tablica_ogloszeniowa_uzytkownik ON tablica_ogloszeniowa_uzytkownik.tablica_ogloszeniowa_id = tablica_ogloszeniowa.id JOIN uzytkownik ON uzytkownik.id = tablica_ogloszeniowa_uzytkownik.uzytkownik_id WHERE ogloszenie.tablica_ogloszeniowa_id = \"$board_id\" and uzytkownik.login = \"$login\" GROUP BY ogloszenie.id;";
+                $sql = "SELECT ogloszenie.id, ogloszenie.tytul, opis_uzytkownika.pseudonim, ogloszenie.data_wstawienia FROM ogloszenie JOIN tablica_ogloszeniowa ON ogloszenie.tablica_ogloszeniowa_id = tablica_ogloszeniowa.id JOIN tablica_ogloszeniowa_uzytkownik ON tablica_ogloszeniowa_uzytkownik.tablica_ogloszeniowa_id = tablica_ogloszeniowa.id JOIN uzytkownik ON uzytkownik.id = tablica_ogloszeniowa_uzytkownik.uzytkownik_id JOIN opis_uzytkownika ON opis_uzytkownika.uzytkownik_id = ogloszenie.autor_id WHERE ogloszenie.tablica_ogloszeniowa_id = \"$board_id\" and uzytkownik.login = \"$login\" GROUP BY ogloszenie.id;";
                 $result = $conn->query($sql);
-
+                
+                echo "<hr>";
                 if ($result->num_rows > 0) {
                     while($row = $result->fetch_assoc()) {
-                        echo "<div class=\"post\">".$row["id"]."</div>";
+                        echo "<div class=\"post\"><h3>".$row["tytul"]."</h3> Od ".$row["pseudonim"]." ".$row["data_wstawienia"]." "."</div><hr>";
                     }
                 }
                 ?>

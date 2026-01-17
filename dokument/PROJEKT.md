@@ -50,6 +50,11 @@
     - [Generacja pliku SQL do importu](#generacja-pliku-sql-do-importu)
     - [Pisanie własnych schematów](#pisanie-własnych-schematów)
   - [7. Zróznicowane zapytania sql](#7-zróznicowane-zapytania-sql)
+    - [Tablice ogłoszeń](#tablice-ogłoszeń)
+    - [Profil użytkownika](#profil-użytkownika)
+    - [Rodzina użytkownika](#rodzina-użytkownika)
+    - [Procentowy podzial na płci](#procentowy-podzial-na-płci)
+    - [Użytkownicy z rejonu Rury](#użytkownicy-z-rejonu-rury)
   - [8. Opracownie i prezentacja zapytań modyfikujacych dane w bazie](#8-opracownie-i-prezentacja-zapytań-modyfikujacych-dane-w-bazie)
       - [Stworzenie zmory](#stworzenie-zmory)
       - [Rozwód](#rozwód)
@@ -73,10 +78,11 @@
       - [Kod pocztowy](#kod-pocztowy)
   - [10.Opracowanie i prezentacja wyzwalaczy (triggerów)](#10opracowanie-i-prezentacja-wyzwalaczy-triggerów)
     - [Sprzatanie kiedy usuwamy uzytkownika](#sprzatanie-kiedy-usuwamy-uzytkownika)
-          - [Przed usunieciem uzytkownika z bazy danych:](#przed-usunieciem-uzytkownika-z-bazy-danych)
+        - [Przed usunieciem uzytkownika z bazy danych:](#przed-usunieciem-uzytkownika-z-bazy-danych)
       - [Przyklady działania:](#przyklady-działania)
-          - [Dodawanie uzytkownika](#dodawanie-uzytkownika)
-          - [Usuwanie Uzytkownika](#usuwanie-uzytkownika)
+        - [Dodawanie uzytkownika](#dodawanie-uzytkownika)
+      - [Usuwanie Uzytkownika](#usuwanie-uzytkownika)
+        - [Stan przed usunieciem:](#stan-przed-usunieciem)
   - [11.Opracowanie i prezentacja procedur składowanych](#11opracowanie-i-prezentacja-procedur-składowanych)
     - [Opis procedury](#opis-procedury)
       - [Przykladowe uzycie](#przykladowe-uzycie)
@@ -84,16 +90,14 @@
     - [Początkowa konfiguracja z poziomu admina serwera](#początkowa-konfiguracja-z-poziomu-admina-serwera)
         - [Zawartosc skryptu:](#zawartosc-skryptu)
     - [Jednorazowy Eksport bazy danych w graficzym panelu xampp](#jednorazowy-eksport-bazy-danych-w-graficzym-panelu-xampp)
-        - [1. Na górnym panelu klikamy w zakladke Eksport i wybieramy opcje szybko](#1-na-górnym-panelu-klikamy-w-zakladke-eksport-i-wybieramy-opcje-szybko)
-        - [2.Klikamy Export i wybieramy gdzie chcemy zapisac nasza baze danych](#2klikamy-export-i-wybieramy-gdzie-chcemy-zapisac-nasza-baze-danych)
+      - [1. Na górnym panelu klikamy w zakladke Eksport i wybieramy opcje szybko](#1-na-górnym-panelu-klikamy-w-zakladke-eksport-i-wybieramy-opcje-szybko)
+      - [2.Klikamy Export i wybieramy gdzie chcemy zapisac nasza baze danych](#2klikamy-export-i-wybieramy-gdzie-chcemy-zapisac-nasza-baze-danych)
     - [Import bazy danych w graficznym panelu xampp](#import-bazy-danych-w-graficznym-panelu-xampp)
       - [Szybki import pliku bazy danych](#szybki-import-pliku-bazy-danych)
       - [Proces budowy bazy danych podczas testów](#proces-budowy-bazy-danych-podczas-testów)
         - [1. Eksport projektu bazy danych z workbencha:](#1-eksport-projektu-bazy-danych-z-workbencha)
-        - [2. Generowanie plików sql do importu](#2-generowanie-plików-sql-do-importu)
+      - [2. Generowanie plików sql do importu](#2-generowanie-plików-sql-do-importu)
         - [3. Import bazy danych w panelu administracyjnym xampa](#3-import-bazy-danych-w-panelu-administracyjnym-xampa)
-
-
 
 <div style="page-break-after: always;"></div>
 
@@ -105,7 +109,7 @@ System Monitorowania Interakcji Pośród Emerytalnej Grupy Społecznej (SMIPEGS 
 
 ### Opis problematyki
 
-Emeryci mogą mieć problem w dowiadywaniu się o zmianach w ich najbliższym otoczeniu. Dzieje się tak ponieważ członkowie ich rodziny opuszczają swój dom rodzinny, a znajomi przebywają głównie w swoich domostwach, smutne. 
+Emeryci mogą mieć problem w dowiadywaniu się o zmianach w ich najbliższym otoczeniu. Dzieje się tak ponieważ członkowie ich rodziny opuszczają swój dom rodzinny, a znajomi przebywają głównie w swoich domostwach, smutne.
 
 ### Dlaczego warto to zrealizować i co ma rozwiązać
 
@@ -470,7 +474,7 @@ tables = {
         ],
         "data": []
     },
-    
+  
     "nazwa_tablicy_ktora_wygeneruje_sie_jako_druga": {
         "column": [
             "nazwa_kolumny_pierwszej",
@@ -482,7 +486,6 @@ tables = {
 ```
 
 <div style="page-break-after: always;"></div>
-
 
 W pliku konfiguracyjnym config.py możemy zdefiniować paramtry generacji schematu aby później móc je łatwo zmienić.
 
@@ -545,7 +548,7 @@ case "nazwa_tablicy1":
             0, # Indeks kolumny
             nazwa_tego_co_generujemy_do_pozniej_generowanej_tabeli_po_angielsku_w_liczbie_mnogiej
         )
-    
+  
     generate_nazwa_kolumny2_po_angielsku()
     generate_nazwa_kolumny_pozniej_generowanej_tabeli_po_angielsku()
 
@@ -567,8 +570,9 @@ case "nazwa_tabeli2":
 
 <div style="page-break-after: always;"></div>
 
-
 ## 7. Zróznicowane zapytania sql
+
+### Tablice ogłoszeń
 
 > Wyświetlanie tablic ogłoszeń do których należy użytkownik o loginie "adam_tester"
 
@@ -580,13 +584,74 @@ JOIN uzytkownik ON uzytkownik.id = tablica_ogloszeniowa_uzytkownik.uzytkownik_id
 WHERE uzytkownik.login = "adam_tester";
 ```
 
+![](assets/20260117_041639_lista_tablic.png)
 
+> Wyświetlanie tytułu i opisu tablicy od id 12 do której należy użytkownik o loginie "adam_tester" (trzeba sprawdzać login bo id tablicy przechowywane jest w url)
 
-Profil główny użytkownika
+```sql
+SELECT tablica_ogloszeniowa.nazwa, tablica_ogloszeniowa.opis FROM tablica_ogloszeniowa JOIN tablica_ogloszeniowa_uzytkownik ON tablica_ogloszeniowa_uzytkownik.tablica_ogloszeniowa_id = tablica_ogloszeniowa.id JOIN uzytkownik ON uzytkownik.id = tablica_ogloszeniowa_uzytkownik.uzytkownik_id WHERE tablica_ogloszeniowa_id = "12" and uzytkownik.login = "adam_tester";
+```
 
-Profil rodzinny użytkowanika
+> Wyświetlanie tytulu, opisu i pseudonimu autora ogłoszeń z tablicy od id 12 do której należy użytkownik o loginie "adam_tester"
 
-> Procentowy podzial na płci
+```sql
+SELECT ogloszenie.id, ogloszenie.tytul, opis_uzytkownika.pseudonim
+FROM ogloszenie JOIN tablica_ogloszeniowa ON ogloszenie.tablica_ogloszeniowa_id = tablica_ogloszeniowa.id
+JOIN tablica_ogloszeniowa_uzytkownik ON tablica_ogloszeniowa_uzytkownik.tablica_ogloszeniowa_id = tablica_ogloszeniowa.id
+JOIN uzytkownik ON uzytkownik.id = tablica_ogloszeniowa_uzytkownik.uzytkownik_id
+JOIN opis_uzytkownika ON opis_uzytkownika.uzytkownik_id = ogloszenie.autor_id
+WHERE ogloszenie.tablica_ogloszeniowa_id = 12 and uzytkownik.login = "adam_tester" GROUP BY ogloszenie.id;
+```
+
+![](assets/20260117_045435_ogloszenia_tablicy.png)
+
+### Profil użytkownika
+
+> Dane użytkownika o loginie "adam_tester"
+
+```sql
+SELECT 
+opis_uzytkownika.pseudonim, 
+opis_uzytkownika.plec, 
+opis_uzytkownika.opis,
+dane_uzytkownika.imie,
+dane_uzytkownika.nazwisko,
+dane_uzytkownika.numer_telefonu,
+dane_uzytkownika.data_urodzenia,
+adres.rejon,
+adres.kod_pocztowy,
+adres.ulica,
+adres.numer_budynku,
+adres.numer_mieszkania
+FROM opis_uzytkownika 
+JOIN uzytkownik ON uzytkownik.id = opis_uzytkownika.uzytkownik_id
+LEFT JOIN dane_uzytkownika ON dane_uzytkownika.uzytkownik_id = uzytkownik.id
+LEFT JOIN adres ON adres.id = dane_uzytkownika.adres_id
+WHERE uzytkownik.login = "adam_tester"
+```
+
+![](assets/20260117_050348_profil_uztkownika.png)
+
+### Rodzina użytkownika
+
+> Relacje rodzinne użytkownika o loginie "adam_tester"
+
+```sql
+SELECT 
+pokrewienstwo.typ_relacji,
+sygnatura.imie_pseudonim_nazwisko,
+wiek.wiek
+FROM pokrewienstwo
+JOIN uzytkownik ON uzytkownik.id = pokrewienstwo.uzytkownik_id
+JOIN sygnatura ON sygnatura.uzytkownik_id = pokrewienstwo.spokrewniony_uzytkownik_id
+JOIN dane_uzytkownika ON dane_uzytkownika.uzytkownik_id = pokrewienstwo.spokrewniony_uzytkownik_id
+JOIN wiek ON wiek.dane_uzytkownika_id = dane_uzytkownika.id
+WHERE uzytkownik.login = "adam_tester"
+```
+
+![](assets/20260117_054348_rodzina_uzytkownika.png)
+
+### Procentowy podzial na płci
 
 ```sql
 SELECT ou.plec, ROUND(COUNT(*) * 100.0 / SUM(COUNT(*)) OVER (), 0) AS procent
@@ -594,7 +659,7 @@ FROM opis_uzytkownika ou
 GROUP BY ou.plec;
 ```
 
-> Ludzie z twojej okolicy
+### Użytkownicy z rejonu Rury
 
 ```sql
 SELECT u.id AS uzytkownik_id,ou.pseudonim,a.rejon
@@ -604,6 +669,8 @@ JOIN dane_uzytkownika du ON du.uzytkownik_id = u.id
 JOIN adres a ON a.id = du.adres_id
 WHERE a.rejon = 'Rury'
 ```
+
+<div style="page-break-after: always;"></div>
 
 ## 8. Opracownie i prezentacja zapytań modyfikujacych dane w bazie
 
@@ -615,8 +682,6 @@ WHERE a.rejon = 'Rury'
 DELETE FROM tablica_ogloszeniowa_uzytkownik 
 WHERE tablica_ogloszeniowa_id = 1 AND uzytkownik_id = "dowolne id"
 ```
-
-<div style="page-break-after: always;"></div>
 
 #### Rozwód
 
@@ -664,7 +729,6 @@ WHERE up.rola = 'kreator postów'
 GROUP BY u.id, ou.pseudonim, pk.liczba_postow
 HAVING MAX(o.data_wstawienia) < DATE_SUB(CURDATE(), INTERVAL 2 YEAR);
 ```
-
 
 ## 9. Opracowanie i prezentacja widoków
 
@@ -799,7 +863,6 @@ WHERE NOT EXISTS (
 
 <div style="page-break-after: always;"></div>
 
-
 #### Zmarły uzytkownik
 
 > uzytkownicy którzy nie żyja
@@ -817,7 +880,6 @@ WHERE du.data_smierci IS NOT NULL;
 ![](assets/20260116_233701_zmarly_uzytkownik.png)
 
 <div style="page-break-after: always;"></div>
-
 
 ### Dane zależne
 
@@ -838,7 +900,6 @@ LEFT JOIN dane_uzytkownika du ON du.uzytkownik_id = u.id;
 
 <div style="page-break-after: always;"></div>
 
-
 #### Wiek
 
 > wyswietla ile lat ma kazdy uzytkownik
@@ -857,7 +918,6 @@ FROM dane_uzytkownika;
 ![](assets/20260115_102736_wiek.png)
 
 <div style="page-break-after: always;"></div>
-
 
 #### Rodzina wrzeniona
 
@@ -893,7 +953,6 @@ FROM obrazek o;
 
 <div style="page-break-after: always;"></div>
 
-
 #### Kod pocztowy
 
 > wyswietla kod pocztowy uzytkownika
@@ -908,7 +967,6 @@ FROM adres a;
 ![](assets/20260115_103123_adres_pocztowy.png)
 
 <div style="page-break-after: always;"></div>
-
 
 ## 10.Opracowanie i prezentacja wyzwalaczy (triggerów)
 
@@ -957,7 +1015,6 @@ WHERE uzytkownik_id = OLD.id;
 ```
 
 <div style="page-break-after: always;"></div>
-
 
 > Usuwamy ustawiony przez niego opis
 
