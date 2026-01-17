@@ -81,14 +81,14 @@
 - [10. Opracowanie i prezentacja wyzwalaczy (triggerów)](#10-opracowanie-i-prezentacja-wyzwalaczy-triggerów)
   - [Domyślne operacje w związku z nowo dodanym użytkownikiem](#domyślne-operacje-w-związku-z-nowo-dodanym-użytkownikiem)
   - [Sprzątanie po usuniętym użytkowniku](#sprzątanie-po-usuniętym-użytkowniku)
-    - [Przed usunięciem użytkownika z bazy danych](#przed-usunięciem-użytkownika-z-bazy-danych)
-    - [Po usunięciu użytkownika z bazy danych](#po-usunięciu-użytkownika-z-bazy-danych)
+    - [Po usunięciem użytkownika z bazy danych](#po-usunięciem-użytkownika-z-bazy-danych)
+    - [Przed usunięciu użytkownika z bazy danych](#przed-usunięciu-użytkownika-z-bazy-danych)
     - [Przykłady działania:](#przykłady-działania)
       - [Dodawanie użytkownika](#dodawanie-użytkownika)
-      - [Usuwanie Uzytkownika](#usuwanie-uzytkownika)
+      - [Usuwanie użytkownika](#usuwanie-użytkownika)
 - [11. Opracowanie i prezentacja procedur składowanych](#11-opracowanie-i-prezentacja-procedur-składowanych)
   - [Opis procedury](#opis-procedury)
-    - [Przykladowe użycie](#przykladowe-użycie)
+    - [Przykładowe użycie](#przykładowe-użycie)
 - [12. Prezentacja zarządzania użytkownikami](#12-prezentacja-zarządzania-użytkownikami)
   - [Opis kont](#opis-kont)
   - [Logowanie i przykładowe zapytania](#logowanie-i-przykładowe-zapytania)
@@ -130,7 +130,7 @@ Wierzymy, iż nasz SMIPEGS Lublin pomoże w byciu na bieżąco z najbliższym ś
 
 Portal społecznościowy dla emerytów wiary chrześcijańskiej, z którego również mogą korzystać użytkownicy nie podzielający tej wiary. Portal składa się z trzech części:
 
-* Główna **Tablica ogłoszeniowa** (o indeksie 0) i prywatne **tablice ogłoszeniowe użytkowników** na które **użytkownicy** o odpowiednich **uprawnieniach** mogą wstawiać **ogłoszenia** zawierające tekst i **obrazki**. znajduje się tam również lista członków danej tablicy z której można wejść do **opisu** danego użytkownika zawierającego:
+* Główna **Tablica ogłoszeniowa** (o indeksie 1) i prywatne **tablice ogłoszeniowe użytkowników** na które **użytkownicy** o odpowiednich **uprawnieniach** mogą wstawiać **ogłoszenia** zawierające tekst i **obrazki**. znajduje się tam również lista członków danej tablicy z której można wejść do **opisu** danego użytkownika zawierającego:
   * Ulubione **modlitwy**.
   * **Parafie** i ich **proboszcza** na oddzielnej podstronie.
 * Zakładke "profil użytkownika" na której użytkownik może zobaczyć jak widzą go inni.
@@ -302,7 +302,7 @@ Wszystkie id mają unique. Wszystkie id są autoinkrementowane. Boolowski typ da
 
 #### Rodzina
 
-> Rodzina o id 0 to rodzina "Nieznana".
+> Rodzina o id 1 to rodzina "Nieznana".
 
 
 | Atrybut | Typ           | Ograniczenia / opis |
@@ -327,7 +327,10 @@ Wszystkie id mają unique. Wszystkie id są autoinkrementowane. Boolowski typ da
 | widzi_dane_osobowe                                  | bool                                                                                                                                                                                                                                                                                                                                      |                     |
 | uzytkownik_id                                       |                                                                                                                                                                                                                                                                                                                                           | klucz obcy          |
 | spokrewniony_uzytkownik_id                          |                                                                                                                                                                                                                                                                                                                                           | klucz obcy          |
-| ![](assets/20260117_001635_pokrewienstwo_encje.png) |                                                                                                                                                                                                                                                                                                                                           |                     |
+|  |                                                                                                                                                                                                                                                                                                                                           |                     |
+
+
+![](assets/20260117_001635_pokrewienstwo_encje.png)
 
 <img src="assets/20260114_134039_mapa_pokrewienstw.png" style="width: 85%"/>
 
@@ -467,7 +470,7 @@ Wszystkie id mają unique. Wszystkie id są autoinkrementowane. Boolowski typ da
 
 ## 6. Generacja danych syntetycznych
 
-Tabele w naszej bazie danych są większości ściśle ze sobą powiązane, co wymagało od nas stworzenia wyspecjalizowanego frameworku do generacji danych w celach testowaia poprawności działania bazy danych. Poniżej opiszemy jak z niego korzystać.
+Tabele w naszej bazie danych są w większości ściśle ze sobą powiązane, co wymagało od nas stworzenia wyspecjalizowanego frameworku do generacji danych w celach testowaia poprawności działania bazy danych. Poniżej opiszemy jak z niego korzystać.
 
 Framework jest napisany w języku Python. Do wygenerowania domyślnego schematu wymagana jest biblioteka "faker". Aby ją zainstalować należy wpisać w konsoli:
 
@@ -627,7 +630,7 @@ WHERE uzytkownik.login = "adam_tester";
 
 <div style="page-break-after: always;"></div>
 
-Wyświetlanie tytułu i opisu tablicy od id 12 do której należy użytkownik o loginie "adam_tester" (trzeba sprawdzać login bo id tablicy przechowywane jest w url).
+Wyświetlanie tytułu i opisu tablicy o id 12 do której należy użytkownik o loginie "adam_tester" (trzeba sprawdzać login bo id tablicy przechowywane jest w url).
 
 ```sql
 SELECT tablica_ogloszeniowa.nazwa, tablica_ogloszeniowa.opis 
@@ -636,7 +639,7 @@ JOIN tablica_ogloszeniowa_uzytkownik ON tablica_ogloszeniowa_uzytkownik.tablica_
 WHERE tablica_ogloszeniowa_id = "12" and uzytkownik.login = "adam_tester";
 ```
 
-Wyświetlanie tytułu, opisu, pseudonimu autora i datę wstawienia ogłoszeń z tablicy od id 12 do której należy użytkownik o loginie "adam_tester".
+Wyświetlanie tytułu, opisu, pseudonimu autora i datę wstawienia ogłoszeń z tablicy o id 12 do której należy użytkownik o loginie "adam_tester".
 
 ```sql
 SELECT ogloszenie.id, ogloszenie.tytul, opis_uzytkownika.pseudonim
@@ -804,7 +807,7 @@ JOIN sygnatura s ON s.uzytkownik_id = u.id
 LEFT JOIN ogloszenie o ON o.autor_id = u.id
 WHERE up.rola = 'kreator postów'
 GROUP BY u.id, s.imie_pseudonim_nazwisko
-HAVING MAX(o.data_wstawienia) < DATE_SUB(CURDATE(), INTERVAL 5
+HAVING MAX(o.data_wstawienia) < DATE_SUB(CURDATE(), INTERVAL 5 YEAR);
 ```
 
 ![](assets/20260117_200851_uzytkownicy_do_eksterminacji.png)
@@ -836,7 +839,7 @@ ORDER BY liczba_postow DESC;
 
 #### Płodność tablicy
 
-Wyświetla ile ogłoszęń znajduje się na danej tablicy.
+Wyświetla ile ogłoszeń znajduje się na danej tablicy.
 
 ```sql
 DROP VIEW IF EXISTS plodnosc_tablicy;
@@ -1079,7 +1082,7 @@ VALUES ('obserwator postow',NEW.tablica_ogloszeniowa_id,NEW.uzytkownik_id);
 
 ### Sprzątanie po usuniętym użytkowniku
 
-#### Przed usunięciem użytkownika z bazy danych
+#### Po usunięciem użytkownika z bazy danych
 
 Zabieramy mu uprawnienia.
 
@@ -1091,7 +1094,7 @@ DELETE FROM uprawnienie
 WHERE uzytkownik_id = OLD.uzytkownik_id;
 ```
 
-#### Po usunięciu użytkownika z bazy danych
+#### Przed usunięciu użytkownika z bazy danych
 
 Usuwamy go z tablic ogłoszeniowych.
 
@@ -1135,7 +1138,7 @@ DELETE FROM pokrewienstwo
 WHERE uzytkownik_id = OLD.id OR spokrewniony_uzytkownik_id = OLD.id;
 ```
 
-Ogłoszenia które stworzył sa przypisaywane autorowi o id 1 ('usuniety użytkownik').
+Ogłoszenia które stworzył są przypisywane autorowi o id 1 ('usunięty użytkownik').
 
 ```sql
 CREATE TRIGGER przed_usunieciem_uzytkownika_usun_posty
@@ -1146,7 +1149,7 @@ SET autor_id = 1
 WHERE autor_id = OLD.id;
 ```
 
-Usuwamy adres zamieszkania z bazy danych, tylko wtedy jezeli nikt inny pod nim nie mieszka.
+Usuwamy adres zamieszkania z bazy danych, tylko wtedy jeżeli nikt inny pod nim nie mieszka.
 
 ```sql
 CREATE TRIGGER po_usunieciu_danych_usun_adres
@@ -1163,7 +1166,7 @@ FOR EACH ROW
 
 ##### Dodawanie użytkownika
 
-Nasze wyzwalacze działaja wspólnie ze soba, gdy dodajemy uzytkownika:
+Nasze wyzwalacze działają wspólnie ze sobą, gdy dodajemy użytkownika:
 
 ![](assets/20260115_104543_dodanie_uzytkownika.png)
 
@@ -1183,7 +1186,7 @@ Oraz zostanie mu przypisana rola 'obserwator postów'.
 
 <div style="page-break-after: always;"></div>
 
-##### Usuwanie Uzytkownika
+##### Usuwanie użytkownika
 
 Stan przed usunięciem 'adam_tester':
 
@@ -1211,11 +1214,11 @@ Stan przed usunięciem 'adam_tester':
 
 <hr>
 
-Gdy postanowimy usunąć uzytkownika
+Gdy postanowimy usunąć użytkownika
 
 ![](assets/20260115_114142_adamGONE.png)
 
-To system posprzata i usunie wszystkie dane powiązane z użytkownikiem.
+To system posprząta i usunie wszystkie dane powiązane z użytkownikiem.
 
 ![](assets/20260115_114347_nieMaAdama.png)
 
@@ -1229,11 +1232,11 @@ To system posprzata i usunie wszystkie dane powiązane z użytkownikiem.
 
 <div style="page-break-after: always;"></div>
 
-Ogłoszenia uzytkownika zostały przypisane autorowi o id równym 1.
+Ogłoszenia użytkownika zostały przypisane autorowi o id równym 1.
 
 ![](assets/20260116_193715_metamorfoza_Adama.png)
 
-Pozostał jedynie adres uzytkownika ponieważ w bazie znajdował sie inny użytkownik który mieszkal pod tym samym adresem
+Pozostał jedynie adres użytkownika ponieważ w bazie znajdował się inny użytkownik który mieszkał pod tym samym adresem
 
 ![](assets/20260115_235624_adam_umar_ale_dom_stoi.png)
 
@@ -1298,13 +1301,13 @@ END$$
 DELIMITER ;
 ```
 
-#### Przykladowe użycie
+#### Przykładowe użycie
 
 Wyszukujemy procedurę w pasku bocznym, klikamy przycisk execute, w parametrach podajemy tylko wartość parametru 'starsze_niz' = 1 następnie naciskamy przycisk Go.
 
 ![](assets/20260115_103531_execute_routine.png)
 
-Procedura pokarze ogłoszenia starsze niz 1 rok, ale ich nie usunie ponieważ nie zmieniamy wartosci paramatru 'usunac'.
+Procedura pokarze ogłoszenia starsze niz 1 rok, ale ich nie usunie ponieważ nie zmieniamy wartości parametru 'usunac'.
 
 ![](assets/20260115_104018_procedure_wynik.png)
 
@@ -1312,7 +1315,7 @@ Procedura pokarze ogłoszenia starsze niz 1 rok, ale ich nie usunie ponieważ ni
 
 ## 12. Prezentacja zarządzania użytkownikami
 
-Tworzenie uzytkowników i nadawanie im uprawnień znajduje się w pliku:
+Tworzenie użytkowników i nadawanie im uprawnień znajduje się w pliku:
 do_importu\3_uzytkownicy.sql
 
 Tworzenie użytkowników.
@@ -1402,7 +1405,7 @@ GRANT SELECT ON smipegs_lublin.sygnatura TO 'uzytkownik'@'localhost';
 
 ### Opis kont
 
-W naszej bazie danych znajduje się 6 uzytkowników każde konto ma inne prawa do wyświetlania, wstawiania i usuwania danych.
+W naszej bazie danych znajduje się 6 użytkowników każde konto ma inne prawa do wyświetlania, wstawiania i usuwania danych.
 
 **Admin -** Konto z najwyższymi uprawnieniami pozwalającymi na dowolne modyfikowanie wyświetlania i usuwanie danych, modyfikowanie struktury bazy danych wywoływanie procedur oraz zarządzanie innymi użytkownikami.
 
@@ -1454,7 +1457,7 @@ W naszej bazie danych znajduje się 6 uzytkowników każde konto ma inne prawa d
 
 ## 13.Prezentacja tworzenia kopii zapasowej, importu i eksportu bazy danych
 
-> Kopia zapasowa jest tworzona automatycznie o godzinie 2:30
+> Kopia zapasowa jest tworzona automatycznie o godzinie 2:30.
 
 ### Początkowa konfiguracja z poziomu admina serwera
 
@@ -1527,11 +1530,11 @@ Wewnątrz dodajemy linie:
 
 ### Proces budowy bazy danych podczas testów
 
-> nie musimy wybierac nowej pustej bazy danych, skrypt sam utworzy bazę o nazwie smipegs_lublin.
+> Nie musimy wybierac nowej pustej bazy danych, skrypt sam utworzy bazę o nazwie smipegs_lublin.
 
 #### 1. Eksport projektu bazy danych z workbencha:
 
-Otwieramy projekt zawierajacy bazę danych. Lokalizacja pliku: do_importu\projekt_bazy_babaa_kabaaba.mwb.
+Otwieramy projekt zawierąjacy bazę danych. Lokalizacja pliku: do_importu\projekt_bazy_babaa_kabaaba.mwb.
 
 ![](assets/20260117_015959_workbench_otwierazie.png)
 
@@ -1543,7 +1546,7 @@ W górnym rogu klikamy w File i wybieramy opcję Export --> Forward Engineer SQL
 
 <div style="page-break-after: always;"></div>
 
-W panelu wybieramy opcje ukazane na zrzucie ekranu i klikamy przycisk Next.
+W panelu wybieramy opcję ukazane na zrzucie ekranu i klikamy przycisk Next.
 
 ![](assets/20260117_013948_workbench_inport1.png)
 
@@ -1565,13 +1568,13 @@ W ostatnim panelu wybieramy opcje "Save to Other File" i nadpisujemy plik w tej 
 
 #### 2. Generowanie plików SQL do importu
 
-Uruchamiany program z tej lokalizacji:
+Uruchamiamy program z tej lokalizacji:
 
 > do_importu\konwersja_workbench_xampp\smipegs_mysql_to_mariadb_translator.py
 
 ![](assets/20260117_021933_tworzenie_pliku_sql.png)
 
-Nastepnie uruchamiamy kolejny proram z tej lokalizacji:
+Następnie uruchamiamy kolejny program z tej lokalizacji:
 
 > do_importu\sztuczne_dane\smipegs_fake_data_generator.py
 
@@ -1581,7 +1584,7 @@ Nastepnie uruchamiamy kolejny proram z tej lokalizacji:
 
 ##### 3. Import bazy danych w panelu administracyjnym xamppa
 
-Na górnym panelu klikamy w zakladkę import wybieramy plik do_importu/1_pusta_baza_z_triggerami.sql, odznaczamy opcję foregin key checks a reszte opcji pozostawiamy ustawionych domyślnie.
+Na górnym panelu klikamy w zakładkę import wybieramy plik do_importu/1_pusta_baza_z_triggerami.sql, odznaczamy opcję foregin key checks a reszte opcji pozostawiamy ustawionych domyślnie.
 
 ![](assets/20260113_202828_import1.png)
 
@@ -1593,13 +1596,13 @@ Następnie klikamy w nowo utworzoną bazę danych smipegs_lublin, wchodzimy w za
 
 <div style="page-break-after: always;"></div>
 
-Na Koniec importujemy w tej samej zakładce plik do_importu\3_uzytkownicy.sql z zachowaniem domyślych ustawień.
+Na Koniec importujemy w tej samej zakładce plik do_importu\3_uzytkownicy.sql z zachowaniem domyślnych ustawień.
 
 ![](assets/20260117_011519_import_3.png)
 
 <div style="page-break-after: always;"></div>
 
-> Poprawna struktura bazy danych po imporcie
+> Poprawna struktura bazy danych po imporcie.
 
 ![](assets/20260117_010146_poprawna_struktura_po_import.png)
 
