@@ -1,18 +1,117 @@
-# 0. Nazwa Projektu
+<img src="logo.png" style="width: 80%; margin:10%"/>
+
+<div style="display: flex; justify-content: center">
+<div style="text-align: center; font-size:20pt; line-height:25pt; width: 70%">Cyberbiezpieczeństwo Grupa Labolatoryjna 7 - Projekt Bazy Danych Semestr 1</div>
+</div>
+<br>
+<div style="text-align: center; font-size:15pt">Autorzy:</div>
+<div style="text-align: center">Szkutnik Kamil, Ścibior Kacper</div>
+
+<div style="page-break-after: always;"></div>
+
+# Spis treści
+
+- [Spis treści](#spis-treści)
+  - [0. Nazwa Projektu](#0-nazwa-projektu)
+  - [1. Motywacja](#1-motywacja)
+    - [Opis problematyki](#opis-problematyki)
+    - [Dlaczego warto to zrealizować i co ma rozwiązać](#dlaczego-warto-to-zrealizować-i-co-ma-rozwiązać)
+  - [2. Opis słowny](#2-opis-słowny)
+  - [2,5. Założenia projektu](#25-założenia-projektu)
+    - [Adminokracja](#adminokracja)
+      - [Admin kreator](#admin-kreator)
+      - [Admin moderator](#admin-moderator)
+      - [Admin kierownik](#admin-kierownik)
+      - [Admin](#admin)
+    - [Serwer](#serwer)
+    - [Terminologia](#terminologia)
+      - [Matuzal](#matuzal)
+      - [Zmora](#zmora)
+  - [3. Tabele](#3-tabele)
+  - [4. Atrybuty encji i relacje](#4-atrybuty-encji-i-relacje)
+    - [Atrybuty encji](#atrybuty-encji)
+      - [uzytkownik](#uzytkownik)
+      - [dane\_uzytkownika](#dane_uzytkownika)
+      - [opis\_użytkownika](#opis_użytkownika)
+      - [modlitwa](#modlitwa)
+      - [adres](#adres)
+      - [rodzina](#rodzina)
+      - [pokrewienstwo](#pokrewienstwo)
+      - [proboszcz](#proboszcz)
+      - [parafia](#parafia)
+      - [tablica\_ogloszeniowa (board)](#tablica_ogloszeniowa-board)
+      - [ogloszenie](#ogloszenie)
+      - [obrazek](#obrazek)
+      - [uprawnienie](#uprawnienie)
+      - [tablica\_ogloszeniowa\_uzytkownik](#tablica_ogloszeniowa_uzytkownik)
+    - [Relacje](#relacje)
+  - [5. Diagram ERD                             ඞ](#5-diagram-erd-----------------------------ඞ)
+  - [6. Generacja danych syntetycznych](#6-generacja-danych-syntetycznych)
+    - [Generacja pliku SQL do importu](#generacja-pliku-sql-do-importu)
+    - [Pisanie własnych schematów](#pisanie-własnych-schematów)
+  - [7. Zróznicowane zapytania sql](#7-zróznicowane-zapytania-sql)
+  - [8. Opracownie i prezentacja zapytań modyfikujacych dane w bazie](#8-opracownie-i-prezentacja-zapytań-modyfikujacych-dane-w-bazie)
+      - [Stworzenie zmory](#stworzenie-zmory)
+      - [Rozwód](#rozwód)
+      - [Ślub](#ślub)
+      - [Degradacja nieaktywnych kreatorów postów](#degradacja-nieaktywnych-kreatorów-postów)
+  - [9. Opracowanie i prezentacja widoków](#9-opracowanie-i-prezentacja-widoków)
+    - [Statystyki](#statystyki)
+      - [Plodnosc\_kreatorow\_postow](#plodnosc_kreatorow_postow)
+      - [Plodnosc tablicy](#plodnosc-tablicy)
+      - [Plodnosc parafii](#plodnosc-parafii)
+      - [Pozycja modlitwy](#pozycja-modlitwy)
+      - [Pozycja rodziny](#pozycja-rodziny)
+      - [Matuzal](#matuzal-1)
+      - [Zmora](#zmora-1)
+      - [Zmarły uzytkownik](#zmarły-uzytkownik)
+    - [Dane zależne](#dane-zależne)
+      - [Sygnatura](#sygnatura)
+      - [Wiek](#wiek)
+      - [Rodzina wrzeniona](#rodzina-wrzeniona)
+      - [url obrazka](#url-obrazka)
+      - [Kod pocztowy](#kod-pocztowy)
+  - [10.Opracowanie i prezentacja wyzwalaczy (triggerów)](#10opracowanie-i-prezentacja-wyzwalaczy-triggerów)
+    - [Sprzatanie kiedy usuwamy uzytkownika](#sprzatanie-kiedy-usuwamy-uzytkownika)
+          - [Przed usunieciem uzytkownika z bazy danych:](#przed-usunieciem-uzytkownika-z-bazy-danych)
+      - [Przyklady działania:](#przyklady-działania)
+          - [Dodawanie uzytkownika](#dodawanie-uzytkownika)
+          - [Usuwanie Uzytkownika](#usuwanie-uzytkownika)
+  - [11.Opracowanie i prezentacja procedur składowanych](#11opracowanie-i-prezentacja-procedur-składowanych)
+    - [Opis procedury](#opis-procedury)
+      - [Przykladowe uzycie](#przykladowe-uzycie)
+  - [13.Prezentacja tworzenia kopii zapasowej, importu i eksportu bazy danych](#13prezentacja-tworzenia-kopii-zapasowej-importu-i-eksportu-bazy-danych)
+    - [Początkowa konfiguracja z poziomu admina serwera](#początkowa-konfiguracja-z-poziomu-admina-serwera)
+        - [Zawartosc skryptu:](#zawartosc-skryptu)
+    - [Jednorazowy Eksport bazy danych w graficzym panelu xampp](#jednorazowy-eksport-bazy-danych-w-graficzym-panelu-xampp)
+        - [1. Na górnym panelu klikamy w zakladke Eksport i wybieramy opcje szybko](#1-na-górnym-panelu-klikamy-w-zakladke-eksport-i-wybieramy-opcje-szybko)
+        - [2.Klikamy Export i wybieramy gdzie chcemy zapisac nasza baze danych](#2klikamy-export-i-wybieramy-gdzie-chcemy-zapisac-nasza-baze-danych)
+    - [Import bazy danych w graficznym panelu xampp](#import-bazy-danych-w-graficznym-panelu-xampp)
+      - [Szybki import pliku bazy danych](#szybki-import-pliku-bazy-danych)
+      - [Proces budowy bazy danych podczas testów](#proces-budowy-bazy-danych-podczas-testów)
+        - [1. Eksport projektu bazy danych z workbencha:](#1-eksport-projektu-bazy-danych-z-workbencha)
+        - [2. Generowanie plików sql do importu](#2-generowanie-plików-sql-do-importu)
+        - [3. Import bazy danych w panelu administracyjnym xampa](#3-import-bazy-danych-w-panelu-administracyjnym-xampa)
+
+
+
+<div style="page-break-after: always;"></div>
+
+## 0. Nazwa Projektu
 
 System Monitorowania Interakcji Pośród Emerytalnej Grupy Społecznej (SMIPEGS Lublin).
 
-# 1. Motywacja
+## 1. Motywacja
 
-## Opis problematyki
+### Opis problematyki
 
 Emeryci mogą mieć problem w dowiadywaniu się o zmianach w ich najbliższym otoczeniu. Dzieje się tak ponieważ członkowie ich rodziny opuszczają swój dom rodzinny, a znajomi przebywają głównie w swoich domostwach, smutne. 
 
-## Dlaczego warto to zrealizować i co ma rozwiązać
+### Dlaczego warto to zrealizować i co ma rozwiązać
 
 Wierzymy, iż nasz SMIPEGS Lublin pomoże w bycie na bierząco z najbliższym środowiskiem co jest trudniejsze z wiekiem. Każdy z nas się kiedyś znajdzie, więc już dziś myślmy o naszej niedalekiej przyszłości, bo kiedyś my sami staniemy się emerytami. Memento mori.
 
-# 2. Opis słowny
+## 2. Opis słowny
 
 Portal społecznościowy dla emerytów wiary chrześcijańskiej, z którego również mogą korzystać użytkownicy nie podzielający tej wiary. Portal składa się z dwóch części:
 
@@ -22,9 +121,11 @@ Portal społecznościowy dla emerytów wiary chrześcijańskiej, z którego rów
 * Zakładke "profil użytkownika" na której użytkownik może zobaczyć jak widzą go inni.
 * Zakładke **"rodzina"** na której użytkownicy którzy są ze sobą w **rodzinie** mogą zobaczyć podstawowe **dane osobowe** (takie jak aktualny **adres**) osób z którymi są **spokrewnieni**.
 
-# 2,5. Założenia projektu
+<div style="page-break-after: always;"></div>
 
-## Adminokracja
+## 2,5. Założenia projektu
+
+### Adminokracja
 
 1. Użytkownicy nie mają możliwości wpływania na zawartość bazy danych, jedynie mogą przeglądać jej zawartość.
 2. Nad zawartością bazy czuwają admini, nad tablicami użytkownicy o odpowiednich uprawnieniach, którzy nadal nie mają siły sprawczej.
@@ -33,39 +134,37 @@ Portal społecznościowy dla emerytów wiary chrześcijańskiej, z którego rów
 5. Admini zawsze mają prawo odmówić uprzywilejowanym użytkownikom.
 6. Wśród adminów panuje czteropodział władzy.
 
-### Admin kreator
+#### Admin kreator
 
 Admin do którego użytkownicy o uprawnieniu "kreator postów" wysyłają swoje posty, aby mógł je wstawić do odpowiedniej tablicy.
 
-### Admin moderator
+#### Admin moderator
 
 Użytkownicy o uprawnieniu "moderator postów" zgłaszają do niego zażalenia jeżeli dane ogłoszenie ujmuje ludzkiej godności lub jest niezgodne z porządkiem pubicznym.
 
-### Admin kierownik
+#### Admin kierownik
 
 Użytkownicy o uprawnieniu "zarządzanie użytkownikami" przekazują adminowi kierownik kogo trzeba dodać lub usunąć z danej tablicy oraz jakie uprawnienia powinien mieć użytkownik.
 
-### Admin
+#### Admin
 
 Admin mający całkowitą władzę nad bazą danych.
 
-## Serwer
+### Serwer
 
 Nasza baza danych stoi na serwerze z systemem operacyjnym Debian. System do tworzenia kopii zapasowej jedynie działa na systeach z rodziny GNU/Linux.
 
-## Terminologia
+### Terminologia
 
-### Matuzal
+#### Matuzal
 
 Matuzal, syn Henocha, był człowiekiem któremu Bóg dał 969 lat życia i zaszczyt bycia jednym z przodków wszystkich ludzi po potopie. Tym mianem w naszej społeczności nazywamy użytkowników którzy dożyli 90 godnych lat. Są chlubą naszego systemu SMIPEGS Lublin.
 
-### Zmora
+#### Zmora
 
 W dawnych wierzeniach słowiańskim była demonem narodzonym z duszy grzesznika, a jeżeli ktoś był kierowany w życiu złością, to mógł się nią stać i za życia. Tak nazywamy w naszej społeczności użytkowników usuniętych z tablicy głównej z powodu ich udręczających zachowań w obrębach naszego systemu SMIPEGS.
 
-# 3. Tabele
-
-## Gotowe
+## 3. Tabele
 
 * uzytkownik
 * dane_uzytkownika
@@ -82,9 +181,9 @@ W dawnych wierzeniach słowiańskim była demonem narodzonym z duszy grzesznika,
 * obraz
 * tablica\_ogloszeniowa\_uzytkownik
 
-# 4. Atrybuty encji i relacje
+## 4. Atrybuty encji i relacje
 
-## Atrybuty encji
+### Atrybuty encji
 
 Jeżeli nie zostało napisane inaczej, to domyślne wartości dla każdego atrybutu to:
 
@@ -97,7 +196,7 @@ Wszystkie id są autoinkrementowane.
 
 Boolowski typ danych jest reprezentowany przez tinyint(1).
 
-### uzytkownik
+#### uzytkownik
 
 > hasła powinny byc szyfrowane ale to zagadnienie wykracza poza naszą obecną wiedze.
 
@@ -114,7 +213,7 @@ Boolowski typ danych jest reprezentowany przez tinyint(1).
 
 > Wartosc NULL jest nam potrzebna aby nikt nie mógł sie zalogowac na usunietego użytkowika.
 
-### dane_uzytkownika
+#### dane_uzytkownika
 
 
 | Atrybut        | Typ         | Ograniczenia / opis       |
@@ -131,7 +230,7 @@ Boolowski typ danych jest reprezentowany przez tinyint(1).
 
 ![](assets/20260117_003050_dane_uzytkownika_encje.png)
 
-### opis_użytkownika
+#### opis_użytkownika
 
 
 | Atrybut              | Typ           | Ograniczenia / opis       |
@@ -148,7 +247,7 @@ Boolowski typ danych jest reprezentowany przez tinyint(1).
 
 ![](assets/20260117_001843_opis_uzytkownika_encje.png)
 
-### modlitwa
+#### modlitwa
 
 
 | Atrybut | Typ           | Ograniczenia / opis |
@@ -160,7 +259,7 @@ Boolowski typ danych jest reprezentowany przez tinyint(1).
 
 ![](assets/20260114_094125_modlitwa.png)
 
-### adres
+#### adres
 
 
 | Atrybut          | Typ            | Ograniczenia / opis |
@@ -176,7 +275,7 @@ Boolowski typ danych jest reprezentowany przez tinyint(1).
 
 ![](assets/20260114_094136_adres.png)
 
-### rodzina
+#### rodzina
 
 
 | Atrybut | Typ           | Ograniczenia / opis |
@@ -189,7 +288,7 @@ Boolowski typ danych jest reprezentowany przez tinyint(1).
 
 ![](assets/20260114_094149_rodzina.png)
 
-### pokrewienstwo
+#### pokrewienstwo
 
 > Użytkownik zgłasza swoją relacje z innym użytkownikiem, relacje nie są symetryczne ponieważ drugi użytkownik nie musi ją uznawać, co nie jest problemem gdyż są one czysto informacyjne.
 
@@ -206,7 +305,7 @@ Boolowski typ danych jest reprezentowany przez tinyint(1).
 
 ![](assets/20260117_001635_pokrewienstwo_encje.png)
 
-### proboszcz
+#### proboszcz
 
 
 | Atrybut  | Typ          | Ograniczenia / opis |
@@ -217,7 +316,7 @@ Boolowski typ danych jest reprezentowany przez tinyint(1).
 
 ![](assets/20260114_094218_proboszcz.png)
 
-### parafia
+#### parafia
 
 
 | Atrybut      | Typ           | Ograniczenia / opis |
@@ -228,7 +327,7 @@ Boolowski typ danych jest reprezentowany przez tinyint(1).
 
 ![](assets/20260114_094230_parafia.png)
 
-### tablica_ogloszeniowa (board)
+#### tablica_ogloszeniowa (board)
 
 > id == 1 to tablica glowna, kazdy uzytkownik jest tam automatycznie dodawany przez trigger
 
@@ -241,7 +340,7 @@ Boolowski typ danych jest reprezentowany przez tinyint(1).
 
 ![](assets/20260114_094243_tablica_ogloszeniowa.png)
 
-### ogloszenie
+#### ogloszenie
 
 
 | Atrybut                 | Typ          | Ograniczenia / opis       |
@@ -257,7 +356,7 @@ Boolowski typ danych jest reprezentowany przez tinyint(1).
 
 ![](assets/20260117_000458_ogloszenie_encje.png)
 
-### obrazek
+#### obrazek
 
 > obrazek o id 1 to domyślne zdjęcie profilowe użytkownika
 
@@ -269,7 +368,7 @@ Boolowski typ danych jest reprezentowany przez tinyint(1).
 
 ![](assets/20260114_094310_obrazek.png)
 
-### uprawnienie
+#### uprawnienie
 
 
 | Atrybut                 | Typ                                                                                               | Ograniczenia / opis |
@@ -281,7 +380,7 @@ Boolowski typ danych jest reprezentowany przez tinyint(1).
 
 ![](assets/20260114_094326_uprawnienie.png)
 
-### tablica_ogloszeniowa_uzytkownik
+#### tablica_ogloszeniowa_uzytkownik
 
 
 | Atrybut                 | Typ | Ograniczenia / opis |
@@ -292,7 +391,7 @@ Boolowski typ danych jest reprezentowany przez tinyint(1).
 
 ![](assets/20260114_094341_tablica_ogloszeniowa_uzytkownik.png)
 
-## Relacje
+### Relacje
 
 **(I)** – relacja identyfikująca
 **(NI)** – relacja nie-identyfikująca
@@ -320,11 +419,11 @@ Boolowski typ danych jest reprezentowany przez tinyint(1).
 
 ![](assets/20260114_125414_relacje.png)
 
-# 5. Diagram ERD                             ඞ
+## 5. Diagram ERD                             ඞ
 
 ![](assets/20260116_211000_diagram_erd_z_logo.png)
 
-# 6. Generacja danych syntetycznych
+## 6. Generacja danych syntetycznych
 
 Tabele w naszej bazie danych są większości ściśle ze sobą powiązane, co wymagało od nasstworzenia wyspecjalizowanego frameworku do generacji danych w celach testowaia poprawności działania bazy danych. Poniżej opiszemy jak z niego korzystać.
 
@@ -334,7 +433,7 @@ Framework jest napisany w języku Python. Do wygenrowania domyślnego schematu w
 pip install faker
 ```
 
-## Generacja pliku SQL do importu
+### Generacja pliku SQL do importu
 
 Z konsoli należy wejść do folderu do_importu/sztuczne_dane/ i uruchomić komendę:
 
@@ -342,7 +441,7 @@ Z konsoli należy wejść do folderu do_importu/sztuczne_dane/ i uruchomić kome
 python smipegs_fake_data_generator.py
 ```
 
-## Pisanie własnych schematów
+### Pisanie własnych schematów
 
 Na początku trzeba zdefiniować wszystkie tabele w pliku scripts\tables_internal_data.py i ich kolejność generacji która odpowiada kolejności w której je definiujem.
 
@@ -447,7 +546,7 @@ case "nazwa_tabeli2":
     nazwa_kolumny1()
 ```
 
-# 7. Zróznicowane zapytania sql
+## 7. Zróznicowane zapytania sql
 
 > Wyświetlanie tablicy głownej
 
@@ -478,18 +577,18 @@ JOIN adres a ON a.id = du.adres_id
 WHERE a.rejon = 'Rury'
 ```
 
-# 8. Opracownie i prezentacja zapytań modyfikujacych dane w bazie
+## 8. Opracownie i prezentacja zapytań modyfikujacych dane w bazie
 
 > Nie mozemy edytowac struktury bazy danych
 
-### Stworzenie zmory
+#### Stworzenie zmory
 
 ```sql
 DELETE FROM tablica_ogloszeniowa_uzytkownik 
 WHERE tablica_ogloszeniowa_id = 1 AND uzytkownik_id = "dowolne id"
 ```
 
-### Rozwód
+#### Rozwód
 
 > rozwązanie ziwązku małżeńskiego zawartego między 2 uzytkownikami
 
@@ -502,7 +601,7 @@ WHERE ou.pseudonim = 'smutnyMarian'
   AND p.typ_relacji IN ('mąż', 'żona');
 ```
 
-### Ślub
+#### Ślub
 
 > ustawianie małżenstwa dla 2 uzytkowników
 
@@ -519,7 +618,7 @@ FROM
 (SELECT uzytkownik_id FROM opis_uzytkownika WHERE pseudonim = 'mariolkaRolka') c2;
 ```
 
-### Degradacja nieaktywnych kreatorów postów
+#### Degradacja nieaktywnych kreatorów postów
 
 > polecenie wypisuje wszyskich nieaktywnych postów i pozwala administratorowi zadecydowac nad ich losem.
 
@@ -536,13 +635,12 @@ GROUP BY u.id, ou.pseudonim, pk.liczba_postow
 HAVING MAX(o.data_wstawienia) < DATE_SUB(CURDATE(), INTERVAL 2 YEAR);
 ```
 
-#
 
-# 9. Opracowanie i prezentacja widoków
+## 9. Opracowanie i prezentacja widoków
 
-## ----(Statystyki)----
+### Statystyki
 
-### Plodnosc_kreatorow_postow
+#### Plodnosc_kreatorow_postow
 
 > wyswietla ile postów dodał dany uzytkownik
 
@@ -559,7 +657,7 @@ ORDER BY liczba_postow DESC;
 
 ![](assets/20260116_234914_plodnosc_kreatorow_postow.png)
 
-### Plodnosc tablicy
+#### Plodnosc tablicy
 
 > wyswietla ile postów znajduje sie na danej tablicy
 
@@ -578,7 +676,7 @@ ORDER BY liczba_postow DESC;
 
 ![](assets/20260116_234713_plodnosc_tablicy_widok.png)
 
-### Plodnosc parafii
+#### Plodnosc parafii
 
 > wyswietla ilu uzytkowników jest w danej parafii
 
@@ -593,7 +691,7 @@ GROUP BY p.id, p.nazwa;
 
 ![](assets/20260115_102513_plodnoscParafii.png)
 
-### Pozycja modlitwy
+#### Pozycja modlitwy
 
 > wyswietla które modlitwy najczesciej znajduja sie w opisach uzytkowników
 
@@ -608,7 +706,7 @@ GROUP BY m.id, m.nazwa;
 
 ![](assets/20260115_102527_pozycjaModlitwy.png)
 
-### Pozycja rodziny
+#### Pozycja rodziny
 
 > wyswietla które rodziny maja najwiecej członków
 
@@ -623,7 +721,7 @@ GROUP BY r.id, r.nazwa;
 
 ![](assets/20260115_102541_pozycjaRodziny.png)
 
-### Matuzal
+#### Matuzal
 
 > wyswietla uzytkownikow mających co namniej 90 lat
 
@@ -641,7 +739,7 @@ ORDER BY w.wiek DESC;
 
 ![](assets/20260116_234314_matuzal_widok.png)
 
-### Zmora
+#### Zmora
 
 > uzytkownicy usunieci z tablicy głównej
 
@@ -661,7 +759,7 @@ WHERE NOT EXISTS (
 
 ![](assets/20260116_234058_zmora_widok.png)
 
-### Zmarły uzytkownik
+#### Zmarły uzytkownik
 
 > uzytkownicy którzy nie żyja
 
@@ -677,11 +775,9 @@ WHERE du.data_smierci IS NOT NULL;
 
 ![](assets/20260116_233701_zmarly_uzytkownik.png)
 
-## ---- Koniec statystyk ----
+### Dane zależne
 
-## ---- Dane zależne ----
-
-### Sygnatura
+#### Sygnatura
 
 > wyswietla imie, pseudonim i nazwisko w jednej komórce
 
@@ -696,7 +792,7 @@ LEFT JOIN dane_uzytkownika du ON du.uzytkownik_id = u.id;
 
 ![](assets/20260116_205604_imie_nazwisko_pseudonim.png)
 
-### Wiek
+#### Wiek
 
 > wyswietla ile lat ma kazdy uzytkownik
 
@@ -713,7 +809,7 @@ FROM dane_uzytkownika;
 
 ![](assets/20260115_102736_wiek.png)
 
-### Rodzina wrzeniona
+#### Rodzina wrzeniona
 
 > wyswietla rodzina małzonka
 
@@ -730,7 +826,7 @@ WHERE p.typ_relacji IN ('mąż', 'żona');
 
 ![](assets/20260115_102806_rodzinaWzeniona.png)
 
-### url obrazka
+#### url obrazka
 
 > wyswietla url obrazka
 
@@ -743,7 +839,7 @@ FROM obrazek o;
 
 ![](assets/20260115_102855_urlObrazka.png)
 
-### Kod pocztowy
+#### Kod pocztowy
 
 > wyswietla kod pocztowy uzytkownika
 
@@ -756,7 +852,7 @@ FROM adres a;
 
 ![](assets/20260115_103123_adres_pocztowy.png)
 
-# 10.Opracowanie i prezentacja wyzwalaczy (triggerów)
+## 10.Opracowanie i prezentacja wyzwalaczy (triggerów)
 
 > Dodaje uzytkownika do tablicy głównej przy dodaniu użytkownika
 
@@ -778,9 +874,9 @@ INSERT INTO uprawnienie (rola,tablica_ogloszeniowa_id,uzytkownik_id)
 VALUES ('obserwator postow',NEW.tablica_ogloszeniowa_id,NEW.uzytkownik_id);
 ```
 
-## Sprzatanie kiedy usuwamy uzytkownika
+### Sprzatanie kiedy usuwamy uzytkownika
 
-##### Przed usunieciem uzytkownika z bazy danych:
+###### Przed usunieciem uzytkownika z bazy danych:
 
 > Zabieramy mu uprawnienia
 
@@ -856,9 +952,9 @@ FOR EACH ROW
     END IF;
 ```
 
-### Przyklady działania:
+#### Przyklady działania:
 
-##### Dodawanie uzytkownika
+###### Dodawanie uzytkownika
 
 > Nasze wyzwalacze działaja wspólnie ze soba, gdy dodajemy uzytkownika:
 
@@ -874,9 +970,9 @@ FOR EACH ROW
 
 ![](assets/20260115_234444_Adam_Uprawniania.png)
 
-##### Usuwanie Uzytkownika
+###### Usuwanie Uzytkownika
 
-###### Stan przed usunieciem:
+####### Stan przed usunieciem:
 
 ![](assets/20260115_234444_Adam_Uprawniania.png)
 
@@ -912,7 +1008,11 @@ FOR EACH ROW
 
 ![](assets/20260115_235624_adam_umar_ale_dom_stoi.png)
 
-# 11.Opracowanie i prezentacja procedur składowanych
+## 11.Opracowanie i prezentacja procedur składowanych
+
+Nasz system SMIPEGS potrzebuje aby jednej procedury, gdyż inne czynności są dosyć łatwe w napisaniu zwykłym zapytaniem SQL.
+
+### Opis procedury
 
 > Pozwala admistratorowi podejrzec przedawnione posty na podstawie daty wstawienia z pominieciem postów oznaczonych jako 'do  archiwizacji'. Procedura pozwala na wyszukanie postów starszych niz x lat lub postów stworzonych do konkretnej daty. Mozna tez podejrzec kolumny do usuniecia jesli nie ustawimy parametru usunac na 'true'.
 
@@ -963,7 +1063,7 @@ END$$
 DELIMITER ;
 ```
 
-### Przykladowe uzycie
+#### Przykladowe uzycie
 
 > Wyszukujemy procedure w pasku bocznym, klikamy przycisk execute, w parametrach podajemy tylko wartosc parametru 'starsze_niz' = 1 nastepnie naciskamy przycisk Go.
 
@@ -973,20 +1073,20 @@ DELIMITER ;
 
 ![](assets/20260115_104018_procedure_wynik.png)
 
-# 13.Prezentacja tworzenia kopii zapasowej, importu i eksportu bazy danych
+## 13.Prezentacja tworzenia kopii zapasowej, importu i eksportu bazy danych
 
 > Kopia zapasowa jest tworzona automatycznie o godzinie 2:30
 
-## Początkowa konfiguracja z poziomu admina serwera
+### Początkowa konfiguracja z poziomu admina serwera
 
-#### Zawartosc skryptu:
+##### Zawartosc skryptu:
 
 ```sh
-#!/bin/bash
+##!/bin/bash
 
 mkdir -p "$BACKUP_PATH"
 
-# Konfiguracja
+## Konfiguracja
 USER="root"
 PASSWORD=""   
 DATABASE="smipegs_lublin"   
@@ -994,10 +1094,10 @@ BACKUP_PATH="/home/server/backups"
 LOG_FILE="/home/server/logi.log"
 DATE=$(date +%Y-%m-%d_%H%M%S)
 
-# Wykonanie kopii
+## Wykonanie kopii
 mysqldump -root -p$PASSWORD $DATABASE > $BACKUP_PATH/$DATABASE-$DATE.sql
 
-# Logi
+## Logi
 echo "$DATE: Wykonanie kopii zapasowej." >> "LOG_FILE"
 ```
 
@@ -1014,25 +1114,25 @@ crontab -e
 30 2 * * * /home/server/scripts/skrypt_do_automatycznej_kopii.sh
 ```
 
-## Jednorazowy Eksport bazy danych w graficzym panelu xampp
+### Jednorazowy Eksport bazy danych w graficzym panelu xampp
 
-#### 1. Na górnym panelu klikamy w zakladke Eksport i wybieramy opcje szybko
+##### 1. Na górnym panelu klikamy w zakladke Eksport i wybieramy opcje szybko
 
 ![](assets/20260112_211932_zakladka_eksport.png)
 
-#### 2.Klikamy Export i wybieramy gdzie chcemy zapisac nasza baze danych
+##### 2.Klikamy Export i wybieramy gdzie chcemy zapisac nasza baze danych
 
 ![](assets/20260112_212626_zakladka_eksport_cz2.png)
 
-## Import bazy danych w graficznym panelu xampp
+### Import bazy danych w graficznym panelu xampp
 
-### Szybki import pliku bazy danych
+#### Szybki import pliku bazy danych
 
 > nie musimy wybierac nowej pustej bazy danych, skrypt sam utworzy baze o nazwie smipegs_lublin
 
-### Proces budowy bazy danych podczas testów
+#### Proces budowy bazy danych podczas testów
 
-#### 1. Eksport projektu bazy danych z workbencha:
+##### 1. Eksport projektu bazy danych z workbencha:
 
 Otwieramy projekt zawierajacy baze danych lokalizacja pliku: do_importu\projekt_bazy_babaa_kabaaba.mwb
 
@@ -1058,7 +1158,7 @@ W ostatnim panelu wybieramy opcje "Save to Other File" i nadpiujemy plik w tej l
 
 ![](assets/20260117_020441_workbench_nadpisaniepliku.png)
 
-#### 2. Generowanie plików sql do importu
+##### 2. Generowanie plików sql do importu
 
 Uruchamiany program z tej lokalizacji:
 do_importu\konwersja_workbench_xampp\smipegs_mysql_to_mariadb_translator.py
@@ -1069,7 +1169,7 @@ Nastepnie uruchamiamy kolejny proram z tej lokalizacji: do_importu\sztuczne_dane
 
 ![](assets/20260117_022343_tworzenie-pliku_sql2.png)
 
-#### 3. Import bazy danych w panelu administracyjnym xampa
+##### 3. Import bazy danych w panelu administracyjnym xampa
 
 Na górnym panelu klikamy w zakladke import wybieramy plik do_importu/1_pusta_baza_z_triggerami.sql, odznaczamy foregin key checks a reszte opcji pozostawiamy ustawionych domyslnie.
 
